@@ -1,0 +1,19 @@
+{
+  "name": "@jupiterone/jupiterone-alert-rules",
+  "version": "0.1.0",
+  "description": "Alert rule packages for the JupiterOne platform",
+  "main": "index.js",
+  "repository": "git@github.com:JupiterOne/jupiterone-alert-rules.git",
+  "author": "JupiterOne <dev@jupiterone.io>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@jupiterone/jupiterone-client-nodejs": "^0.5.3"
+  },
+  "devDependencies": {
+    "dotenv": "^7.0.0",
+    "jest": "^24.0.0"
+  }
+}
