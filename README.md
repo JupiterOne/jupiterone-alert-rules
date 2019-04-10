@@ -5,14 +5,19 @@ JupiterOne account via the included CLI utility.
 
 ## Rule Packs
 
-- `rule-packs/aws-config.json`: AWS configuration audit
+- `rule-packs/aws-config.json`
 
-All rules inherit the alert settings from `rule-settings/default-settings.json`.
+  Alert rules for AWS configuration audit
+
+All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
 
-To add these alert rules to your account via the CLI, run the following command:
+To add these alert rules to your account via the CLI, you will need to download
+the [JupiterOne CLI][1] and run the following command:
 
 ```bash
-node index -a <j1AccountId> -u <j1Username> -r aws-config
+./bin/j1cli -a <j1AccountId> -u <j1Username> -o provision-alert-rule-pack --alert -f aws-config
 ```
+
+[1]: https://github.com/JupiterOne/jupiterone-client-nodejs
