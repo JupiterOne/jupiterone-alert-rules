@@ -1,5 +1,5 @@
 
-export const defaultAlertSettings = {
+const defaultAlertSettings = {
   version: "v1",
   pollingInterval: "ONE_DAY",
   outputs: [
@@ -27,4 +27,8 @@ export const defaultAlertSettings = {
       ]
     }
   ]
+}
+
+module.exports = {
+  defaultAlertSettings
 }
