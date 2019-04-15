@@ -13,11 +13,20 @@ All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
 
-To add these alert rules to your account via the CLI, you will need to download
-the [JupiterOne CLI][1] and run the following command:
+To add these alert rules to your account via the CLI, you will need to install
+the **JupiterOne CLI** from [npm][1] or download source from [github][2]:
+
+**Install J1 CLI**
 
 ```bash
-./bin/j1cli -a <j1AccountId> -u <j1Username> -o provision-alert-rule-pack --alert -f aws-config
+npm install @jupiterone/jupiterone-client-nodejs -g
 ```
 
-[1]: https://github.com/JupiterOne/jupiterone-client-nodejs
+**Provision Rule Pack**
+
+```bash
+j1 -a <j1AccountId> -u <j1Username> -o provision-alert-rule-pack --alert -f aws-config
+```
+
+[1]: https://www.npmjs.com/package/@jupiterone/jupiterone-client-nodejs
+[2]: https://github.com/JupiterOne/jupiterone-client-nodejs

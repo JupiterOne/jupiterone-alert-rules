@@ -12,7 +12,7 @@ const defaultAlertSettings = {
         version: 1,
         condition: [
           "AND",
-          [ "queries.query.total", "!=", 0 ]
+          [ "queries.query0.total", "!=", 0 ]
         ]
       },
       actions: [
