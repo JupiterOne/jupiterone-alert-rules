@@ -1,11 +1,11 @@
 [
   {
     "name": "high-severity-finding",
-    "description": "Findings with a severity of High or a numeric severity rating higher than 7.",
+    "description": "Findings with a severity of High or a numeric severity rating higher than 7 that was new within the last 24 hours.",
     "queries": [
       {
         "name": "query0",
-        "query": "Find Finding with severity='High' or numericSeverity>7",
+        "query": "Find Finding with (severity='High' or numericSeverity>7) and _createdOn > date.now-24hours",
         "version": "v1"
       }
     ]
