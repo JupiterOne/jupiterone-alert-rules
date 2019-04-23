@@ -1,0 +1,46 @@
+[
+  {
+    "name": "high-severity-finding",
+    "description": "Findings with a severity of High or a numeric severity rating higher than 7.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find Finding with severity='High' or numericSeverity>7",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "prod-resources-with-high-severity-finding",
+    "description": "Production resources impacted by high severity findings",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity='High' or numericSeverity>7",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "unencrypted-critical-data-stores",
+    "description": "Unencrypted data store with classification label of 'critical' or 'sensitive' or 'confidential' or 'restricted'",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find DataStore with classification=('critical' or 'sensitive' or 'confidential' or 'restricted') and encrypted!=true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "unclassified-data-stores",
+    "description": "Data stores without a classification tag assigned",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find DataStore with classification=undefined",
+        "version": "v1"
+      }
+    ]
+  }
+]

@@ -1,6 +1,6 @@
 
 const defaultAlertSettings = {
-  version: "v1",
+  specVersion: 1,
   pollingInterval: "ONE_DAY",
   outputs: [
     "alertLevel"
