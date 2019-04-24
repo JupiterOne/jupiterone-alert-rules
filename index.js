@@ -9,7 +9,7 @@ const defaultAlertSettings = {
     {
       when: {
         type: "FILTER",
-        version: 1,
+        specVersion: 1,
         condition: [
           "AND",
           [ "queries.query0.total", ">", 0 ]
