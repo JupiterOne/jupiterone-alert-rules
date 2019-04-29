@@ -19,7 +19,8 @@
         "query": "Find (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity='High' or numericSeverity>7",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "CRITICAL"
   },
   {
     "name": "unencrypted-critical-data-stores",
@@ -30,7 +31,8 @@
         "query": "Find DataStore with classification=('critical' or 'sensitive' or 'confidential' or 'restricted') and encrypted!=true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "CRITICAL"
   },
   {
     "name": "unclassified-data-stores",
@@ -41,6 +43,7 @@
         "query": "Find DataStore with classification=undefined",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   }
 ]

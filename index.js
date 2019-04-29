@@ -19,7 +19,7 @@ const defaultAlertSettings = {
         {
           type: "SET_PROPERTY",
           targetProperty: "alertLevel",
-          targetValue: "CRITICAL"
+          targetValue: "HIGH"
         },
         {
           type: "CREATE_ALERT"
