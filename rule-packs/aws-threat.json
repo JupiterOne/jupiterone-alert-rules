@@ -1,0 +1,14 @@
+[
+  {
+    "name": "aws-guardduty-inspector-finding-instance-correlation",
+    "description": "Identifies vulnerable EC2 instances (i.e. with medium or higher rated open Inspector finding) that are also targets of suspicious activities (i.e. with medium or higher rated open GuardDuty finding).",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_guardduty_finding with numericSeverity > 5 and open=true as guardduty that relates to aws_instance as i that has aws_inspector_finding with numericSeverity > 5 and open=true as inspector return i.*, guardduty.*, inspector.*",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  }
+]
