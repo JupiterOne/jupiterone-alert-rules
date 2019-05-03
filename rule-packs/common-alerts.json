@@ -32,7 +32,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH"
+    "alertLevel": "CRITICAL"
   },
   {
     "name": "unencrypted-critical-data-stores",
