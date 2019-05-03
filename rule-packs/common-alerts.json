@@ -1,11 +1,11 @@
 [
   {
     "name": "high-severity-finding",
-    "description": "Findings with a severity of High or a numeric severity rating higher than 7 that was new within the last 24 hours.",
+    "description": "Findings with a severity of High or a numeric severity rating higher than 7 that were new within the last 24 hours.",
     "queries": [
       {
         "name": "query0",
-        "query": "Find Finding with (severity='High' or numericSeverity>7) and _createdOn > date.now-24hours",
+        "query": "Find Finding with (severity='High' or severity='high' or numericSeverity>7) and _createdOn > date.now-24hours",
         "version": "v1"
       }
     ]
@@ -16,7 +16,19 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity='High' or numericSeverity>7",
+        "query": "Find (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('High' or 'high') or numericSeverity=(7 or 8)",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "prod-resources-with-critical-finding",
+    "description": "Production resources impacted by critical findings",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('Critical' or 'critical') or numericSeverity=(9 or 10)",
         "version": "v1"
       }
     ],

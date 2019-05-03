@@ -9,6 +9,14 @@ JupiterOne account via the included CLI utility.
 
   Alert rules for AWS configuration audit
 
+- `rule-packs/aws-threat.json`
+
+  Alert rules for AWS threat monitoring
+
+- `rule-packs/common-alerts.json`
+
+  Commonly used alert rules
+
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
