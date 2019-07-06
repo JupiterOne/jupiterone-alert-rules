@@ -16,7 +16,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('High' or 'high') or numericSeverity=(7 or 8)",
+        "query": "Find unique (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('High' or 'high') or numericSeverity=(7 or 8)",
         "version": "v1"
       }
     ],
@@ -28,7 +28,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('Critical' or 'critical') or numericSeverity=(9 or 10)",
+        "query": "Find unique (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('Critical' or 'critical') or numericSeverity=(9 or 10)",
         "version": "v1"
       }
     ],
