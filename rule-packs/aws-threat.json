@@ -10,5 +10,16 @@
       }
     ],
     "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-unvalidated-external-trusts",
+    "description": "Identifies assume role trust relationships from integrated account to external IAM role or user or account that is not integrated (i.e. unknown to JupiterOne). Ensure all valid accounts are integrated to reduce noise. You can also manually edit known/trusted external accounts and set the 'validated' property to 'true'.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_account as aws that HAS aws_iam that HAS aws_iam_role as role that TRUSTS (AccessRole|User|Account) with _source='system-mapper' and validated!=true as e return aws.name, aws.accountId, role.roleName, e.displayName, e._type, e.arn",
+        "version": "v1"
+      }
+    ]
   }
 ]

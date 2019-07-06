@@ -17,7 +17,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_instance with vpcId=undefined",
+        "query": "Find aws_instance with vpcId=undefined and state!='terminated'",
         "version": "v1"
       }
     ],
