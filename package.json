@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/jupiterone-alert-rules",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Alert rule packages for the JupiterOne platform",
   "main": "index.js",
   "repository": "git@github.com:JupiterOne/jupiterone-alert-rules.git",
