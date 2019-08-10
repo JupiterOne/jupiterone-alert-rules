@@ -110,7 +110,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (aws_db_instance|aws_rds_cluster) with BackupRetentionPeriod=undefined",
+        "query": "Find (aws_db_instance|aws_rds_cluster) with backupRetentionPeriod=undefined",
         "version": "v1"
       }
     ]
