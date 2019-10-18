@@ -5,11 +5,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_acm_certificate with expiresOn < date.now + 30days",
+        "query": "Find aws_acm_certificate with renewalEligibility != 'ELIGIBLE' and expiresOn > date.now and expiresOn < date.now + 30days",
         "version": "v1"
       }
     ],
-    "alertLevel": "INFO"
+    "alertLevel": "HIGH"
   },
   {
     "name": "ec2-instances-in-vpc",
