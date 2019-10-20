@@ -105,6 +105,18 @@
     "alertLevel": "MEDIUM"
   },
   {
+    "name": "lambda-function-settings-check-runtime-nodejs810",
+    "description": "Node.js 8.10 is end of life (EOL) and should no longer be used.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_lambda_function with runtime='nodejs8.10'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
     "name": "rds-db-instance-backup-enabled",
     "description": "RDS cluster or instance does not have back up enabled or the backup retention period is undefined.",
     "queries": [
