@@ -11,7 +11,7 @@ const defaultAlertSettings = {
       when: {
         type: "FILTER",
         specVersion: 1,
-        condition: "{{queries.query0.total != 0}}"
+        condition: "{{queries.query0.total > 0}}"
       },
       actions: [
         {
