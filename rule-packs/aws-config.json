@@ -98,11 +98,15 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_lambda_function with runtime='nodejs6.10'",
+        "query": "Find aws_lambda_function with runtime='nodejs6.10' as f return f.name as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "HIGH",
+    "templates": {
+      "emailBody": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}<br>",
+      "jiraTicket": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}\n"
+    }
   },
   {
     "name": "lambda-function-settings-check-runtime-nodejs810",
@@ -110,11 +114,15 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_lambda_function with runtime='nodejs8.10'",
+        "query": "Find aws_lambda_function with runtime='nodejs8.10' as f return f.name as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "MEDIUM",
+    "templates": {
+      "emailBody": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}<br>",
+      "jiraTicket": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}\n"
+    }
   },
   {
     "name": "rds-db-instance-backup-enabled",
