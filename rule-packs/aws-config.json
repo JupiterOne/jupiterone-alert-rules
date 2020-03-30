@@ -63,7 +63,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_account with _source!='system-mapper' and AccountMFAEnabled!=1",
+        "query": "Find aws_account with _source!='system-mapper' and accountMFAEnabled!=1",
         "version": "v1"
       }
     ],
