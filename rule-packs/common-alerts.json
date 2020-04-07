@@ -1,5 +1,16 @@
 [
   {
+    "name": "domain-expires-in-30-days",
+    "description": "Find registered domain names with an expiration date within 30 days from now and not set to auto-renew.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find Domain with expiresOn < date.now+30days and autoRenew!=true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
     "name": "high-severity-finding",
     "description": "Findings with a severity of High or a numeric severity rating higher than 7 that were new within the last 24 hours.",
     "queries": [
