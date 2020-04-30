@@ -19,7 +19,11 @@
         "query": "Find Finding with (severity='High' or severity='high' or numericSeverity>7) and _createdOn > date.now-24hours",
         "version": "v1"
       }
-    ]
+    ],
+    "templates": {
+      "emailBody": "({{itemIndex+1}} of {{itemCount}}) <b>{{item.displayName}}</b><br>---<br>{{item.description || item.summary}}<br><b>severity:</b> {{item.severity}}<br><br>",
+      "slackBody": "({{itemIndex+1}} of {{itemCount}}) *{{item.displayName}}*\n---\n{{item.description || item.summary}}\n*severity:* {{item.severity}}\n\n"
+    }
   },
   {
     "name": "prod-resources-with-high-severity-finding",

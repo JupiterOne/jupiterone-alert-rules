@@ -21,5 +21,16 @@
         "version": "v1"
       }
     ]
+  },
+  {
+    "name": "aws-guardduty-finding-unattributed",
+    "description": "GuardDuty findings with a userName is mapped to a known User or Person entity. Unmapped finding (without attribution) could be an indicator of compromise (IOC).",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "find Finding with userName!=undefined that !has (Person|User)",
+        "version": "v1"
+      }
+    ]
   }
 ]
