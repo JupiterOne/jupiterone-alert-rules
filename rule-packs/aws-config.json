@@ -136,12 +136,24 @@
     ]
   },
   {
+    "name": "rds-instance-public-access-check",
+    "description": "Check whether the Amazon RDS clusters and instances are publicly accessible.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find (aws_db_instance|aws_rds_cluster) with public=true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
     "name": "rds-snapshots-public-prohibited",
     "description": "RDS cluster or instance snapshots is public.",
     "queries": [
       {
         "name": "query0",
-        "query": "Find (aws_db_instance|aws_rds_cluster) with public=true",
+        "query": "Find (aws_db_snapshot|aws_db_cluster_snapshot) with public=true",
         "version": "v1"
       }
     ],
@@ -225,6 +237,17 @@
       {
         "name": "query0",
         "query": "Find aws_s3_bucket with loggingEnabled != true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "s3-bucket-ssl-requests-only",
+    "description": "Checks whether S3 buckets have policies that require requests to use TLS / SecureTransport.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_s3_bucket with secureTransport != true",
         "version": "v1"
       }
     ]
