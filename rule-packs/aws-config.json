@@ -230,6 +230,17 @@
     ]
   },
   {
+    "name": "s3-bucket-ssl-requests-only",
+    "description": "Checks whether S3 buckets have policies that require requests to use TLS / SecureTransport.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_s3_bucket with secureTransport != true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
     "name": "s3-bucket-versioning-enabled",
     "description": "S3 buckets should enable versioning.",
     "queries": [
