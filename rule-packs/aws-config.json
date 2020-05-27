@@ -58,16 +58,27 @@
     ]
   },
   {
-    "name": "iam-root-access-key-check",
+    "name": "root-account-mfa-enabled",
     "description": "AWS account root user does not have MFA enabled.",
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_account with _source!='system-mapper' and accountMfaEnabled!=1",
+        "query": "Find aws_account with _source!='system-mapper' and mfaEnabled!=true",
         "version": "v1"
       }
     ],
     "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "iam-root-access-key-check",
+    "description": "Checks whether the root user access key is available.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_account with _source!='system-mapper' and rootUserAccessKeyEnabled!=false",
+        "version": "v1"
+      }
+    ]
   },
   {
     "name": "iam-password-policy",
