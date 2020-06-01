@@ -5,7 +5,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "find CodeRepo with public=false that published CodeModule with public=true",
+        "query": "find CodeRepo with public!=true and classification!='public' that published CodeModule with public=true",
         "version": "v1"
       }
     ]
