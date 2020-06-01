@@ -1,0 +1,13 @@
+[
+  {
+    "name": "private-repo-published-publicly",
+    "description": "Find code repos marked as private but published as public packages/modules.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "find CodeRepo with public!=true and classification!='public' that published CodeModule with public=true",
+        "version": "v1"
+      }
+    ]
+  }
+]
