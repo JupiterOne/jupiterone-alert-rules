@@ -42,7 +42,8 @@
         "query": "find UNIQUE Internet\n  that allows as rule aws_security_group\n  that protects aws_instance with active=true as instance\n  that uses aws_iam_role as role\n  that assigned AccessPolicy as policy\n  that allows (aws_s3|aws_s3_bucket) with classification!='public' as s3\nreturn\n  s3.tag.AccountName, s3.bucketName, instance.name, instance.instanceId, instance.owner, instance.webLink, role.roleName, policy.displayName",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "aws-s3-public-access-via-cloudfront",
@@ -53,6 +54,7 @@
         "query": "find Internet\n  that CONNECTS aws_cloudfront_distribution with active=true as cloudfront\n  that CONNECTS aws_s3_bucket with classification!='public' as s3\nreturn\n  s3.bucketName, s3.tag.AccountName, s3.ownerId, s3.owner, s3.webLink,\n  cloudfront.domainName, cloudfront.tag.AccountName, cloudfront.webLink",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   }
 ]
