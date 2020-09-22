@@ -104,6 +104,18 @@
     "alertLevel": "LOW"
   },
   {
+    "name": "lambda-function-logging-enabled",
+    "description": "Check if lambda functions are not sending logs to cloudtrail",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_lambda_function with loggingEnabled != true that has aws_lambda with loggingEnabled != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
     "name": "lambda-function-settings-check-runtime-nodejs610",
     "description": "Node.js 6.10 is end of life (EOL) and should no longer be used.",
     "queries": [
@@ -243,11 +255,11 @@
   },
   {
     "name": "s3-bucket-logging-enabled",
-    "description": "S3 buckets should enable access logging.",
+    "description": "S3 buckets should enable server access logging and/or object-level logging.",
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with loggingEnabled != true",
+        "query": "Find aws_s3_bucket with loggingEnabled != true that has aws_s3 with loggingEnabled != true",
         "version": "v1"
       }
     ]
