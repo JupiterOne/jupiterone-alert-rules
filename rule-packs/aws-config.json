@@ -164,7 +164,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (aws_db_instance|aws_rds_cluster) with public=true",
+        "query": "Find (aws_db_instance|aws_rds_cluster) with public=true that protects aws_security_group that allows Internet",
         "version": "v1"
       }
     ],
@@ -200,7 +200,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with classification!='public' that ALLOWS as grant Everyone where grant.permission='READ'",
+        "query": "Find aws_s3_bucket with classification != 'public' and ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='READ'",
         "version": "v1"
       }
     ],
@@ -212,7 +212,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket that ALLOWS as grant Everyone where grant.permission='WRITE'",
+        "query": "Find aws_s3_bucket with classification != 'public' and ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='WRITE'",
         "version": "v1"
       }
     ],
@@ -224,7 +224,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket that ALLOWS as grant Everyone where grant.permission='READ_ACP' or grant.permission='WRITE_ACP'",
+        "query": "Find aws_s3_bucket with classification != 'public' and ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='READ_ACP' or grant.permission='WRITE_ACP'",
         "version": "v1"
       }
     ],
