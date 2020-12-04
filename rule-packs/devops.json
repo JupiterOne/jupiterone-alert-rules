@@ -9,5 +9,17 @@
         "version": "v1"
       }
     ]
+  },
+  {
+    "name": "aws-ecs-tasks-orphaned",
+    "description": "Finds ECS tasks that are running for over 24 hours but its corresponding task definition is gone. These tasks are orphaned and shows up as INACTIVE in the AWS Console.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "find aws_ecs_task with active=true and createdOn < date.now-24hours that !DEFINES aws_ecs_task_definition",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
   }
 ]
