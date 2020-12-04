@@ -1,0 +1,67 @@
+name: Build
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [12.x]
+        os: [ubuntu-latest]
+
+    steps:
+      - id: setup-node
+        name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Check out code repository source code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn
+
+  # Publishing is done in a separate job to allow
+  # for all matrix builds to complete.
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [12]
+
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Check out repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Check if publish needed
+        run: |
+          name="$(jq -r .name package.json)"
+          npmver="$(npm show $name version 2>/dev/null || echo v0.0.0)"
+          pkgver="$(jq -r .version package.json)"
+          if [ "$npmver" = "$pkgver" ]
+          then
+            echo "Package version ($pkgver) is the same as last published NPM version ($npmver), skipping publish."
+          else
+            echo "Package version ($pkgver) is different from latest NPM version ($npmver), publishing!"
+            echo "publish=true" >> $GITHUB_ENV
+          fi
+      - name: Publish
+        if: env.publish == 'true'
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
+          yarn
+          npm publish --access public
