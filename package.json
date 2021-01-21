@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/jupiterone-alert-rules",
-  "version": "0.13.2",
+  "version": "0.13.3",
   "description": "Alert rule packages for the JupiterOne platform",
   "main": "dist/index.js",
   "types": "dist/types.d.ts",
