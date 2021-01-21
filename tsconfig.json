@@ -1,0 +1,13 @@
+{
+  "extends": "./node_modules/@jupiterone/typescript-tools/config/typescript",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "lib": ["esnext", "dom"],
+    "outDir": "dist",
+    "declaration": true
+  },
+  "include": ["**/*.ts"]
+}

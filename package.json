@@ -2,8 +2,15 @@
   "name": "@jupiterone/jupiterone-alert-rules",
   "version": "0.13.2",
   "description": "Alert rule packages for the JupiterOne platform",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/types.d.ts",
   "repository": "git@github.com:JupiterOne/jupiterone-alert-rules.git",
   "author": "JupiterOne <dev@jupiterone.io>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@jupiterone/typescript-tools": "^13.2.1"
+  }
 }
