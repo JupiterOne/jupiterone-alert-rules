@@ -1,0 +1,152 @@
+[
+    {
+      "name": "gcp-personal-account-access",
+      "description": "Finds login credentials tied to personal accounts (as opposed to corporate credentials).",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "find google_user with email !$='@{{domain}'",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "gcp-managed-service-account-keys",
+      "description": "Finds user managed serice accounts with user managed keys (as opposed to system managed keys).",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "find google_iam_service_account_key with type!='SYSTEM_MANAGED'",
+          "version": "v1"
+        }
+      ],
+    //   criticality?
+    "alertLevel": "INFO"
+    },
+    {
+        "name": "gcp-service-account-admin-privilege",
+        "description": "Finds service accounts with admin privileges.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find google_iam_service_account as user\n  that ASSIGNED google_iam_role\n  with name!~=(\n    \"admin\" or\n    \"Admin\"\n  ) and name!=(\n    \"roles/owner\" or\n    \"roles/editor\"\n  )\nreturn\n  user.name,\n  user.username,\n  user.email,\n  google_iam_role.name",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-service-credentials-project",
+        "description": "Finds Service Account Users or Service Account Token Creator roles assigned at the project level (as opposed to the specific service account).",
+        "queries": [
+          {
+            "name": "query0",
+            // not sure which query to use
+            // fix return spacing
+            "query": "find google_iam_service_account as user
+            that ASSIGNED google_iam_role as role
+            where
+              role.name!='roles/iam.serviceAccountUser' and
+              role.name!='roles/iam.serviceAccountTokenCreator'
+          return
+            user.name,
+            role.name",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-service-account-key-rotation",
+        "description": "Finds service account keys that haven't been rotated in the last 90 days",
+        // original managed q in library has 60days instead of 90
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find google_iam_service_account as serviceAccount\n  that HAS google_iam_service_account_key\n  with date.now-60days <= createdOn\nreturn\n  serviceAccount.id,\n  serviceAccount.email,\n  serviceAccount.description,\n  serviceAccount.enabled,\n  serviceAccount.webLink,\n  google_iam_service_account_key.name,\n  google_iam_service_account_key.type,\n  google_iam_service_account_key.createdOn,\n  google_iam_service_account_key.expiresOn",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-encryption-key-rotation",
+        "description": "Finds encryption keys that have rotation periods greater than a year (365 days)",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find google_kms_key_ring as keyRing\n  THAT HAS google_kms_crypto_key as key\nwhere\n  key.rotationPeriod > 31536000\nreturn\n  keyRing.name,\n  keyRing.location,\n  keyRing.webLink,\n  key.name,\n  key.displayName,\n  key.createdOn,\n  key.nextRotationTime,\n  key.rotationPeriod,\n  key.webLink",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-default-network",
+        "description": "Finds usage of the default network in a project.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find google_compute_network with name='default'",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-ssh",
+        "description": "Finds firewall rules that allow SSH traffic.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find Internet\n  THAT ALLOWS as rule google_compute_firewall as firewall\n  THAT PROTECTS google_compute_network as network\n  THAT CONTAINS google_compute_subnetwork as subnetwork\nWHERE\n  firewall.ingress=true AND\n  rule.ipProtocol='tcp' AND\n  rule.fromPort <= 22 AND\n  rule.toPort >= 22\nreturn\n  rule.ipProtocol,\n    rule.fromPort,\n    rule.toPort,\n  firewall.sourceRanges,\n    firewall.destinationRanges,\n  network.displayName,\n    network.name,\n    network.description,\n  subnetwork.CIDR,\n    subnetwork.displayName,\n    subnetwork.name",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-rdp",
+        "description": "Finds firewall rules that allow RDP traffic.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find Internet\n  THAT ALLOWS as rule google_compute_firewall as firewall\n  THAT PROTECTS google_compute_network as network\n  THAT CONTAINS google_compute_subnetwork as subnetwork\nWHERE\n  firewall.ingress=true AND\n  rule.ipProtocol='tcp' AND\n  rule.fromPort <= 3389 AND\n  rule.toPort >= 3389\nreturn\n  rule.ipProtocol,\n    rule.fromPort,\n    rule.toPort,\n  firewall.sourceRanges,\n    firewall.destinationRanges,\n  network.displayName,\n    network.name,\n    network.description,\n  subnetwork.CIDR,\n    subnetwork.displayName,\n    subnetwork.name",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-compute-engine-default-service-account",
+        "description": "Finds where your instance is using the default Compute Engine service account via Project Editor role (it's recommended to change this).",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find google_compute_instance as instance\n  that TRUSTS as trusts google_iam_service_account\n  with email$=\"-compute@developer.gserviceaccount.com\"\nreturn\n  instance.id,\n  instance.name,\n  instance.displayName,\n  instance.webLink,\n  google_iam_service_account.name,\n  google_iam_service_account.username,\n  google_iam_service_account.email,\n  trusts.scopes as serviceAccountScopes,\n  google_iam_service_account.webLink\n",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-public-buckets",
+        "description": "Finds Cloud Storage buckets with IAM policy configured to allow anonymous or public access.",
+        // the queries don't make sense to me for what we're trying to accomplish
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find google_storage_bucket with public!=true",
+            "version": "v1"
+          }
+          {
+            "name": "query1",
+            "query": "find google_storage_bucket with public=true and classification!='public'",
+            "version": "v1"
+          }
+        ]
+      },
+      {
+        "name": "gcp-uniform-bucket",
+        "description": "Finds Cloud Storage buckets without uniform bucket-level access (it's recommended to use uniform access to simply granting access).",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find google_storage_bucket with uniformBucketLevelAccess!=true",
+            "version": "v1"
+          }
+        ]
+      },
+  ]
