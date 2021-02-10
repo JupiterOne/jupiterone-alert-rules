@@ -19,9 +19,7 @@
           "query": "find google_iam_service_account_key with type!='SYSTEM_MANAGED'",
           "version": "v1"
         }
-      ],
-    //   criticality?
-    "alertLevel": "INFO"
+      ]
     },
     {
         "name": "gcp-service-account-admin-privilege",
@@ -36,20 +34,11 @@
       },
       {
         "name": "gcp-service-credentials-project",
-        "description": "Finds Service Account Users or Service Account Token Creator roles assigned at the project level (as opposed to the specific service account).",
+        "description": "Finds service accounts not assigned the Service Account Users or Service Account Token Creator roles (it's recommended service accounts only be assigned these roles).",
         "queries": [
           {
             "name": "query0",
-            // not sure which query to use
-            // fix return spacing
-            "query": "find google_iam_service_account as user
-            that ASSIGNED google_iam_role as role
-            where
-              role.name!='roles/iam.serviceAccountUser' and
-              role.name!='roles/iam.serviceAccountTokenCreator'
-          return
-            user.name,
-            role.name",
+            "query": "find google_iam_service_account as user\n  that ASSIGNED google_iam_role as role\n  where\n    role.name!=\"roles/iam.serviceAccountUser\" and\n    role.name!=\"roles/iam.serviceAccountTokenCreator\"\nreturn\n  user.name,\n  role.name\n",
             "version": "v1"
           }
         ]
@@ -57,11 +46,10 @@
       {
         "name": "gcp-service-account-key-rotation",
         "description": "Finds service account keys that haven't been rotated in the last 90 days",
-        // original managed q in library has 60days instead of 90
         "queries": [
           {
             "name": "query0",
-            "query": "find google_iam_service_account as serviceAccount\n  that HAS google_iam_service_account_key\n  with date.now-60days <= createdOn\nreturn\n  serviceAccount.id,\n  serviceAccount.email,\n  serviceAccount.description,\n  serviceAccount.enabled,\n  serviceAccount.webLink,\n  google_iam_service_account_key.name,\n  google_iam_service_account_key.type,\n  google_iam_service_account_key.createdOn,\n  google_iam_service_account_key.expiresOn",
+            "query": "find google_iam_service_account as serviceAccount\n  that HAS google_iam_service_account_key\n  with createdOn <= date.now-90days\nreturn\n  serviceAccount.id,\n  serviceAccount.email,\n  serviceAccount.description,\n  serviceAccount.enabled,\n  serviceAccount.webLink,\n  google_iam_service_account_key.name,\n  google_iam_service_account_key.type,\n  google_iam_service_account_key.createdOn,\n  google_iam_service_account_key.expiresOn",
             "version": "v1"
           }
         ]
@@ -124,15 +112,9 @@
       {
         "name": "gcp-public-buckets",
         "description": "Finds Cloud Storage buckets with IAM policy configured to allow anonymous or public access.",
-        // the queries don't make sense to me for what we're trying to accomplish
         "queries": [
           {
             "name": "query0",
-            "query": "find google_storage_bucket with public!=true",
-            "version": "v1"
-          }
-          {
-            "name": "query1",
             "query": "find google_storage_bucket with public=true and classification!='public'",
             "version": "v1"
           }
@@ -148,5 +130,5 @@
             "version": "v1"
           }
         ]
-      },
+      }
   ]
