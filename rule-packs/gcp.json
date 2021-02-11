@@ -12,7 +12,7 @@
     },
     {
       "name": "gcp-managed-service-account-keys",
-      "description": "Finds user managed serice accounts with user managed keys (as opposed to system managed keys).",
+      "description": "Finds user managed service accounts with user managed keys (as opposed to system managed keys).",
       "queries": [
         {
           "name": "query0",
