@@ -19,7 +19,8 @@
           "query": "find google_iam_service_account_key with type!='SYSTEM_MANAGED'",
           "version": "v1"
         }
-      ]
+      ],
+      "alertLevel": "INFO"
     },
     {
         "name": "gcp-service-account-admin-privilege",
@@ -78,25 +79,27 @@
       },
       {
         "name": "gcp-ssh",
-        "description": "Finds firewall rules that allow SSH traffic.",
+        "description": "Finds firewall rules that allow SSH traffic from the Internet.",
         "queries": [
           {
             "name": "query0",
             "query": "find Internet\n  THAT ALLOWS as rule google_compute_firewall as firewall\n  THAT PROTECTS google_compute_network as network\n  THAT CONTAINS google_compute_subnetwork as subnetwork\nWHERE\n  firewall.ingress=true AND\n  rule.ipProtocol='tcp' AND\n  rule.fromPort <= 22 AND\n  rule.toPort >= 22\nreturn\n  rule.ipProtocol,\n    rule.fromPort,\n    rule.toPort,\n  firewall.sourceRanges,\n    firewall.destinationRanges,\n  network.displayName,\n    network.name,\n    network.description,\n  subnetwork.CIDR,\n    subnetwork.displayName,\n    subnetwork.name",
             "version": "v1"
           }
-        ]
+        ],
+        "alertLevel": "CRITICAL"
       },
       {
         "name": "gcp-rdp",
-        "description": "Finds firewall rules that allow RDP traffic.",
+        "description": "Finds firewall rules that allow RDP traffic from the Internet.",
         "queries": [
           {
             "name": "query0",
             "query": "find Internet\n  THAT ALLOWS as rule google_compute_firewall as firewall\n  THAT PROTECTS google_compute_network as network\n  THAT CONTAINS google_compute_subnetwork as subnetwork\nWHERE\n  firewall.ingress=true AND\n  rule.ipProtocol='tcp' AND\n  rule.fromPort <= 3389 AND\n  rule.toPort >= 3389\nreturn\n  rule.ipProtocol,\n    rule.fromPort,\n    rule.toPort,\n  firewall.sourceRanges,\n    firewall.destinationRanges,\n  network.displayName,\n    network.name,\n    network.description,\n  subnetwork.CIDR,\n    subnetwork.displayName,\n    subnetwork.name",
             "version": "v1"
           }
-        ]
+        ],
+        "alertLevel": "CRITICAL"
       },
       {
         "name": "gcp-compute-engine-default-service-account",
@@ -118,11 +121,12 @@
             "query": "find google_storage_bucket with public=true and classification!='public'",
             "version": "v1"
           }
-        ]
+        ],
+        "alertLevel": "CRITICAL"
       },
       {
         "name": "gcp-uniform-bucket",
-        "description": "Finds Cloud Storage buckets without uniform bucket-level access (it's recommended to use uniform access to simply granting access).",
+        "description": "Finds Cloud Storage buckets without uniform bucket-level access (it's recommended to use uniform access to simplify granting access).",
         "queries": [
           {
             "name": "query0",
