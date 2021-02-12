@@ -103,7 +103,7 @@
       },
       {
         "name": "gcp-compute-engine-default-service-account",
-        "description": "Finds where your instance is using the default Compute Engine service account via Project Editor role (it's recommended to change this).",
+        "description": "Finds Compute instances using the default Compute Engine service account via Project Editor role (it's recommended to change this).",
         "queries": [
           {
             "name": "query0",
