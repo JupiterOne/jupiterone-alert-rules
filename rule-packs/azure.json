@@ -1,7 +1,7 @@
 [
     {
       "name": "azure-asc-monitor-system-updates",
-      "description": "Finds if Azure Security Center setting 'Monitor System Updates' is disabled.",
+      "description": "Finds Azure Security Center policies where 'Monitor System Updates' is disabled.",
       "queries": [
         {
           "name": "query0",
@@ -82,7 +82,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.vulnerabilityAssesmentMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.vulnerabilityAssessmentMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -144,7 +144,7 @@
     },
     {
         "name": "azure-security-contact-email",
-        "description": "Finds if there is no security contact email address set.",
+        "description": "Finds Azure Security Center contacts without an email address.",
         "queries": [
           {
             "name": "query0",
@@ -166,7 +166,7 @@
     },
     {
         "name": "azure-high-sev-alert-email-notification",
-        "description": "Finds if email notifications are disabled for high severity alerts.",
+        "description": "Finds Azure Security Center contacts that have disabled email notification of high severity alerts.",
         "queries": [
           {
             "name": "query0",
