@@ -1,7 +1,7 @@
 [
     {
       "name": "azure-asc-monitor-system-updates",
-      "description": "Finds if Azure Security Center setting 'Monitor System Updates' is disabled.",
+      "description": "Finds Azure Security Center setting where 'Monitor System Updates' is disabled.",
       "queries": [
         {
           "name": "query0",
@@ -12,7 +12,7 @@
     },
     {
       "name": "azure-asc-monitor-os-vulnerabilities",
-      "description": "Finds if Azure Security Center setting 'Monitor OS Vulnerabilities' is disabled.",
+      "description": "Finds Azure Security Center setting where 'Monitor OS Vulnerabilities' is disabled.",
       "queries": [
         {
           "name": "query0",
@@ -23,7 +23,7 @@
     },
     {
         "name": "azure-asc-monitor-endpoint-protection",
-        "description": "Finds if Azure Security Center setting 'Monitor Endpoint Protection' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Endpoint Protection' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -34,7 +34,7 @@
     },
     {
         "name": "azure-asc-monitor-disk-encryption",
-        "description": "Finds if Azure Security Center setting 'Monitor Disk Encryption' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Disk Encryption' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -45,7 +45,7 @@
     },
     {
         "name": "azure-asc-monitor-network-security-groups",
-        "description": "Finds if Azure Security Center setting 'Monitor Network Security Groups' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Network Security Groups' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -56,7 +56,7 @@
     },
     {
         "name": "azure-asc-monitor-web-application-firewall",
-        "description": "Finds if Azure Security Center setting 'Monitor Web Application Firewall' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Web Application Firewall' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -67,7 +67,7 @@
     },
     {
         "name": "azure-asc-monitor-next-generation-firewall",
-        "description": "Finds if Azure Security Center setting 'Monitor Enable Next Generation Firewall (NGFW)' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Enable Next Generation Firewall (NGFW)' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -78,7 +78,7 @@
     },
     {
         "name": "azure-asc-monitor-vulnerability-assessment",
-        "description": "Finds if Azure Security Center setting 'Monitor Vulnerability Assessment' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Vulnerability Assessment' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -89,7 +89,7 @@
     },
     {
         "name": "azure-asc-monitor-storage-blob-encryption",
-        "description": "Finds if Azure Security Center setting 'Monitor Storage Blob Encryption' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Storage Blob Encryption' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -100,7 +100,7 @@
     },
     {
         "name": "azure-asc-monitor-JIT-network-access",
-        "description": "Finds if Azure Security Center setting 'Monitor JIT Network Access' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor JIT Network Access' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -111,7 +111,7 @@
     },
     {
         "name": "azure-asc-monitor-adaptive-application-whitelisting",
-        "description": "Finds if Azure Security Center setting 'Monitor Adaptive Application Whitelisting' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor Adaptive Application Whitelisting' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -122,7 +122,7 @@
     },
     {
         "name": "azure-asc-monitor-sql-auditing",
-        "description": "Finds if Azure Security Center setting 'Monitor SQL Auditing' is disabled.",
+        "description": "Finds where Azure Security Center setting where 'Monitor SQL Auditing' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -133,7 +133,7 @@
     },
     {
         "name": "azure-asc-monitor-sql-encryption",
-        "description": "Finds if Azure Security Center setting 'Monitor SQL Encryption' is disabled.",
+        "description": "Finds Azure Security Center setting where 'Monitor SQL Encryption' is disabled.",
         "queries": [
           {
             "name": "query0",
@@ -144,7 +144,7 @@
     },
     {
         "name": "azure-security-contact-email",
-        "description": "Finds if there is no security contact email address set.",
+        "description": "Finds Azure Security Center setting where there is no security contact email address set.",
         "queries": [
           {
             "name": "query0",
@@ -155,7 +155,7 @@
     },
     {
         "name": "azure-security-contact-phone-number",
-        "description": "Finds if there is no security contact phone number set.",
+        "description": "Finds Azure Security Center setting where there is no security contact phone number set.",
         "queries": [
           {
             "name": "query0",
@@ -166,7 +166,7 @@
     },
     {
         "name": "azure-high-sev-alert-email-notification",
-        "description": "Finds if email notifications are disabled for high severity alerts.",
+        "description": "Finds Azure Security Center setting where email notifications are disabled for high severity alerts.",
         "queries": [
           {
             "name": "query0",
@@ -177,7 +177,7 @@
     },
     {
         "name": "azure-admin-email-notification",
-        "description": "Finds if email notifications to subscription owners are disabled.",
+        "description": "Finds Azure Security Center setting where email notifications to subscription owners are disabled.",
         "queries": [
           {
             "name": "query0",
@@ -188,7 +188,7 @@
     },
     {
         "name": "azure-public-blob-storage-container",
-        "description": "Finds if Azure Blob Storage Containers have public access enabled.",
+        "description": "Finds Azure Blob Storage Containers which have public access enabled.",
         "queries": [
           {
             "name": "query0",
@@ -199,7 +199,7 @@
     },
     {
         "name": "azure-sql-auditing",
-        "description": "Finds if Azure SQL servers/databases don't have auditing enabled.",
+        "description": "Finds Azure SQL servers/databases which don't have auditing enabled.",
         "queries": [
           {
             "name": "query0",
@@ -210,7 +210,7 @@
     },
     {
         "name": "azure-sql-audit-actions-groups",
-        "description": "Finds if Azure SQL servers/databases don't have audit actions/groups defined.",
+        "description": "Finds Azure SQL servers/databases that don't have audit actions/groups defined.",
         "queries": [
           {
             "name": "query0",
@@ -221,7 +221,7 @@
     },
     {
         "name": "azure-sql-retention",
-        "description": "Finds if Azure SQL servers/databases don't minimum retention duration of 90 days.",
+        "description": "Finds Azure SQL servers/databases that don't have minimum audit log retention duration of 90 days.",
         "queries": [
           {
             "name": "query0",
@@ -232,7 +232,7 @@
     },
     {
         "name": "azure-sql-advanced-data-security",
-        "description": "Finds if Azure SQL servers don't have Advanced Data Security enabled.",
+        "description": "Finds Azure SQL servers which don't have Advanced Data Security enabled.",
         "queries": [
           {
             "name": "query0",
@@ -243,7 +243,7 @@
     },
     {
         "name": "azure-sql-advanced-data-security-threats",
-        "description": "Finds if Azure SQL servers don't have all Advanced Data Security (alerting) rules enabled.",
+        "description": "Finds Azure SQL servers which don't have all Advanced Data Security (alerting) rules enabled.",
         "queries": [
           {
             "name": "query0",
@@ -254,7 +254,7 @@
     },
     {
         "name": "azure-sql-advanced-data-security-notifications",
-        "description": "Finds if Azure SQL servers with Advanced Data Security don't have alert recipient email addresses defined.",
+        "description": "Finds Azure SQL servers with Advanced Data Security which don't have alert recipient email addresses defined.",
         "queries": [
           {
             "name": "query0",
@@ -265,7 +265,7 @@
     },
     {
         "name": "azure-sql-advanced-data-security-notifications-admin",
-        "description": "Finds if Azure SQL servers with Advanced Data Security don't have admin alerts enabled.",
+        "description": "Finds Azure SQL servers with Advanced Data Security that don't have admin alerts enabled.",
         "queries": [
           {
             "name": "query0",
@@ -276,7 +276,7 @@
     }, 
     {
         "name": "azure-sql-encryption-rest",
-        "description": "Finds if Azure SQL servers aren't encrypted at rest.",
+        "description": "Finds Azure SQL servers which aren't encrypted at rest.",
         "queries": [
           {
             "name": "query0",
@@ -287,7 +287,7 @@
     },
     {
         "name": "azure-sql-mysql-encryption-transit",
-        "description": "Finds if Azure MySQL servers aren't encrypted in transit.",
+        "description": "Finds Azure MySQL servers which aren't encrypted in transit.",
         "queries": [
           {
             "name": "query0",
@@ -298,7 +298,7 @@
     },
     {
         "name": "azure-sql-postgres-encryption-transit",
-        "description": "Finds if Azure PostgreSQL servers aren't encrypted in transit.",
+        "description": "Finds Azure PostgreSQL servers which aren't encrypted in transit.",
         "queries": [
           {
             "name": "query0",
@@ -309,7 +309,7 @@
     },
     {
         "name": "azure-access-internet",
-        "description": "Finds if Azure Security Group rules allow access to resources via the Internet.",
+        "description": "Finds Azure Security Group rules which allow access to resources via the Internet.",
         "queries": [
           {
             "name": "query0",
@@ -320,7 +320,7 @@
     },
     {
         "name": "azure-access-internet-nonweb",
-        "description": "Finds if Azure Security Group rules allowing access to resources via the Internet through non-web access (outside of TCP ports 80/443).",
+        "description": "Finds Azure Security Group rules allowing access to resources via the Internet through non-web access (outside of TCP ports 80/443).",
         "queries": [
           {
             "name": "query0",
@@ -331,7 +331,7 @@
     },
     {
         "name": "azure-access-rdp",
-        "description": "Finds if Azure Security Group rules allow RDP (port 3389) access from the Internet.",
+        "description": "Finds Azure Security Group rules allowing RDP (port 3389) access from the Internet.",
         "queries": [
           {
             "name": "query0",
@@ -342,7 +342,7 @@
     },
     {
         "name": "azure-access-ssh",
-        "description": "Finds if Azure Security Group rules allow SSH (TCP port 22) access from the Internet.",
+        "description": "Finds Azure Security Group rules allowing SSH (TCP port 22) access from the Internet.",
         "queries": [
           {
             "name": "query0",
@@ -353,7 +353,7 @@
     },
     {
         "name": "azure-managed-disk-encryption-boot",
-        "description": "Finds if there are Azure managed disks with an installed OS, attached to a host, without encryption enabled. ",
+        "description": "Finds Azure managed disks with an installed OS, attached to a host, without encryption enabled. ",
         "queries": [
           {
             "name": "query0",
@@ -364,7 +364,7 @@
     },
     {
         "name": "azure-managed-disk-encryption",
-        "description": "Finds if there are Azure managed disks without an installed OS, attached to a host, without encryption enabled. ",
+        "description": "Finds Azure managed disks without an installed OS, attached to a host, without encryption enabled. ",
         "queries": [
           {
             "name": "query0",
@@ -375,7 +375,7 @@
     },
     {
         "name": "azure-managed-disk-encryption-unattached",
-        "description": "Finds if there are Azure unattached managed disks without encryption enabled. ",
+        "description": "Finds Azure unattached managed disks without encryption enabled. ",
         "queries": [
           {
             "name": "query0",
@@ -385,4 +385,3 @@
         ]
     }
   ]
-  asdfasdf
