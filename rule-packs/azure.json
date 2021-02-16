@@ -5,7 +5,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.systemUpdatesMonitoringEffect=\"Disabled\"",
+          "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.systemUpdatesMonitoringEffect=\"Disabled\"",
           "version": "v1"
         }
       ]
@@ -16,7 +16,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.systemConfigurationsMonitoringEffect=\"Disabled\"",
+          "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.systemConfigurationsMonitoringEffect=\"Disabled\"",
           "version": "v1"
         }
       ]
@@ -27,7 +27,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.endpointProtectionMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.endpointProtectionMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -38,7 +38,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.diskEncryptionMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.diskEncryptionMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -49,7 +49,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.networkSecurityGroupsMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.networkSecurityGroupsMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -60,7 +60,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.webApplicationFirewallMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.webApplicationFirewallMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -71,7 +71,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.nextGenerationFirewallMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.nextGenerationFirewallMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -82,7 +82,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.vulnerabilityAssesmentMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.vulnerabilityAssessmentMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -93,7 +93,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.storageEncryptionMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.storageEncryptionMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -104,7 +104,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.jitNetworkAccessMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.jitNetworkAccessMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -115,7 +115,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.adaptiveApplicationControlsMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.adaptiveApplicationControlsMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -126,7 +126,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.sqlAuditingMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.sqlAuditingMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
@@ -137,7 +137,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and params.sqlEncryptionMonitoringEffect=\"Disabled\"",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.sqlEncryptionMonitoringEffect=\"Disabled\"",
             "version": "v1"
           }
         ]
