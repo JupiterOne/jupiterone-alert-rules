@@ -1,0 +1,387 @@
+[
+    {
+      "name": "azure-asc-monitor-system-updates",
+      "description": "Finds Azure Security Center setting where 'Monitor System Updates' is disabled.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.systemUpdatesMonitoringEffect=\"Disabled\"",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "azure-asc-monitor-os-vulnerabilities",
+      "description": "Finds Azure Security Center setting where 'Monitor OS Vulnerabilities' is disabled.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.systemConfigurationsMonitoringEffect=\"Disabled\"",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+        "name": "azure-asc-monitor-endpoint-protection",
+        "description": "Finds Azure Security Center setting where 'Monitor Endpoint Protection' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.endpointProtectionMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-disk-encryption",
+        "description": "Finds Azure Security Center setting where 'Monitor Disk Encryption' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.diskEncryptionMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-network-security-groups",
+        "description": "Finds Azure Security Center setting where 'Monitor Network Security Groups' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.networkSecurityGroupsMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-web-application-firewall",
+        "description": "Finds Azure Security Center setting where 'Monitor Web Application Firewall' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.webApplicationFirewallMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-next-generation-firewall",
+        "description": "Finds Azure Security Center setting where 'Monitor Enable Next Generation Firewall (NGFW)' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.nextGenerationFirewallMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-vulnerability-assessment",
+        "description": "Finds Azure Security Center setting where 'Monitor Vulnerability Assessment' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.vulnerabilityAssessmentMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-storage-blob-encryption",
+        "description": "Finds Azure Security Center setting where 'Monitor Storage Blob Encryption' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.storageEncryptionMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-JIT-network-access",
+        "description": "Finds Azure Security Center setting where 'Monitor JIT Network Access' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.jitNetworkAccessMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-adaptive-application-whitelisting",
+        "description": "Finds Azure Security Center setting where 'Monitor Adaptive Application Whitelisting' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.adaptiveApplicationControlsMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-sql-auditing",
+        "description": "Finds where Azure Security Center setting where 'Monitor SQL Auditing' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.sqlAuditingMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-asc-monitor-sql-encryption",
+        "description": "Finds Azure Security Center setting where 'Monitor SQL Encryption' is disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.sqlEncryptionMonitoringEffect=\"Disabled\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-security-contact-email",
+        "description": "Finds Azure Security Center setting where there is no security contact email address set.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_security_center_contact with name=\"default1\" and email=undefined",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-security-contact-phone-number",
+        "description": "Finds Azure Security Center setting where there is no security contact phone number set.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_security_center_contact with name=\"default1\" and phone=undefined",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-high-sev-alert-email-notification",
+        "description": "Finds Azure Security Center setting where email notifications are disabled for high severity alerts.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_security_center_contact with name=\"default1\" and alertNotifications!=\"On\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-admin-email-notification",
+        "description": "Finds Azure Security Center setting where email notifications to subscription owners are disabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find azure_security_center_contact with name=\"default1\" and alertsToAdmins!=\"On\"",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-public-blob-storage-container",
+        "description": "Finds Azure Blob Storage Containers which have public access enabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_storage_container with public=true or publicAccess!='None'",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-auditing",
+        "description": "Finds Azure SQL servers/databases which don't have auditing enabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_sql_server with auditingEnabled!=true\n  that has azure_sql_database with auditingEnabled!=true",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-audit-actions-groups",
+        "description": "Finds Azure SQL servers/databases that don't have audit actions/groups defined.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find (azure_sql_server|azure_sql_database) with auditActionsAndGroups=undefined",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-retention",
+        "description": "Finds Azure SQL servers/databases that don't have minimum audit log retention duration of 90 days.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find (azure_sql_server|azure_sql_database) with\n  auditLogRetentionDays < 90 or auditLogRetentionDays = undefined",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-advanced-data-security",
+        "description": "Finds Azure SQL servers which don't have Advanced Data Security enabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_sql_server with alertingEnabled != true",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-advanced-data-security-threats",
+        "description": "Finds Azure SQL servers which don't have all Advanced Data Security (alerting) rules enabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_sql_server with alertOnAllThreats != true as server\nReturn server.name, server.alertingEnabled, server.alertsDisabled, server.webLink",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-advanced-data-security-notifications",
+        "description": "Finds Azure SQL servers with Advanced Data Security which don't have alert recipient email addresses defined.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_sql_server with alertEmails = undefined",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-advanced-data-security-notifications-admin",
+        "description": "Finds Azure SQL servers with Advanced Data Security that don't have admin alerts enabled.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_sql_server with alertAdmins != true",
+            "version": "v1"
+          }
+        ]
+    }, 
+    {
+        "name": "azure-sql-encryption-rest",
+        "description": "Finds Azure SQL servers which aren't encrypted at rest.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_sql_server with encrypted!=true",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-mysql-encryption-transit",
+        "description": "Finds Azure MySQL servers which aren't encrypted in transit.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_mysql_server with sslEnforced!=true and sslEnforcement!='Enabled'",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-sql-postgres-encryption-transit",
+        "description": "Finds Azure PostgreSQL servers which aren't encrypted in transit.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_postgresql_server with sslEnforced!=true and sslEnforcement!='Enabled'",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-access-internet",
+        "description": "Finds Azure Security Group rules which allow access to resources via the Internet.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find Internet that allows as rule azure_security_group\n  that protects * that (has|contains|connects|uses) *\nreturn tree",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-access-internet-nonweb",
+        "description": "Finds Azure Security Group rules allowing access to resources via the Internet through non-web access (outside of TCP ports 80/443).",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find Internet that allows as rule azure_security_group as sg\n  that protects * as i\n  that (has|contains|connects|uses) (Host|Gateway) as h\nwhere\n  rule.ingress=true and\n  (rule.fromPort!=80 and rule.toPort!=80) and\n  (rule.toPort!=443 and rule.toPort!=443)\nreturn\n  sg.displayName, sg.resourceGroup,\n  rule.protocol, rule.fromPort, rule.toPort,\n  i._type, i.displayName, i.CIDR, i.privateIp, i.publicIp,\n  h._type, h.displayName, h.webLink",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-access-rdp",
+        "description": "Finds Azure Security Group rules allowing RDP (port 3389) access from the Internet.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_security_group that allows as rule Internet\nwhere rule.inbound=true and rule.fromPort <= 3389 and rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-access-ssh",
+        "description": "Finds Azure Security Group rules allowing SSH (TCP port 22) access from the Internet.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_security_group that allows as rule Internet\nwhere rule.inbound=true and rule.fromPort <= 22 and rule.toPort >= 22",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-managed-disk-encryption-boot",
+        "description": "Finds Azure managed disks with an installed OS, attached to a host, without encryption enabled. ",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_managed_disk with osType!=undefined and attached=true and encrypted!=true",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-managed-disk-encryption",
+        "description": "Finds Azure managed disks without an installed OS, attached to a host, without encryption enabled. ",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_managed_disk with osType=undefined and attached=true and encrypted!=true",
+            "version": "v1"
+          }
+        ]
+    },
+    {
+        "name": "azure-managed-disk-encryption-unattached",
+        "description": "Finds Azure unattached managed disks without encryption enabled. ",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_managed_disk with attached=false and encrypted!=true",
+            "version": "v1"
+          }
+        ]
+    }
+  ]
