@@ -1,0 +1,39 @@
+[
+    {
+      // May never yield results
+      "name": "aws-endgame-acm-resource-policy",
+      "description": "Identifies the ACM Certificates that are being shared as a resource with a principal in another account.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "Find * as a that uses aws_acm_certificate as c where a.AccountName!=c.AccountName Return c.displayName, c.inUseBy, c.active, c.region",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "INFO"
+    },
+    {
+      "name": "aws-endgame-ebs-unencrypted",
+      "description": "Identifies any EBS Snapshots that are not encrypted and sees if they have been shared and who they have been shared with.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "Find aws_ebs_snapshot with encrypted!=true as e Return e.displayName, e.shared, e.sharedWithAccounts, e.region",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "CRITICAL"
+    },
+    {
+        "name": "aws-endgame-sqs-resource-policy",
+        "description": "Identifies SQS Queues with resource policies that allow a specific action.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find aws_sqs_queue with policy~='sqs:ListQueueTags'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "INFO"
+      }
+  ]
