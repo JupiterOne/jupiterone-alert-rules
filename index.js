@@ -1,7 +1,7 @@
 
 const defaultAlertSettings = {
   specVersion: 1,
-  pollingInterval: "ONE_DAY",
+  pollingInterval: "ONE_WEEK",
   outputs: [
     "queries.query0.total",
     "alertLevel"
