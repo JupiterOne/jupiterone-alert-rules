@@ -1,5 +1,16 @@
 [
   {
+    "name": "aws-new-accounts",
+    "description": "Detects new AWS accounts created or referenced within the last 24 hours.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "find aws_account with _createdOn > date.now-1day",
+        "version": "v1"
+      }
+    ]
+  },
+  {
     "name": "aws-guardduty-inspector-finding-instance-correlation",
     "description": "Identifies vulnerable EC2 instances (i.e. with medium or higher rated open Inspector finding) that are also targets of suspicious activities (i.e. with medium or higher rated open GuardDuty finding).",
     "queries": [
@@ -56,5 +67,16 @@
       }
     ],
     "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-ec2-instance-ssh-key-shared",
+    "description": "Multiple EC2 instances are sharing the same SSH key, which increases the attack blast radius and risk.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_instance as i1 that uses Key \n  that uses aws_instance as i2 \nwhere i1.instanceId != i2.instanceId \nreturn \n  Key._type, Key.name, Key.tag.AccountName, \n  i1.instanceId, i1.region, i1.webLink, \n  i2.instanceId, i2.region, i2.webLink",
+        "version": "v1"
+      }
+    ]
   }
 ]
