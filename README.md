@@ -45,4 +45,4 @@ j1 -a <j1AccountId> -u <j1Username> -o provision-alert-rule-pack --alert -f aws-
 
 ## Contribution
 
-This repo is coupled to the `@jupiterone/jupiterone-alert-rules` npm package via Github Workflows. Any rule pack edits should be followed by an `npm version patch` command to inform the CI to publish a new package version when the edits are merged into `master`.
+This repo is coupled to the `@jupiterone/jupiterone-alert-rules` npm package via Github Workflows. Any rule pack edits should be followed by an `npm version patch` command to inform the CI to publish a new package version when the edits are merged into `main`. After the npm package updated the version needs to be updated in both the `rule-service` to be used and the `jupiter-web-monorepo` for integration testing.
