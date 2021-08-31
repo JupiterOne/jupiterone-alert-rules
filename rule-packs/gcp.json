@@ -28,7 +28,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find google_iam_service_account as user\n  that ASSIGNED google_iam_role\n  with name!~=(\n    \"admin\" or\n    \"Admin\"\n  ) and name!=(\n    \"roles/owner\" or\n    \"roles/editor\"\n  )\nreturn\n  user.name,\n  user.username,\n  user.email,\n  google_iam_role.name",
+            "query": "find google_iam_service_account as user\n  that ASSIGNED google_iam_role\n  with name!~=(\n    \"admin\" and\n    \"Admin\"\n  ) and name!=(\n    \"roles/owner\" and\n    \"roles/editor\"\n  )\nreturn\n  user.name,\n  user.username,\n  user.email,\n  google_iam_role.name",
             "version": "v1"
           }
         ]
