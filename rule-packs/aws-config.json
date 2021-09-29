@@ -296,5 +296,16 @@
         "version": "v1"
       }
     ]
+  },
+  {
+    "name": "account-part-of-organizations",
+    "description": "Checks if an AWS account is part of AWS Organizations.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_account with _source!='system-mapper' that !has aws_account with master=true",
+        "version": "v1"
+      }
+    ]
   }
 ]
