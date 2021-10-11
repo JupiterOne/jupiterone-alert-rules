@@ -28,7 +28,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find google_iam_service_account as user\n  that ASSIGNED google_iam_role\n  with name!~=(\n    \"admin\" and\n    \"Admin\"\n  ) and name!=(\n    \"roles/owner\" and\n    \"roles/editor\"\n  )\nreturn\n  user.name,\n  user.username,\n  user.email,\n  google_iam_role.name",
+            "query": "find google_iam_service_account as user\n that ASSIGNED google_iam_binding\n that USES google_iam_role\n  with name~=(\n    \"admin\" or\n    \"Admin\"\n  ) or name=(\n    \"roles/owner\" or\n    \"roles/editor\"\n  )\nreturn\n  user.name,\n  user.username,\n  user.email,\n  google_iam_role.name",
             "version": "v1"
           }
         ]
@@ -39,7 +39,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find google_iam_service_account as user\n  that ASSIGNED google_iam_role as role\n  where\n    role.name!=\"roles/iam.serviceAccountUser\" and\n    role.name!=\"roles/iam.serviceAccountTokenCreator\"\nreturn\n  user.name,\n  role.name\n",
+            "query": "find google_iam_service_account as user\n  that ASSIGNED google_iam_binding\n that USES google_iam_role as role\n  where\n    role.name=\"roles/iam.serviceAccountUser\" and\n    role.name=\"roles/iam.serviceAccountTokenCreator\"\nreturn\n  user.name,\n  role.name\n",
             "version": "v1"
           }
         ]
