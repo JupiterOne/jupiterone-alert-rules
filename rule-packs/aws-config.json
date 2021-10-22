@@ -296,5 +296,104 @@
         "version": "v1"
       }
     ]
+  },
+  {
+    "name": "account-part-of-organizations",
+    "description": "Checks if an AWS account is part of AWS Organizations.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find aws_account with _source!='system-mapper' that !has aws_account with master=true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "access-keys-rotated",
+    "description": "Checks if the active access keys are rotated within 90 days.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_iam_access_key WITH active=true AND createdOn < date.now - 90 days",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "alb-http-drop-invalid-header-enabled",
+    "description": "Checks if rule evaluates AWS Application Load Balancers (ALB) to ensure they are configured to drop http headers.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_alb WITH dropInvalidHeaders != true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "alb-waf-enabled",
+    "description": "Checks if Web Application Firewall (WAF) is enabled on Application Load Balancers (ALBs).",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_alb THAT !PROTECTS (aws_waf_web_acl|aws_waf_v2_web_acl)",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "cloudwatch-alarm-action-check",
+    "description": "Checks whether CloudWatch alarms have at least one alarm action, one INSUFFICIENT_DATA action, or one OK action enabled.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_cloudwatch_metric_alarm WITH (okActions = undefined AND alarmActions = undefined AND insufficientDataActions = undefined)",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "cloudwatch-log-group-encrypted",
+    "description": "Checks if a log group in Amazon CloudWatch Logs is encrypted with a AWS Key Management Service (KMS) managed Customer Master Keys (CMK).",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_cloudwatch_log_group WITH encrypted != true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "dynamodb-pitr-enabled",
+    "description": "Checks that point in time recovery (PITR) is enabled for Amazon DynamoDB tables",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_dynamodb_table WITH pointInTimeRecoveryEnabled != true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "ebs-optimized-instance",
+    "description": "Checks whether EBS optimization is enabled for your EC2 instances that can be EBS-optimized.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_instance WITH ebsOptimized != true AND ebsOptimizationSupported = true",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "db-instance-backup-enabled",
+    "description": "Checks if RDS DB instances have backups enabled.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (aws_rds_cluster|aws_db_instance) WITH hasBackup != true",
+        "version": "v1"
+      }
+    ]
   }
 ]
