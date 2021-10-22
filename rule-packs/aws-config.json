@@ -336,7 +336,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_alb THAT ! PROTECTS (aws_waf_web_acl|aws_waf_v2_web_acl)",
+        "query": "FIND aws_alb THAT !PROTECTS (aws_waf_web_acl|aws_waf_v2_web_acl)",
         "version": "v1"
       }
     ]
@@ -347,7 +347,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_cloudwatch_metric_alarm WITH ( okActions = undefined AND alarmActions = undefined AND insufficientDataActions = undefined)",
+        "query": "FIND aws_cloudwatch_metric_alarm WITH (okActions = undefined AND alarmActions = undefined AND insufficientDataActions = undefined)",
         "version": "v1"
       }
     ]
@@ -380,7 +380,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_instance WITH ebsOptimized != true AND ebsOptimizationSupported = true AS i RETURN i.instanceType, COUNT(i)",
+        "query": "FIND aws_instance WITH ebsOptimized != true AND ebsOptimizationSupported = true",
         "version": "v1"
       }
     ]
@@ -391,7 +391,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_db_instance WITH hasBackup != true",
+        "query": "FIND (aws_rds_cluster|aws_db_instance) WITH hasBackup != true",
         "version": "v1"
       }
     ]
