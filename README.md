@@ -45,4 +45,11 @@ j1 -a <j1AccountId> -u <j1Username> -o provision-alert-rule-pack --alert -f aws-
 
 ## Contribution
 
-This repo is coupled to the `@jupiterone/jupiterone-alert-rules` npm package via Github Workflows. Any rule pack edits should be followed by an `npm version patch` command to inform the CI to publish a new package version when the edits are merged into `master`.
+This repo is coupled to the `@jupiterone/jupiterone-alert-rules` npm package via Github Workflows.
+
+In order to publish your changes into a new npm package version, your **last commit** must be the
+commit that is automatically made via running `npm version patch` or `yarn version --patch`. You
+must then push your changes along with the version tag by using `git push --follow-tags`.
+
+Doing both of these things will inform the CI to publish a new package version when the edits are
+merged into `main`.
