@@ -21,6 +21,22 @@ JupiterOne account via the included CLI utility.
 
   Commonly used alert rules
 
+- `rule-packs/azure-config.json`
+
+  Alert rules for Azure configuration audit
+  
+- `rule-packs/azure.json`
+
+  Commonly used Azure alert rules
+  
+- `rule-packs/gcp.json`
+
+  Commonly used GCP alert rules
+  
+- `rule-packs/devops.json`
+
+  Commonly used DevOps alert rules
+  
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
