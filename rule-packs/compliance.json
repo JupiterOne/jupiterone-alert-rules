@@ -1,0 +1,14 @@
+[
+  {
+    "name": "compliance-gaps",
+    "description": "Finds open compliance gaps.",
+    "queries": [
+      {
+        "name": "gaps",
+        "query": "FIND jupiterone_compliance_gap",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  }
+]
