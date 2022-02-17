@@ -9,6 +9,6 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH"
+    "alertLevel": "MEDIUM"
   }
 ]
