@@ -414,11 +414,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_lambda_function THAT !HAS aws_subnet THAT contains aws_vpc",
+        "query": "FIND aws_lambda_function THAT !HAS aws_subnet THAT CONTAINS aws_vpc",
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "rds-deletion-protection-enabled",
@@ -430,7 +430,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "rds-iam-authentication-enabled",
@@ -474,7 +474,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_db_instance WITH multiAZ != true ",
+        "query": "FIND aws_db_instance WITH multiAZ != true",
         "version": "v1"
       }
     ],
@@ -510,11 +510,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_instance WITH iamInstanceProfileArn = undefined ",
+        "query": "FIND aws_instance WITH iamInstanceProfileArn = undefined",
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "dynamodb-tables-kms-encrypted",
@@ -522,7 +522,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_dynamodb_table WITH encryptionAlgorithm!='KMS'",
+        "query": "FIND aws_dynamodb_table WITH encryptionAlgorithm != 'KMS'",
         "version": "v1"
       }
     ],
@@ -534,11 +534,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_dynamodb_table WITH encrypted!=true",
+        "query": "FIND aws_dynamodb_table WITH encrypted != true",
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "ec2-instance-detailed-monitoring-enabled",
@@ -550,7 +550,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"LOW"
+    "alertLevel": "LOW"
   },
   {
     "name": "cmk-backing-key-rotation-enabled",
@@ -562,7 +562,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "cw-loggroup-retention-period-check",
@@ -574,7 +574,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"LOW"
+    "alertLevel": "LOW"
   },
   {
     "name": "rds-resources-protected-by-backup-plan",
@@ -582,11 +582,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_db_instance WITH hasBackup!=true",
+        "query": "FIND aws_db_instance WITH hasBackup != true",
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "cloudfront-associated-with-waf",
@@ -598,7 +598,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "dynamodb-resources-protected-by-backup-plan",
@@ -606,11 +606,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_dynamodb_table WITH continuousBackupEnabled!=true",
+        "query": "FIND aws_dynamodb_table WITH continuousBackupEnabled != true",
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "cloudwatch-log-group-encrypted",
@@ -622,7 +622,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "ec2-instances-in-vpc",
@@ -634,7 +634,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "ec2-stopped-instance",
@@ -646,7 +646,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "elb-tls-https-listeners-only",
@@ -654,11 +654,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_elb WITH category='classic' THAT HAS aws_lb_listener WITH protocol != ('HTTPS' OR 'SSL')",
+        "query": "FIND aws_elb WITH category ='classic' THAT HAS aws_lb_listener WITH protocol != ('HTTPS' OR 'SSL')",
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "iam-user-group-membership-check",
@@ -670,7 +670,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "multi-region-cloudtrail-enabled",
@@ -682,7 +682,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "restricted-ssh",
@@ -690,11 +690,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule Internet WHERE rule.ingress=true AND rule.fromPort <= 22 AND rule.toPort >= 22 RETURN  sg.displayName, sg.groupId, sg.vpcId, sg.tag.AccountName, sg.webLink,  rule.ipProtocol, rule.fromPort, rule.toPort",
+        "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule Internet WHERE rule.ingress = true AND rule.fromPort <= 22 AND rule.toPort >= 22 RETURN  sg.displayName, sg.groupId, sg.vpcId, sg.tag.AccountName, sg.webLink,  rule.ipProtocol, rule.fromPort, rule.toPort",
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "s3-bucket-default-lock-enabled",
@@ -706,7 +706,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "vpc-flow-logs-enabled",
@@ -718,7 +718,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "vpc-network-acl-unused-check",
@@ -730,7 +730,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"LOW"
+    "alertLevel": "LOW"
   },
   {
     "name": "desired-instance-tenancy",
@@ -778,7 +778,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "cloudformation-stack-drift-detection-not-checked",
@@ -814,7 +814,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "s3-default-encryption-kms",
@@ -826,7 +826,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "rds-logging-enabled",
@@ -838,7 +838,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"LOW"
+    "alertLevel": "LOW"
   },
   {
     "name": "restricted-common-ports",
@@ -846,11 +846,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_security_group AS fw THAT !ALLOWS AS rule (Host|Network) WITH internal != true AS src WHERE (rule.ingress=true AND rule.ipProtocol='tcp' AND rule.fromPort<=20 AND rule.toPort>=20) OR (rule.ingress=true AND rule.ipProtocol='tcp' AND rule.fromPort<=21 AND rule.toPort>=21) OR (rule.ingress=true AND rule.ipProtocol='tcp' AND rule.fromPort<=3306 AND rule.toPort>=3306) OR (rule.ingress=true AND rule.ipProtocol='tcp' AND rule.fromPort<=3389 AND rule.toPort>=3389) OR (rule.ingress=true AND rule.ipProtocol='tcp' AND rule.fromPort<=4333 AND rule.toPort>=4333) RETURN fw.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
+        "query": "FIND aws_security_group AS fw THAT !ALLOWS AS rule (Host|Network) WITH internal != true AS src WHERE (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 20 AND rule.toPort >= 20) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 21 AND rule.toPort >= 21) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3306 AND rule.toPort >= 3306) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 4333 AND rule.toPort >= 4333) RETURN fw.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "vpc-default-security-group-closed",
@@ -858,11 +858,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_security_group WITH default=true AND egressRules != undefined OR ingressRules != undefined",
+        "query": "FIND aws_security_group WITH default = true AND egressRules != undefined OR ingressRules != undefined",
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "no-unrestricted-route-to-igw",
@@ -874,7 +874,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "subnet-auto-assign-public-ip-disabled",
@@ -897,7 +897,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "ec2-ebs-encryption-by-default",
@@ -909,7 +909,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "alb-http-to-https-redirection-check",
@@ -921,7 +921,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "ec2-security-group-attached-to-eni",
@@ -944,7 +944,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "elb-acm-certificate-required",
@@ -956,7 +956,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "elb-custom-security-policy-ssl-check",
@@ -992,7 +992,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "elbv2-acm-certificate-required",
@@ -1015,7 +1015,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"MEDIUM"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "iam-group-has-users-check",
@@ -1075,7 +1075,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "iam-role-managed-policy-check",
@@ -1087,7 +1087,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   },
   {
     "name": "eks-endpoint-no-public-access",
@@ -1099,6 +1099,6 @@
         "version": "v1"
       }
     ],
-    "alertLevel":"HIGH"
+    "alertLevel": "HIGH"
   }
 ]
