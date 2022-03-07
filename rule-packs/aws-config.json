@@ -654,7 +654,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_elb WITH category ='classic' THAT HAS aws_lb_listener WITH protocol != ('HTTPS' OR 'SSL')",
+        "query": "FIND aws_elb WITH category = 'classic' THAT HAS aws_lb_listener WITH protocol != ('HTTPS' OR 'SSL')",
         "version": "v1"
       }
     ],
