@@ -44,7 +44,8 @@
         "query": "Find aws_instance as i that USES aws_ebs_volume with encrypted!=true as v return i.tag.AccountName, i.name, i.instanceId, i.state, i.region, i.webLink, v.volumeId, v.encrypted, v.webLink",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "ec2-restricted-ssh",
@@ -55,7 +56,8 @@
         "query": "Find aws_security_group as sg that ALLOWS as rule * as src where rule.ingress=true and rule.ipProtocol='tcp' and rule.fromPort<=22 and rule.toPort>=22 return sg.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "root-account-mfa-enabled",
@@ -78,7 +80,8 @@
         "query": "Find aws_account with _source!='system-mapper' and rootUserAccessKeyEnabled!=false",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "CRITICAL"
   },
   {
     "name": "iam-password-policy",
@@ -89,7 +92,8 @@
         "query": "Find aws_iam_account_password_policy with requireUppercase != true or requireLowercase != true or requireSymbols != true or requireNumbers != true or minLength < 8 or maxAgeDays > 90 or historyCount < 12",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "iam-user-no-policies-check",
@@ -101,11 +105,11 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "LOW"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "lambda-function-logging-enabled",
-    "description": "Check if lambda functions are not sending logs to cloudtrail",
+    "description": "Checks if Lambda functions are not sending logs to CloudTrail",
     "queries": [
       {
         "name": "query0",
@@ -113,7 +117,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "INFO"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "lambda-function-settings-check-runtime-nodejs610",
@@ -141,7 +145,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM",
+    "alertLevel": "HIGH",
     "templates": {
       "emailBody": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}<br>",
       "jiraTicket": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}\n"
@@ -156,7 +160,8 @@
         "query": "Find (aws_db_instance|aws_rds_cluster) with backupRetentionPeriod=undefined",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "rds-instance-public-access-check",
@@ -216,7 +221,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "CRITICAL"
+    "alertLevel": "HIGH"
   },
   {
     "name": "s3-bucket-public-acp-prohibited",
@@ -239,7 +244,8 @@
         "query": "Find aws_s3_bucket with replicationEnabled != true or destinationBuckets = undefined",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "LOW"
   },
   {
     "name": "s3-bucket-server-side-encryption-enabled",
@@ -262,7 +268,8 @@
         "query": "Find aws_s3_bucket with loggingEnabled != true that has aws_s3 with loggingEnabled != true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "s3-bucket-ssl-requests-only",
@@ -273,7 +280,8 @@
         "query": "Find aws_s3_bucket with secureTransport != true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "s3-bucket-versioning-enabled",
@@ -284,7 +292,8 @@
         "query": "Find aws_s3_bucket with versioningEnabled != true or mfaDelete != true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "config-rule-noncompliant",
@@ -295,7 +304,8 @@
         "query": "Find aws_config_rule with complianceState='NON_COMPLIANT'",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "account-part-of-organizations",
@@ -306,7 +316,8 @@
         "query": "Find aws_account with _source!='system-mapper' that !has aws_account with master=true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "INFO"
   },
   {
     "name": "access-keys-rotated",
@@ -317,7 +328,8 @@
         "query": "FIND aws_iam_access_key WITH active=true AND createdOn < date.now - 90 days",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "alb-http-drop-invalid-header-enabled",
@@ -328,7 +340,8 @@
         "query": "FIND aws_alb WITH dropInvalidHeaders != true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "alb-waf-enabled",
@@ -339,7 +352,8 @@
         "query": "FIND aws_alb THAT !PROTECTS (aws_waf_web_acl|aws_waf_v2_web_acl)",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "cloudwatch-alarm-action-check",
@@ -350,7 +364,8 @@
         "query": "FIND aws_cloudwatch_metric_alarm WITH (okActions = undefined AND alarmActions = undefined AND insufficientDataActions = undefined)",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "LOW"
   },
   {
     "name": "cloudwatch-log-group-encrypted",
@@ -361,7 +376,8 @@
         "query": "FIND aws_cloudwatch_log_group WITH encrypted != true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "dynamodb-pitr-enabled",
@@ -372,7 +388,8 @@
         "query": "FIND aws_dynamodb_table WITH pointInTimeRecoveryEnabled != true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "ebs-optimized-instance",
@@ -383,7 +400,8 @@
         "query": "FIND aws_instance WITH ebsOptimized != true AND ebsOptimizationSupported = true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "INFO"
   },
   {
     "name": "db-instance-backup-enabled",
@@ -394,7 +412,8 @@
         "query": "FIND (aws_rds_cluster|aws_db_instance) WITH hasBackup != true",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "iam-user-mfa-enabled",
@@ -406,7 +425,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH"
+    "alertLevel": "CRITICAL"
   },
   {
     "name": "lambda-inside-vpc",
@@ -442,7 +461,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "rds-automatic-minor-version-upgrade-enabled",
@@ -466,7 +485,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "HIGH"
   },
   {
     "name": "rds-multi-az-support",
@@ -478,7 +497,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "LOW"
+    "alertLevel": "HIGH"
   },
   {
     "name": "sns-encrypted-kms",
@@ -502,7 +521,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "LOW"
+    "alertLevel": "HIGH"
   },
   {
     "name": "ec2-instance-profile-attached",
@@ -622,7 +641,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "ec2-instances-in-vpc",
@@ -682,7 +701,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH"
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "restricted-ssh",
@@ -885,7 +904,8 @@
         "query": "FIND aws_subnet WITH public = true AND internal = true ",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "cloudformation-stack-notification-check",
@@ -897,7 +917,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "INFO"
   },
   {
     "name": "ec2-ebs-encryption-by-default",
@@ -909,7 +929,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "HIGH"
   },
   {
     "name": "alb-http-to-https-redirection-check",
@@ -932,7 +952,8 @@
         "query": "FIND aws_security_group WITH default = false THAT !PROTECTS (aws_instance | aws_eni)",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "cloud-trail-log-file-validation-enabled",
@@ -944,7 +965,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "LOW"
   },
   {
     "name": "elb-acm-certificate-required",
@@ -1003,7 +1024,8 @@
         "query": "FIND (aws_alb|aws_nlb) THAT !USES aws_acm_certificate",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "MEDIUM"
   },
   {
     "name": "fms-webacl-resource-policy-check",
@@ -1027,7 +1049,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "INFO"
+    "alertLevel": "HIGH"
   },
   {
     "name": "iam-policy-in-use-attached-to-iam-user",
@@ -1039,7 +1061,7 @@
         "version": "v1"
       }
     ],
-    "alertLevel": "INFO"
+    "alertLevel": "HIGH"
   },
   {
     "name": "iam-policy-in-use-attached-to-a-group-with-users",
