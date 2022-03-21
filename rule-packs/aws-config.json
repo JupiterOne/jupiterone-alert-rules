@@ -113,7 +113,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_lambda_function with loggingEnabled != true that has aws_lambda with loggingEnabled != true",
+        "query": "FIND aws_lambda_function WITH loggingEnabled != true THAT HAS aws_lambda with loggingEnabled != true",
         "version": "v1"
       }
     ],
