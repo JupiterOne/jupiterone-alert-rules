@@ -5,7 +5,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_acm_certificate with renewalEligibility != 'ELIGIBLE' and expiresOn > date.now and expiresOn < date.now + 30days",
+        "query": "FIND aws_acm_certificate WITH renewalEligibility != 'ELIGIBLE' AND expiresOn > date.now AND expiresOn < date.now + 30days",
         "version": "v1"
       }
     ],
@@ -17,7 +17,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_instance with vpcId=undefined and active=true",
+        "query": "FIND aws_instance WITH vpcId = undefined AND active = true",
         "version": "v1"
       }
     ],
@@ -29,7 +29,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_ebs_volume that !USES aws_instance",
+        "query": "FIND aws_ebs_volume THAT !USES aws_instance",
         "version": "v1"
       }
     ],
@@ -41,7 +41,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_instance as i that USES aws_ebs_volume with encrypted!=true as v return i.tag.AccountName, i.name, i.instanceId, i.state, i.region, i.webLink, v.volumeId, v.encrypted, v.webLink",
+        "query": "FIND aws_instance AS i THAT USES aws_ebs_volume WITH encrypted != true AS v RETURN i.tag.AccountName, i.name, i.instanceId, i.state, i.region, i.webLink, v.volumeId, v.encrypted, v.webLink",
         "version": "v1"
       }
     ],
@@ -53,7 +53,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_security_group as sg that ALLOWS as rule * as src where rule.ingress=true and rule.ipProtocol='tcp' and rule.fromPort<=22 and rule.toPort>=22 return sg.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
+        "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule * AS src where rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 22 AND rule.toPort >= 22 RETURN sg.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
         "version": "v1"
       }
     ],
@@ -65,7 +65,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_account with _source!='system-mapper' and mfaEnabled!=true",
+        "query": "FIND aws_account WITH _source != 'system-mapper' AND mfaEnabled != true",
         "version": "v1"
       }
     ],
@@ -77,7 +77,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_account with _source!='system-mapper' and rootUserAccessKeyEnabled!=false",
+        "query": "FIND aws_account WITH _source!='system-mapper' AND rootUserAccessKeyEnabled != false",
         "version": "v1"
       }
     ],
@@ -89,7 +89,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_iam_account_password_policy with requireUppercase != true or requireLowercase != true or requireSymbols != true or requireNumbers != true or minLength < 8 or maxAgeDays > 90 or historyCount < 12",
+        "query": "FIND aws_iam_account_password_policy with requireUppercase != true OR requireLowercase != true OR requireSymbols != true OR requireNumbers != true OR minLength < 8 OR maxAgeDays > 90 OR historyCount < 12",
         "version": "v1"
       }
     ],
@@ -97,11 +97,11 @@
   },
   {
     "name": "iam-user-no-policies-check",
-    "description": "AWS IAM user should have not direct/inline policy attachments. Users should inherit permissions from the assigned IAM groups or roles",
+    "description": "AWS IAM user should have not direct/inline policy attachments. Users should inherit permissions from the assigned IAM groups or roles.",
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_iam_user that assigned (aws_iam_user_policy|aws_iam_policy)",
+        "query": "FIND aws_iam_user THAT ASSIGNED (aws_iam_user_policy|aws_iam_policy)",
         "version": "v1"
       }
     ],
@@ -109,11 +109,11 @@
   },
   {
     "name": "lambda-function-logging-enabled",
-    "description": "Checks if Lambda functions are not sending logs to CloudTrail",
+    "description": "Checks if Lambda functions are not sending logs to CloudTrail.",
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_lambda_function with loggingEnabled != true that has aws_lambda with loggingEnabled != true",
+        "query": "FIND aws_lambda_function with loggingEnabled != true that has aws_lambda with loggingEnabled != true",
         "version": "v1"
       }
     ],
@@ -125,7 +125,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_lambda_function with runtime='nodejs6.10' as f return f.name as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
+        "query": "FIND aws_lambda_function WITH runtime = 'nodejs6.10' AS f return f.name AS functionName, f.version AS version, f.tag.AccountName AS account, f.tag.Project AS project ORDER BY account",
         "version": "v1"
       }
     ],
@@ -141,7 +141,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_lambda_function with runtime='nodejs8.10' as f return f.name as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
+        "query": "FIND aws_lambda_function WITH runtime = 'nodejs8.10' AS f return f.name AS functionName, f.version AS version, f.tag.AccountName AS account, f.tag.Project AS project ORDER BY account",
         "version": "v1"
       }
     ],
@@ -157,7 +157,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (aws_db_instance|aws_rds_cluster) with backupRetentionPeriod=undefined",
+        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH backupRetentionPeriod = undefined",
         "version": "v1"
       }
     ],
@@ -169,7 +169,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (aws_db_instance|aws_rds_cluster) with public=true that protects aws_security_group that allows Internet",
+        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH public = true THAT PROTECTS aws_security_group THAT ALLOWS Internet",
         "version": "v1"
       }
     ],
@@ -181,7 +181,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (aws_db_snapshot|aws_db_cluster_snapshot) with public=true",
+        "query": "FIND (aws_db_snapshot|aws_db_cluster_snapshot) WITH public = true",
         "version": "v1"
       }
     ],
@@ -193,7 +193,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find (aws_db_instance|aws_rds_cluster) with encrypted!=true",
+        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH encrypted != true",
         "version": "v1"
       }
     ],
@@ -205,7 +205,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with classification != 'public' and ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='READ'",
+        "query": "FIND aws_s3_bucket WITH classification != 'public' AND ignorePublicAcls != true AND restrictPublicBuckets != true THAT ALLOWS AS grant Everyone WHERE grant.permission = 'READ'",
         "version": "v1"
       }
     ],
@@ -217,7 +217,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='WRITE'",
+        "query": "FIND aws_s3_bucket WITH ignorePublicAcls != true AND restrictPublicBuckets != true THAT ALLOWS AS grant Everyone WHERE grant.permission = 'WRITE'",
         "version": "v1"
       }
     ],
@@ -229,7 +229,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='READ_ACP' or grant.permission='WRITE_ACP'",
+        "query": "FIND aws_s3_bucket WITH ignorePublicAcls != true AND restrictPublicBuckets != true THAT ALLOWS AS grant Everyone WHERE grant.permission = 'READ_ACP' or grant.permission = 'WRITE_ACP'",
         "version": "v1"
       }
     ],
@@ -241,7 +241,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with replicationEnabled != true or destinationBuckets = undefined",
+        "query": "FIND aws_s3_bucket WITH replicationEnabled != true OR destinationBuckets = undefined",
         "version": "v1"
       }
     ],
@@ -253,7 +253,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with encrypted=false and defaultEncryptionEnabled=false",
+        "query": "FIND aws_s3_bucket WITH encrypted != true AND defaultEncryptionEnabled = false",
         "version": "v1"
       }
     ],
@@ -265,7 +265,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with loggingEnabled != true that has aws_s3 with loggingEnabled != true",
+        "query": "FIND aws_s3_bucket WITH loggingEnabled != true THAT HAS aws_s3 WITH loggingEnabled != true",
         "version": "v1"
       }
     ],
@@ -277,7 +277,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with secureTransport != true",
+        "query": "FIND aws_s3_bucket WITH secureTransport != true",
         "version": "v1"
       }
     ],
@@ -289,7 +289,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_s3_bucket with versioningEnabled != true or mfaDelete != true",
+        "query": "FIND aws_s3_bucket WITH versioningEnabled != true OR mfaDelete != true",
         "version": "v1"
       }
     ],
@@ -301,7 +301,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_config_rule with complianceState='NON_COMPLIANT'",
+        "query": "FIND aws_config_rule WITH complianceState = 'NON_COMPLIANT'",
         "version": "v1"
       }
     ],
@@ -313,7 +313,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_account with _source!='system-mapper' that !has aws_account with master=true",
+        "query": "FIND aws_account WITH _source != 'system-mapper' THAT !HAS aws_account WITH master = true",
         "version": "v1"
       }
     ],
@@ -325,7 +325,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_iam_access_key WITH active=true AND createdOn < date.now - 90 days",
+        "query": "FIND aws_iam_access_key WITH active = true AND createdOn < date.now - 90 days",
         "version": "v1"
       }
     ],
@@ -517,7 +517,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_rds_cluster with engine = 'aurora' AND multiAZ != true",
+        "query": "FIND aws_rds_cluster WITH engine = 'aurora' AND multiAZ != true",
         "version": "v1"
       }
     ],
@@ -901,7 +901,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_subnet WITH public = true AND internal = true ",
+        "query": "FIND aws_subnet WITH public = true AND internal = true",
         "version": "v1"
       }
     ],
@@ -925,7 +925,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_ec2 THAT HAS aws_ec2_settings WITH ebsEncryptionByDefault != true ",
+        "query": "FIND aws_ec2 THAT HAS aws_ec2_settings WITH ebsEncryptionByDefault != true",
         "version": "v1"
       }
     ],
@@ -1093,7 +1093,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND (aws_iam_policy | aws_iam_role_policy | aws_iam_group_policy | aws_iam_user_policy)   WITH vendorManaged != true THAT ALLOWS as a * WHERE a.actions = '*' AND a.resources = '*'",
+        "query": "FIND (aws_iam_policy | aws_iam_role_policy | aws_iam_group_policy | aws_iam_user_policy) WITH vendorManaged != true THAT ALLOWS as a * WHERE a.actions = '*' AND a.resources = '*'",
         "version": "v1"
       }
     ],
