@@ -25,7 +25,7 @@
   },
   {
     "name": "ec2-volume-inuse-check",
-    "description": "Unused/unattached EBS volume.",
+    "description": "Unused or unattached EBS Volumes.",
     "queries": [
       {
         "name": "query0",
@@ -49,7 +49,7 @@
   },
   {
     "name": "ec2-restricted-ssh",
-    "description": "Incoming SSH traffic for the security groups is accessible.",
+    "description": "Incoming SSH traffic for the security groups are accessible.",
     "queries": [
       {
         "name": "query0",
@@ -73,7 +73,7 @@
   },
   {
     "name": "iam-root-access-key-check",
-    "description": "Checks whether the root user access key is available.",
+    "description": "Checks if root user access key is available.",
     "queries": [
       {
         "name": "query0",
@@ -85,7 +85,7 @@
   },
   {
     "name": "iam-password-policy",
-    "description": "AWS password policy does not meet organization's complexity, age and/or history requirements.",
+    "description": "AWS password policy does not adhere to the organization's complexity, age and or history requirements.",
     "queries": [
       {
         "name": "query0",
@@ -97,7 +97,7 @@
   },
   {
     "name": "iam-user-no-policies-check",
-    "description": "AWS IAM user should have not direct/inline policy attachments. Users should inherit permissions from the assigned IAM groups or roles.",
+    "description": "An AWS IAM user should not have direct or inline policy attachments. Users should inherit permissions from the assigned IAM groups or roles.",
     "queries": [
       {
         "name": "query0",
@@ -177,7 +177,7 @@
   },
   {
     "name": "rds-snapshots-public-prohibited",
-    "description": "RDS cluster or instance snapshots is public.",
+    "description": "RDS cluster or instance snapshots are public.",
     "queries": [
       {
         "name": "query0",
@@ -201,7 +201,7 @@
   },
   {
     "name": "s3-bucket-public-read-prohibited",
-    "description": "S3 buckets should not allow public read access unless it is tagged/classified as 'public'.",
+    "description": "S3 buckets should not allow public read access unless buckets are tagged or classified as 'public'.",
     "queries": [
       {
         "name": "query0",
@@ -225,7 +225,7 @@
   },
   {
     "name": "s3-bucket-public-acp-prohibited",
-    "description": "S3 buckets should not allow public read/write access to the bucket ACL policy.",
+    "description": "S3 buckets should not allow public read or write access to the bucket ACL policy.",
     "queries": [
       {
         "name": "query0",
@@ -249,7 +249,7 @@
   },
   {
     "name": "s3-bucket-server-side-encryption-enabled",
-    "description": "S3 buckets should enable have server-side encryption.",
+    "description": "S3 buckets should enable and have server-side encryption.",
     "queries": [
       {
         "name": "query0",
@@ -261,7 +261,7 @@
   },
   {
     "name": "s3-bucket-logging-enabled",
-    "description": "S3 buckets should enable server access logging and/or object-level logging.",
+    "description": "S3 buckets should enable server access logging and or object-level logging.",
     "queries": [
       {
         "name": "query0",
@@ -273,7 +273,7 @@
   },
   {
     "name": "s3-bucket-ssl-requests-only",
-    "description": "Checks whether S3 buckets have policies that require requests to use TLS / SecureTransport.",
+    "description": "Checks if S3 buckets have policies that require requests to use TLS or SecureTransport.",
     "queries": [
       {
         "name": "query0",
@@ -357,7 +357,7 @@
   },
   {
     "name": "cloudwatch-alarm-action-check",
-    "description": "Checks whether CloudWatch alarms have at least one alarm action, one INSUFFICIENT_DATA action, or one OK action enabled.",
+    "description": "Checks if CloudWatch alarms have at least one alarm action, one INSUFFICIENT_DATA action, or one OK action enabled.",
     "queries": [
       {
         "name": "query0",
@@ -381,7 +381,7 @@
   },
   {
     "name": "dynamodb-pitr-enabled",
-    "description": "Checks that point in time recovery (PITR) is enabled for Amazon DynamoDB tables",
+    "description": "Checks that point in time recovery (PITR) is enabled for Amazon DynamoDB tables.",
     "queries": [
       {
         "name": "query0",
@@ -393,7 +393,7 @@
   },
   {
     "name": "ebs-optimized-instance",
-    "description": "Checks whether EBS optimization is enabled for your EC2 instances that can be EBS-optimized.",
+    "description": "Checks if EBS optimization is enabled for your EC2 instances that can be EBS-optimized.",
     "queries": [
       {
         "name": "query0",
@@ -417,7 +417,7 @@
   },
   {
     "name": "iam-user-mfa-enabled",
-    "description": "Checks whether the AWS Identity and Access Management users have multi-factor authentication (MFA) enabled.",
+    "description": "Checks if the AWS Identity and Access Management users have multi-factor authentication (MFA) enabled.",
     "queries": [
       {
         "name": "query0",
@@ -429,7 +429,7 @@
   },
   {
     "name": "lambda-inside-vpc",
-    "description": "Checks whether an AWS Lambda function is allowed access to an Amazon Virtual Private Cloud.",
+    "description": "Checks if an AWS Lambda function is allowed access to an Amazon Virtual Private Cloud.",
     "queries": [
       {
         "name": "query0",
@@ -477,7 +477,7 @@
   },
   {
     "name": "rds-snapshot-encrypted",
-    "description": "Checks whether Amazon Relational Database Service (Amazon RDS) DB snapshots are encrypted.",
+    "description": "Checks if Amazon Relational Database Service (Amazon RDS) DB snapshots are encrypted.",
     "queries": [
       {
         "name": "query0",
@@ -489,7 +489,7 @@
   },
   {
     "name": "rds-multi-az-support",
-    "description": "Checks whether high availability is enabled for your RDS DB instances.",
+    "description": "Checks if high availability is enabled for your RDS DB instances.",
     "queries": [
       {
         "name": "query0",
@@ -585,7 +585,7 @@
   },
   {
     "name": "cw-loggroup-retention-period-check",
-    "description": "Checks whether Amazon CloudWatch LogGroup retention period is set to at least 365 days. Checks if the retention period is not set.",
+    "description": "Checks if Amazon CloudWatch LogGroup retention period is set to at least 365 days. Checks if the retention period is not set.",
     "queries": [
       {
         "name": "query0",
@@ -681,7 +681,7 @@
   },
   {
     "name": "iam-user-group-membership-check",
-    "description": "Checks whether IAM users are members of at least one IAM group.",
+    "description": "Checks if IAM users are members of at least one IAM group.",
     "queries": [
       {
         "name": "query0",
@@ -717,7 +717,7 @@
   },
   {
     "name": "s3-bucket-default-lock-enabled",
-    "description": "Checks whether Amazon S3 buckets have lock enabled, by default.",
+    "description": "Checks if Amazon S3 buckets have lock enabled, by default.",
     "queries": [
       {
         "name": "query0",
@@ -729,7 +729,7 @@
   },
   {
     "name": "vpc-flow-logs-enabled",
-    "description": "Checks whether Amazon VPC flow logs are found and enabled for Amazon VPC.",
+    "description": "Checks if Amazon VPC flow logs are found and enabled for Amazon VPC.",
     "queries": [
       {
         "name": "query0",
@@ -813,7 +813,7 @@
   },
   {
     "name": "autoscaling-group-elb-healthcheck-required",
-    "description": "Checks whether your Auto Scaling groups that are associated with a load balancer are using ELB health checks or only the default EC2 health checks.",
+    "description": "Checks if your Auto Scaling groups that are associated with a load balancer are using ELB health checks or only the default EC2 health checks.",
     "queries": [
       {
         "name": "query0",
@@ -825,7 +825,7 @@
   },
   {
     "name": "redshift-require-tls-ssl",
-    "description": "Checks whether Amazon Redshift clusters require TLS/SSL encryption to connect to SQL clients.",
+    "description": "Checks if Amazon Redshift clusters require TLS/SSL encryption to connect to SQL clients.",
     "queries": [
       {
         "name": "query0",
@@ -837,7 +837,7 @@
   },
   {
     "name": "s3-default-encryption-kms",
-    "description": "Checks whether the Amazon S3 buckets are encrypted with AWS Key Management Service(AWS KMS).",
+    "description": "Checks if the Amazon S3 buckets are encrypted with AWS Key Management Service(AWS KMS).",
     "queries": [
       {
         "name": "query0",
@@ -909,7 +909,7 @@
   },
   {
     "name": "cloudformation-stack-notification-check",
-    "description": "Checks whether your CloudFormation stacks are sending event notifications to an SNS topic.",
+    "description": "Checks if your CloudFormation stacks are sending event notifications to an SNS topic.",
     "queries": [
       {
         "name": "query0",
@@ -921,7 +921,7 @@
   },
   {
     "name": "ec2-ebs-encryption-by-default",
-    "description": "Check that Amazon Elastic Block Store (EBS) encryption is enabled by default.",
+    "description": "Checks that Amazon Elastic Block Store (EBS) encryption is enabled by default.",
     "queries": [
       {
         "name": "query0",
@@ -957,7 +957,7 @@
   },
   {
     "name": "cloud-trail-log-file-validation-enabled",
-    "description": "Checks whether AWS CloudTrail creates a signed digest file with logs.",
+    "description": "Checks if AWS CloudTrail creates a signed digest file with logs.",
     "queries": [
       {
         "name": "query0",
@@ -981,7 +981,7 @@
   },
   {
     "name": "elb-custom-security-policy-ssl-check",
-    "description": "Checks whether your Classic Load Balancer SSL listeners are using a custom policy.",
+    "description": "Checks if your Classic Load Balancer SSL listeners are using a custom policy.",
     "queries": [
       {
         "name": "query0",
@@ -993,7 +993,7 @@
   },
   {
     "name": "elb-predefined-security-policy-ssl-check",
-    "description": "Checks whether your Classic Load Balancer SSL listeners are using a predefined policy.",
+    "description": "Checks if your Classic Load Balancer SSL listeners are using a predefined policy.",
     "queries": [
       {
         "name": "query0",
@@ -1041,7 +1041,7 @@
   },
   {
     "name": "iam-group-has-users-check",
-    "description": "Checks whether IAM groups have at least one IAM user.",
+    "description": "IAM groups that have at least one IAM user.",
     "queries": [
       {
         "name": "query0",
@@ -1053,7 +1053,7 @@
   },
   {
     "name": "iam-policy-in-use-attached-to-iam-user",
-    "description": "Checks whether the IAM policy ARN is attached to an IAM user.",
+    "description": "Checks if the IAM policy ARN is attached to an IAM user.",
     "queries": [
       {
         "name": "query0",
@@ -1065,7 +1065,7 @@
   },
   {
     "name": "iam-policy-in-use-attached-to-a-group-with-users",
-    "description": "Checks whether the IAM policy ARN is attached to a group with one or more IAM users.",
+    "description": "Checks if the IAM policy ARN is attached to a group with one or more IAM users.",
     "queries": [
       {
         "name": "query0",
@@ -1077,7 +1077,7 @@
   },
   {
     "name": "iam-policy-in-use-attached-to-a-role-with-trusted-entities",
-    "description": "Checks whether the IAM policy ARN is attached to an IAM role with one or more trusted entities.",
+    "description": "Checks if the IAM policy ARN is attached to an IAM role with one or more trusted entities.",
     "queries": [
       {
         "name": "query0",
@@ -1113,7 +1113,7 @@
   },
   {
     "name": "eks-endpoint-no-public-access",
-    "description": "Checks whether Amazon EKS endpoints are not publicly accessible.",
+    "description": "Checks if Amazon EKS endpoints are publicly accessible.",
     "queries": [
       {
         "name": "query0",
