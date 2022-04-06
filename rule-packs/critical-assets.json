@@ -1,0 +1,25 @@
+[
+  {
+    "name": "critical-assets-added",
+    "description": "Find new critical assets added in the last 24 hours. Security team should review these new assets to make sure they are valide.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find #CriticalAsset with _createdOn >= date.now-24hours",
+        "version": "v1"
+      }
+    ]
+  },
+  {
+    "name": "critical-assets-exposed",
+    "description": "Find critical assets that are directly exposed to the Internet or allowing access to everyone. Security team should immediately tighten up the permissions for these resources.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find #CriticalAsset that (ALLOWS|CONNECTS) (Internet|Everyone)",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  }
+]
