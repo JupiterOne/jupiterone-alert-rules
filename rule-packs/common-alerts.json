@@ -43,7 +43,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find unique (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('Critical' or 'critical') or numericSeverity>=9",
+        "query": "Find unique (Host|DataStore|Application|CodeRepo|Account|Service|Network) with tag.Production=true that has Finding with severity=('critical' OR 'Critical' OR 'CRITICAL') or numericSeverity>=9",
         "version": "v1"
       }
     ],
