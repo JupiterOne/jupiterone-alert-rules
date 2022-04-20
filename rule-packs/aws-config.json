@@ -5,7 +5,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_acm_certificate WITH renewalEligibility != 'ELIGIBLE' AND expiresOn > date.now AND expiresOn < date.now + 30days",
+        "query": "Find aws_acm_certificate with renewalEligibility != 'ELIGIBLE' and expiresOn > date.now and expiresOn < date.now + 30days",
         "version": "v1"
       }
     ],
@@ -17,7 +17,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_instance WITH vpcId = undefined AND active = true",
+        "query": "Find aws_instance with vpcId=undefined and active=true",
         "version": "v1"
       }
     ],
@@ -25,11 +25,11 @@
   },
   {
     "name": "ec2-volume-inuse-check",
-    "description": "Unused or unattached EBS Volumes.",
+    "description": "Unused/unattached EBS volume.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_ebs_volume THAT !USES aws_instance",
+        "query": "Find aws_ebs_volume that !USES aws_instance",
         "version": "v1"
       }
     ],
@@ -41,23 +41,21 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_instance AS i THAT USES aws_ebs_volume WITH encrypted != true AS v RETURN i.tag.AccountName, i.name, i.instanceId, i.state, i.region, i.webLink, v.volumeId, v.encrypted, v.webLink",
+        "query": "Find aws_instance as i that USES aws_ebs_volume with encrypted!=true as v return i.tag.AccountName, i.name, i.instanceId, i.state, i.region, i.webLink, v.volumeId, v.encrypted, v.webLink",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
+    ]
   },
   {
     "name": "ec2-restricted-ssh",
-    "description": "Incoming SSH traffic for the security groups are accessible.",
+    "description": "Incoming SSH traffic for the security groups is accessible.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule * AS src where rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 22 AND rule.toPort >= 22 RETURN sg.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
+        "query": "Find aws_security_group as sg that ALLOWS as rule * as src where rule.ingress=true and rule.ipProtocol='tcp' and rule.fromPort<=22 and rule.toPort>=22 return sg.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
+    ]
   },
   {
     "name": "root-account-mfa-enabled",
@@ -65,7 +63,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_account WITH _source != 'system-mapper' AND mfaEnabled != true",
+        "query": "Find aws_account with _source!='system-mapper' and mfaEnabled!=true",
         "version": "v1"
       }
     ],
@@ -73,51 +71,49 @@
   },
   {
     "name": "iam-root-access-key-check",
-    "description": "Checks if root user access key is available.",
+    "description": "Checks whether the root user access key is available.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_account WITH _source!='system-mapper' AND rootUserAccessKeyEnabled != false",
+        "query": "Find aws_account with _source!='system-mapper' and rootUserAccessKeyEnabled!=false",
         "version": "v1"
       }
-    ],
-    "alertLevel": "CRITICAL"
+    ]
   },
   {
     "name": "iam-password-policy",
-    "description": "AWS password policy does not adhere to the organization's complexity, age and or history requirements.",
+    "description": "AWS password policy does not meet organization's complexity, age and/or history requirements.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_iam_account_password_policy with requireUppercase != true OR requireLowercase != true OR requireSymbols != true OR requireNumbers != true OR minLength < 8 OR maxAgeDays > 90 OR historyCount < 12",
+        "query": "Find aws_iam_account_password_policy with requireUppercase != true or requireLowercase != true or requireSymbols != true or requireNumbers != true or minLength < 8 or maxAgeDays > 90 or historyCount < 12",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
+    ]
   },
   {
     "name": "iam-user-no-policies-check",
-    "description": "An AWS IAM user should not have direct or inline policy attachments. Users should inherit permissions from the assigned IAM groups or roles.",
+    "description": "AWS IAM user should have not direct/inline policy attachments. Users should inherit permissions from the assigned IAM groups or roles",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_iam_user THAT ASSIGNED (aws_iam_user_policy|aws_iam_policy)",
+        "query": "Find aws_iam_user that assigned (aws_iam_user_policy|aws_iam_policy)",
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "LOW"
   },
   {
     "name": "lambda-function-logging-enabled",
-    "description": "Checks if Lambda functions are not sending logs to CloudTrail.",
+    "description": "Check if lambda functions are not sending logs to cloudtrail",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_lambda_function WITH loggingEnabled != true THAT HAS aws_lambda with loggingEnabled != true",
+        "query": "Find aws_lambda_function with loggingEnabled != true that has aws_lambda with loggingEnabled != true",
         "version": "v1"
       }
     ],
-    "alertLevel": "MEDIUM"
+    "alertLevel": "INFO"
   },
   {
     "name": "lambda-function-settings-check-runtime-nodejs610",
@@ -125,7 +121,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_lambda_function WITH runtime = 'nodejs6.10' AS f return f.name AS functionName, f.version AS version, f.tag.AccountName AS account, f.tag.Project AS project ORDER BY account",
+        "query": "Find aws_lambda_function with runtime='nodejs6.10' as f return f.name as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
         "version": "v1"
       }
     ],
@@ -141,11 +137,11 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_lambda_function WITH runtime = 'nodejs8.10' AS f return f.name AS functionName, f.version AS version, f.tag.AccountName AS account, f.tag.Project AS project ORDER BY account",
+        "query": "Find aws_lambda_function with runtime='nodejs8.10' as f return f.name as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH",
+    "alertLevel": "MEDIUM",
     "templates": {
       "emailBody": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}<br>",
       "jiraTicket": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.functionName}}\n"
@@ -157,11 +153,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH backupRetentionPeriod = undefined",
+        "query": "Find (aws_db_instance|aws_rds_cluster) with backupRetentionPeriod=undefined",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
+    ]
   },
   {
     "name": "rds-instance-public-access-check",
@@ -169,7 +164,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH public = true THAT PROTECTS aws_security_group THAT ALLOWS Internet",
+        "query": "Find (aws_db_instance|aws_rds_cluster) with public=true that protects aws_security_group that allows Internet",
         "version": "v1"
       }
     ],
@@ -177,11 +172,11 @@
   },
   {
     "name": "rds-snapshots-public-prohibited",
-    "description": "RDS cluster or instance snapshots are public.",
+    "description": "RDS cluster or instance snapshots is public.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND (aws_db_snapshot|aws_db_cluster_snapshot) WITH public = true",
+        "query": "Find (aws_db_snapshot|aws_db_cluster_snapshot) with public=true",
         "version": "v1"
       }
     ],
@@ -193,7 +188,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH encrypted != true",
+        "query": "Find (aws_db_instance|aws_rds_cluster) with encrypted!=true",
         "version": "v1"
       }
     ],
@@ -201,11 +196,11 @@
   },
   {
     "name": "s3-bucket-public-read-prohibited",
-    "description": "S3 buckets should not allow public read access unless buckets are tagged or classified as 'public'.",
+    "description": "S3 buckets should not allow public read access unless it is tagged/classified as 'public'.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH classification != 'public' AND ignorePublicAcls != true AND restrictPublicBuckets != true THAT ALLOWS AS grant Everyone WHERE grant.permission = 'READ'",
+        "query": "Find aws_s3_bucket with classification != 'public' and ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='READ'",
         "version": "v1"
       }
     ],
@@ -217,19 +212,19 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH ignorePublicAcls != true AND restrictPublicBuckets != true THAT ALLOWS AS grant Everyone WHERE grant.permission = 'WRITE'",
+        "query": "Find aws_s3_bucket with ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='WRITE'",
         "version": "v1"
       }
     ],
-    "alertLevel": "HIGH"
+    "alertLevel": "CRITICAL"
   },
   {
     "name": "s3-bucket-public-acp-prohibited",
-    "description": "S3 buckets should not allow public read or write access to the bucket ACL policy.",
+    "description": "S3 buckets should not allow public read/write access to the bucket ACL policy.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH ignorePublicAcls != true AND restrictPublicBuckets != true THAT ALLOWS AS grant Everyone WHERE grant.permission = 'READ_ACP' or grant.permission = 'WRITE_ACP'",
+        "query": "Find aws_s3_bucket with ignorePublicAcls != true and restrictPublicBuckets != true that ALLOWS as grant Everyone where grant.permission='READ_ACP' or grant.permission='WRITE_ACP'",
         "version": "v1"
       }
     ],
@@ -241,19 +236,18 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH replicationEnabled != true OR destinationBuckets = undefined",
+        "query": "Find aws_s3_bucket with replicationEnabled != true or destinationBuckets = undefined",
         "version": "v1"
       }
-    ],
-    "alertLevel": "LOW"
+    ]
   },
   {
     "name": "s3-bucket-server-side-encryption-enabled",
-    "description": "S3 buckets should enable and have server-side encryption.",
+    "description": "S3 buckets should enable have server-side encryption.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH encrypted != true AND defaultEncryptionEnabled = false",
+        "query": "Find aws_s3_bucket with encrypted=false and defaultEncryptionEnabled=false",
         "version": "v1"
       }
     ],
@@ -261,27 +255,25 @@
   },
   {
     "name": "s3-bucket-logging-enabled",
-    "description": "S3 buckets should enable server access logging and or object-level logging.",
+    "description": "S3 buckets should enable server access logging and/or object-level logging.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH loggingEnabled != true THAT HAS aws_s3 WITH loggingEnabled != true",
+        "query": "Find aws_s3_bucket with loggingEnabled != true that has aws_s3 with loggingEnabled != true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "MEDIUM"
+    ]
   },
   {
     "name": "s3-bucket-ssl-requests-only",
-    "description": "Checks if S3 buckets have policies that require requests to use TLS or SecureTransport.",
+    "description": "Checks whether S3 buckets have policies that require requests to use TLS / SecureTransport.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH secureTransport != true",
+        "query": "Find aws_s3_bucket with secureTransport != true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
+    ]
   },
   {
     "name": "s3-bucket-versioning-enabled",
@@ -289,11 +281,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_s3_bucket WITH versioningEnabled != true OR mfaDelete != true",
+        "query": "Find aws_s3_bucket with versioningEnabled != true or mfaDelete != true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "MEDIUM"
+    ]
   },
   {
     "name": "config-rule-noncompliant",
@@ -301,11 +292,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_config_rule WITH complianceState = 'NON_COMPLIANT'",
+        "query": "Find aws_config_rule with complianceState='NON_COMPLIANT'",
         "version": "v1"
       }
-    ],
-    "alertLevel": "MEDIUM"
+    ]
   },
   {
     "name": "account-part-of-organizations",
@@ -313,11 +303,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_account WITH _source != 'system-mapper' THAT !HAS aws_account WITH master = true",
+        "query": "Find aws_account with _source!='system-mapper' that !has aws_account with master=true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "INFO"
+    ]
   },
   {
     "name": "access-keys-rotated",
@@ -325,11 +314,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_iam_access_key WITH active = true AND createdOn < date.now - 90 days",
+        "query": "FIND aws_iam_access_key WITH active=true AND createdOn < date.now - 90 days",
         "version": "v1"
       }
-    ],
-    "alertLevel": "MEDIUM"
+    ]
   },
   {
     "name": "alb-http-drop-invalid-header-enabled",
@@ -340,8 +328,7 @@
         "query": "FIND aws_alb WITH dropInvalidHeaders != true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
+    ]
   },
   {
     "name": "alb-waf-enabled",
@@ -352,20 +339,18 @@
         "query": "FIND aws_alb THAT !PROTECTS (aws_waf_web_acl|aws_waf_v2_web_acl)",
         "version": "v1"
       }
-    ],
-    "alertLevel": "MEDIUM"
+    ]
   },
   {
     "name": "cloudwatch-alarm-action-check",
-    "description": "Checks if CloudWatch alarms have at least one alarm action, one INSUFFICIENT_DATA action, or one OK action enabled.",
+    "description": "Checks whether CloudWatch alarms have at least one alarm action, one INSUFFICIENT_DATA action, or one OK action enabled.",
     "queries": [
       {
         "name": "query0",
         "query": "FIND aws_cloudwatch_metric_alarm WITH (okActions = undefined AND alarmActions = undefined AND insufficientDataActions = undefined)",
         "version": "v1"
       }
-    ],
-    "alertLevel": "LOW"
+    ]
   },
   {
     "name": "cloudwatch-log-group-encrypted",
@@ -376,32 +361,29 @@
         "query": "FIND aws_cloudwatch_log_group WITH encrypted != true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "MEDIUM"
+    ]
   },
   {
     "name": "dynamodb-pitr-enabled",
-    "description": "Checks that point in time recovery (PITR) is enabled for Amazon DynamoDB tables.",
+    "description": "Checks that point in time recovery (PITR) is enabled for Amazon DynamoDB tables",
     "queries": [
       {
         "name": "query0",
         "query": "FIND aws_dynamodb_table WITH pointInTimeRecoveryEnabled != true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
+    ]
   },
   {
     "name": "ebs-optimized-instance",
-    "description": "Checks if EBS optimization is enabled for your EC2 instances that can be EBS-optimized.",
+    "description": "Checks whether EBS optimization is enabled for your EC2 instances that can be EBS-optimized.",
     "queries": [
       {
         "name": "query0",
         "query": "FIND aws_instance WITH ebsOptimized != true AND ebsOptimizationSupported = true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "INFO"
+    ]
   },
   {
     "name": "db-instance-backup-enabled",
@@ -412,715 +394,6 @@
         "query": "FIND (aws_rds_cluster|aws_db_instance) WITH hasBackup != true",
         "version": "v1"
       }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "iam-user-mfa-enabled",
-    "description": "Checks if the AWS Identity and Access Management users have multi-factor authentication (MFA) enabled.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_iam_user WITH mfaEnabled != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "CRITICAL"
-  },
-  {
-    "name": "lambda-inside-vpc",
-    "description": "Checks if an AWS Lambda function is allowed access to an Amazon Virtual Private Cloud.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_lambda_function THAT !HAS aws_subnet THAT CONTAINS aws_vpc",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "rds-deletion-protection-enabled",
-    "description": "Checks if an Amazon Relational Database Service (Amazon RDS) cluster or instance has deletion protection enabled.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH deletionProtection != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "rds-iam-authentication-enabled",
-    "description": "Checks if an Amazon Relational Database Service (Amazon RDS) cluster or instance has AWS Identity and Access Management (IAM) authentication enabled.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_db_instance|aws_rds_cluster) WITH iamDatabaseAuthenticationEnabled != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "rds-automatic-minor-version-upgrade-enabled",
-    "description": "Checks if Amazon Relational Database Service (RDS) database instances are configured for automatic minor version upgrades.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_db_instance WITH autoMinorVersionUpgrade != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "rds-snapshot-encrypted",
-    "description": "Checks if Amazon Relational Database Service (Amazon RDS) DB snapshots are encrypted.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_db_cluster_snapshot|aws_db_snapshot) WITH encrypted != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "rds-multi-az-support",
-    "description": "Checks if high availability is enabled for your RDS DB instances.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_db_instance WITH multiAZ != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "sns-encrypted-kms",
-    "description": "Checks if Amazon SNS topic is encrypted with AWS Key Management Service (AWS KMS).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_sns_topic THAT !USES aws_kms_key",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "rds-cluster-multi-az-enabled",
-    "description": "Checks if Multi-AZ replication is enabled on Amazon Aurora clusters managed by Amazon Relational Database Service (Amazon RDS).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_rds_cluster WITH engine = 'aurora' AND multiAZ != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "ec2-instance-profile-attached",
-    "description": "Checks if an Amazon Elastic Compute Cloud (Amazon EC2) instance has an Identity and Access Management (IAM) profile attached to it.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance WITH iamInstanceProfileArn = undefined",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "dynamodb-tables-kms-encrypted",
-    "description": "Amazon DynamoDB tables that do not use AWS Key Management Service (KMS) as their encryption algorithm.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_dynamodb_table WITH encryptionAlgorithm != 'KMS'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "dynamodb-table-encryption-enabled",
-    "description": "Amazon DynamoDB tables that are not encrypted.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_dynamodb_table WITH encrypted != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "ec2-instance-detailed-monitoring-enabled",
-    "description": "EC2 instances without detailed monitoring enabled.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance WITH monitoringState != 'enabled'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "LOW"
-  },
-  {
-    "name": "cmk-backing-key-rotation-enabled",
-    "description": "Checks if key rotation is enabled for customer-created AWS KMS (symmetric) keys.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_kms_key WITH keyManager = 'CUSTOMER' AND encryptionAlgorithms = 'SYMMETRIC_DEFAULT' AND keyRotationEnabled != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "cw-loggroup-retention-period-check",
-    "description": "Checks if Amazon CloudWatch LogGroup retention period is set to at least 365 days. Checks if the retention period is not set.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudwatch_log_group WITH retentionInDays < 365  OR retentionInDays = undefined",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "LOW"
-  },
-  {
-    "name": "rds-resources-protected-by-backup-plan",
-    "description": "Amazon RDS instances that do not have a backup plan.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_db_instance WITH hasBackup != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "cloudfront-associated-with-waf",
-    "description": "Checks if Amazon CloudFront distributions are associated with either WAF or WAFv2 web access control lists (ACLs).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudfront_distribution THAT !PROTECTS (aws_waf_web_acl|aws_waf_v2_web_acl)",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "dynamodb-resources-protected-by-backup-plan",
-    "description": "DynamoDB tables without backup plans.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_dynamodb_table WITH continuousBackupEnabled != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "cloudwatch-log-group-encrypted",
-    "description": "Checks if a log group in Amazon CloudWatch Logs is encrypted with a AWS Key Management Service (KMS) managed Customer Master Keys (CMK).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudwatch_log_group WITH encrypted != true THAT !USES aws_kms_key WITH keyManager = 'CUSTOMER'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "ec2-instances-in-vpc",
-    "description": "Checks if your EC2 instances belong to a virtual private cloud (VPC).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance THAT !HAS aws_subnet",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "ec2-stopped-instance",
-    "description": "Checks if there are instances stopped for more than the allowed number of days (default 30 days).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance WITH state = 'stopped' AND stateChangedOn < date.now-30days",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "elb-tls-https-listeners-only",
-    "description": "Checks if your Classic Load Balancer is configured with SSL or HTTPS listeners.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_elb WITH category = 'classic' THAT HAS aws_lb_listener WITH protocol != ('HTTPS' OR 'SSL')",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "iam-user-group-membership-check",
-    "description": "Checks if IAM users are members of at least one IAM group.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_iam_group AS group THAT !HAS aws_iam_user AS user RETURN user.accountId, user.name,user.displayName, group.name,group.displayName, group.id",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "multi-region-cloudtrail-enabled",
-    "description": "Checks if there is at least one multi-region AWS CloudTrail.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudtrail AS ct THAT LOGS AS trail * AS destination WHERE trail.isMultiRegionTrail != true RETURN ct.accountId, ct.tag.AccountName, trail.name, trail.isMultiRegionTrail AS multiRegion, trail.homeRegion AS homeRegion, destination._type, destination.displayName, destination.webLink ORDER BY trail.name",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "restricted-ssh",
-    "description": "Checks if the incoming SSH traffic for the security groups is accessible.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule Internet WHERE rule.ingress = true AND rule.fromPort <= 22 AND rule.toPort >= 22 RETURN  sg.displayName, sg.groupId, sg.vpcId, sg.tag.AccountName, sg.webLink,  rule.ipProtocol, rule.fromPort, rule.toPort",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "s3-bucket-default-lock-enabled",
-    "description": "Checks if Amazon S3 buckets have lock enabled, by default.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_s3_bucket WITH objectLockEnabled != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "vpc-flow-logs-enabled",
-    "description": "Checks if Amazon VPC flow logs are found and enabled for Amazon VPC.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_vpc AS vpc THAT !LOGS AS flowLog * AS destination RETURN vpc.tag.AccountName, vpc.displayName, vpc.vpcId, flowLog.flowLogId, flowLog.trafficType, flowLog.createdOn, flowLog.active, flowLog.status, destination._type, destination.displayName, destination.webLink",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "vpc-network-acl-unused-check",
-    "description": "Checks if there are unused network access control lists (network ACLs).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_network_acl THAT !(PROTECTS|ALLOWS) aws_subnet",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "LOW"
-  },
-  {
-    "name": "desired-instance-tenancy",
-    "description": "Checks EC2 instances for configured tenancy that is shared(default).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance WITH tenancy = 'default'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "desired-instance-tenancy-dedicated-instance",
-    "description": "Checks EC2 instances for configured tenancy that is dedicated.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance WITH tenancy = 'dedicated'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "desired-instance-tenancy-dedicated-host",
-    "description": "Checks EC2 instances for configured tenancy that is host.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance WITH tenancy = 'host'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "cloudformation-stack-drift-detection-check",
-    "description": "Checks if the actual configuration of a CloudFormation stack has drifted, from the expected configuration.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudformation_stack WITH driftStatus = 'DRIFTED' AND drifted = true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "cloudformation-stack-drift-detection-not-checked",
-    "description": "CloudFormation has not checked if the stack, stack set, or stack instance differs from its expected template configuration.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudformation_stack WITH driftStatus = 'NOT_CHECKED' AND drifted != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "autoscaling-group-elb-healthcheck-required",
-    "description": "Checks if your Auto Scaling groups that are associated with a load balancer are using ELB health checks or only the default EC2 health checks.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_autoscaling_group WITH (targetGroupARNs != undefined OR LoadBalancerNames != undefined) AND healthCheckType = 'EC2'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "redshift-require-tls-ssl",
-    "description": "Checks if Amazon Redshift clusters require TLS/SSL encryption to connect to SQL clients.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_redshift_cluster THAT USES aws_redshift_cluster_parameter_group WITH parameter.require_ssl != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "s3-default-encryption-kms",
-    "description": "Checks if the Amazon S3 buckets are encrypted with AWS Key Management Service(AWS KMS).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_s3_bucket WITH encryptionAlgorithm != 'aws:kms' AS b RETURN  b.bucketName, b.defaultEncryptionEnabled, b.encryptionAlgorithm, b.createdOn, b.region, b.classification, b.tag.AccountName",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "rds-logging-enabled",
-    "description": "Checks if log exports are enabled for Amazon Relational Database Service (RDS) instances to publish logs to Amazon CloudWatch.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_db_instance WITH loggingEnabled != true AS l RETURN l.displayName,l.dbInstanceClass,l.dbiResourceId, l.enabledCloudwatchLogsExports,l.databaseName",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "LOW"
-  },
-  {
-    "name": "restricted-common-ports",
-    "description": "Checks if the security groups in use do not allow unrestricted incoming TCP traffic to the specified ports.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_security_group AS fw THAT !ALLOWS AS rule (Host|Network) WITH internal != true AS src WHERE (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 20 AND rule.toPort >= 20) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 21 AND rule.toPort >= 21) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3306 AND rule.toPort >= 3306) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 4333 AND rule.toPort >= 4333) RETURN fw.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "vpc-default-security-group-closed",
-    "description": "Checks that the default security group of any Amazon Virtual Private Cloud (VPC) does not allow inbound or outbound traffic.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_security_group WITH default = true AND egressRules != undefined OR ingressRules != undefined",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "no-unrestricted-route-to-igw",
-    "description": "Checks if there are public routes in the route table to an Internet Gateway (IGW), e.g. a destination CIDR block of '0.0.0.0/0' or '::/0'.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_internet_gateway THAT CONNECTS Internet",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "subnet-auto-assign-public-ip-disabled",
-    "description": "Checks if Amazon Virtual Private Cloud (Amazon VPC) subnets are assigned a public IP address.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_subnet WITH public = true AND internal = true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "cloudformation-stack-notification-check",
-    "description": "Checks if your CloudFormation stacks are sending event notifications to an SNS topic.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudformation_stack WITH notificationArns !~= 'arn:aws:sns'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "ec2-ebs-encryption-by-default",
-    "description": "Checks that Amazon Elastic Block Store (EBS) encryption is enabled by default.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_ec2 THAT HAS aws_ec2_settings WITH ebsEncryptionByDefault != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "alb-http-to-https-redirection-check",
-    "description": "Checks if HTTP to HTTPS redirection is configured on all HTTP listeners of Application Load Balancers.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_alb THAT HAS aws_lb_listener WITH protocol = “HTTP” AND defaultAction != “redirect” ",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "ec2-security-group-attached-to-eni",
-    "description": "Checks that non-default security groups are attached to EC2 instances or an ENI.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_security_group WITH default = false THAT !PROTECTS (aws_instance | aws_eni)",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "cloud-trail-log-file-validation-enabled",
-    "description": "Checks if AWS CloudTrail creates a signed digest file with logs.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudtrail THAT LOGS AS trail * WHERE trail.logFileValidationEnabled != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "LOW"
-  },
-  {
-    "name": "elb-acm-certificate-required",
-    "description": "Checks if the Classic Load Balancers use SSL certificates provided by AWS Certificate Manager.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_elb WITH category = 'classic' THAT !USES aws_acm_certificate",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "elb-custom-security-policy-ssl-check",
-    "description": "Checks if your Classic Load Balancer SSL listeners are using a custom policy.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_elb WITH category = 'classic' THAT HAS aws_lb_listener WITH protocol = 'HTTPS' AND sslPolicy != ('ELBSecurityPolicy-2016-08' OR 'ELBSecurityPolicy-TLS-1-1-2017-01' OR 'ELBSecurityPolicy-TLS-1-2-2017-01' OR 'ELBSecurityPolicy-2015-05' OR 'ELBSecurityPolicy-2015-03' OR 'ELBSecurityPolicy-2015-02' OR 'ELBSecurityPolicy-2014-10' OR 'ELBSecurityPolicy-2014-01' OR 'ELBSecurityPolicy-2011-08' OR 'ELBSample-ELBDefaultNegotiationPolicy' OR 'ELBSample-ELBDefaultCipherPolicy' OR 'ELBSample-OpenSSLDefaultNegotiationPolicy' OR 'ELBSample-OpenSSLDefaultCipherPolicy')",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "elb-predefined-security-policy-ssl-check",
-    "description": "Checks if your Classic Load Balancer SSL listeners are using a predefined policy.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_elb WITH category = 'classic' THAT HAS aws_lb_listener WITH protocol = 'HTTPS' AND sslPolicy = ('ELBSecurityPolicy-2016-08' OR 'ELBSecurityPolicy-TLS-1-1-2017-01' OR 'ELBSecurityPolicy-TLS-1-2-2017-01' OR 'ELBSecurityPolicy-2015-05' OR 'ELBSecurityPolicy-2015-03' OR 'ELBSecurityPolicy-2015-02' OR 'ELBSecurityPolicy-2014-10' OR 'ELBSecurityPolicy-2014-01' OR 'ELBSecurityPolicy-2011-08' OR 'ELBSample-ELBDefaultNegotiationPolicy' OR 'ELBSample-ELBDefaultCipherPolicy' OR 'ELBSample-OpenSSLDefaultNegotiationPolicy' OR 'ELBSample-OpenSSLDefaultCipherPolicy')",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "elb-deletion-protection-enabled",
-    "description": "Checks if Elastic Load Balancing has deletion protection enabled.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_elb|aws_nlb|aws_alb) WITH deletionProtection != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "elbv2-acm-certificate-required",
-    "description": "Checks if ALBs and NLBs are configured to use certificates from ACM.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_alb|aws_nlb) THAT !USES aws_acm_certificate",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "fms-webacl-resource-policy-check",
-    "description": "Checks if web ACLs are associated with an ALB, API Gateway stage, or Amazon CloudFront distributions.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_waf_web_acl | aws_waf_v2_web_acl) THAT !(HAS | PROTECTS) (aws_api_gateway_rest_api | aws_api_gateway_v2_api | aws_alb | aws_cloudfront_distribution)",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "iam-group-has-users-check",
-    "description": "IAM groups that have at least one IAM user.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_iam_group THAT !HAS aws_iam_user",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "iam-policy-in-use-attached-to-iam-user",
-    "description": "Checks if the IAM policy ARN is attached to an IAM user.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_iam_policy | aws_iam_role_policy | aws_iam_group_policy | aws_iam_user_policy) THAT ASSIGNED aws_iam_user",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "iam-policy-in-use-attached-to-a-group-with-users",
-    "description": "Checks if the IAM policy ARN is attached to a group with one or more IAM users.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_iam_policy | aws_iam_role_policy | aws_iam_group_policy | aws_iam_user_policy) THAT ASSIGNED aws_iam_group THAT HAS aws_iam_user",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "iam-policy-in-use-attached-to-a-role-with-trusted-entities",
-    "description": "Checks if the IAM policy ARN is attached to an IAM role with one or more trusted entities.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_iam_policy | aws_iam_role_policy | aws_iam_group_policy | aws_iam_user_policy) THAT ASSIGNED aws_iam_role THAT TRUSTS *",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "INFO"
-  },
-  {
-    "name": "iam-policy-no-statements-with-full-access",
-    "description": "Checks the IAM policies that you create for Allow statements that grant permissions to all actions on all resources.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND (aws_iam_policy | aws_iam_role_policy | aws_iam_group_policy | aws_iam_user_policy) WITH vendorManaged != true THAT ALLOWS as a * WHERE a.actions = '*' AND a.resources = '*'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "iam-role-managed-policy-check",
-    "description": "Checks if all AWS managed policies are attached to AWS Identity and Access Management (IAM) roles.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_iam_policy WITH vendorManaged = true THAT !assigned aws_iam_role",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
-  },
-  {
-    "name": "eks-endpoint-no-public-access",
-    "description": "Checks if Amazon EKS endpoints are publicly accessible.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_eks_cluster WITH vpcEndpointPublicAccess = true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "HIGH"
+    ]
   }
 ]
