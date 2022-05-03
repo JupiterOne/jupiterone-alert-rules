@@ -3,6 +3,15 @@
 This project contains default rule packs that can be provisioned to your
 JupiterOne account via the included CLI utility.
 
+## Contribution
+
+When making a pull request for this repo, please update the version property in the `package.json`.
+If it is not updated, then the code will not get released.
+
+Patch version - x.x.1 - A patch version is used to make a quick fix, patch a security vulnerability, or do clean up.
+Minor version - x.1.x - A minor version is used to add/remove content
+Major version - 1.x.x - A major version is used to introduce breaking changes
+
 ## Rule Packs
 
 - `rule-packs/aws-config.json`
