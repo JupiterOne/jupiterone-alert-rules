@@ -49,7 +49,7 @@
   },
   {
     "name": "ec2-restricted-ssh",
-    "description": "Incoming SSH traffic for the security groups are accessible.",
+    "description": "Incoming SSH traffic for the security groups are accessible.  For public instances, leaving the SSH port open and unrestricted might allow intrusions if misconfigurations exist or if there are unexpected software vulnerabilities.  To prevent intrusions restrict your security group to only allow incoming connections from trusted IPs only, such as corporate network IP.  See link provided (https://aws.amazon.com/premiumsupport/knowledge-center/ec2-ssh-best-practices/)",
     "queries": [
       {
         "name": "query0",
@@ -73,7 +73,7 @@
   },
   {
     "name": "iam-root-access-key-check",
-    "description": "Checks if root user access key is available.",
+    "description": "Checks if root user access key is available. The credentials of the account owner allow full access to all resources in the account.  AWS recommends that you create an IAM user with administrator permissions to use for everyday Amazon tasks and lock away the access keys for the root user. (https://docs.amazonaws.cn/en_us/general/latest/gr/root-vs-iam.html)",
     "queries": [
       {
         "name": "query0",
@@ -85,7 +85,7 @@
   },
   {
     "name": "iam-password-policy",
-    "description": "AWS password policy does not adhere to the organization's complexity, age and or history requirements.",
+    "description": "AWS password policy does not adhere to the organization's complexity, age and or history requirements. Refer to https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html#default-policy-details for details on the AWS default policy.",
     "queries": [
       {
         "name": "query0",
