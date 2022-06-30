@@ -421,7 +421,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_iam_user WITH mfaEnabled != true",
+        "query": "FIND aws_iam_user WITH mfaEnabled != true AND passwordEnabled = true",
         "version": "v1"
       }
     ],
