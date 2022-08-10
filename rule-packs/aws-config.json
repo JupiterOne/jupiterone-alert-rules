@@ -13,7 +13,7 @@
   },
   {
     "name": "ec2-instances-in-vpc",
-    "description": "EC2 instance not in a VPC.",
+    "description": "Checks if your EC2 instances belong to a virtual private cloud (VPC).",
     "queries": [
       {
         "name": "query0",
@@ -368,18 +368,6 @@
     "alertLevel": "LOW"
   },
   {
-    "name": "cloudwatch-log-group-encrypted",
-    "description": "Checks if a log group in Amazon CloudWatch Logs is encrypted with a AWS Key Management Service (KMS) managed Customer Master Keys (CMK).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_cloudwatch_log_group WITH encrypted != true",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
     "name": "dynamodb-pitr-enabled",
     "description": "Checks that point in time recovery (PITR) is enabled for Amazon DynamoDB tables.",
     "queries": [
@@ -637,19 +625,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_cloudwatch_log_group WITH encrypted != true THAT !USES aws_kms_key WITH keyManager = 'CUSTOMER'",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "ec2-instances-in-vpc",
-    "description": "Checks if your EC2 instances belong to a virtual private cloud (VPC).",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND aws_instance THAT !HAS aws_subnet",
+        "query": "FIND aws_cloudwatch_log_group THAT !USES aws_kms_key WITH keyManager = 'CUSTOMER'",
         "version": "v1"
       }
     ],
