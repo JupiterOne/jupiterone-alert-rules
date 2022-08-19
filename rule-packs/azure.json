@@ -383,5 +383,16 @@
             "version": "v1"
           }
         ]
-    }
-  ]
+    },
+    {
+      "name": "azure-virtual-machine-disablePasswordAuthentication",
+      "description": "Finds Azure virtual machines that allow all access with disabledPasswordAuthentication. ",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND azure_vm WITH disablePasswordAuthentication = true AS v\n  THAT ASSIGNED azure_service_principal\n  THAT ASSIGNED azure_role_assignment WITH actions = '*'\n  THAT ALLOWS azure_subscription as s\nRETURN \n   v.displayName,v.active,v.usesManagedDisks,\n   s.displayName",
+          "version": "v1"
+        }
+      ]
+  }
+] 
