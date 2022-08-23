@@ -386,7 +386,7 @@
     },
     {
       "name": "azure-virtual-machine-disablePasswordAuthentication",
-      "description": "Finds Azure virtual machines that allow all access with disabledPasswordAuthentication. ",
+      "description": "Finds Azure virtual machines with disabledPasswordAuthentication. ",
       "queries": [
         {
           "name": "query0",
