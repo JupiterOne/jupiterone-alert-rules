@@ -383,5 +383,16 @@
             "version": "v1"
           }
         ]
-    }
-  ]
+    },
+    {
+      "name": "azure-virtual-machine-disablePasswordAuthentication",
+      "description": "Finds Azure virtual machines with disabledPasswordAuthentication. ",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND azure_vm WITH disablePasswordAuthentication = true",
+          "version": "v1"
+        }
+      ]
+  }
+] 
