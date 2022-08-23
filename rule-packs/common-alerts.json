@@ -79,7 +79,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find jupiterone_integration WITH status = 'FAILED',
+        "query": "FIND jupiterone_integration WITH status = 'FAILED',
         "version": "v1"
       }
     ],
