@@ -72,7 +72,7 @@
       }
     ],
     "alertLevel": "MEDIUM"
-  }
+  },
   {
     "name": "J1-Integration-Failed-Accuracy-1Day",
     "description": "Find jupiterone_integrations that have failed. This data will be updated every 24 hours and will show the status of the last run of the integration at that point in time",
