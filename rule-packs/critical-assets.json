@@ -37,7 +37,7 @@
   },
   {
     "name": "critical-assets-problematic",
-    "description": "Find critical assets that are most problematic",
+    "description": "Find critical assets that are most problematic.",
     "queries": [
       {
         "name": "query0",
