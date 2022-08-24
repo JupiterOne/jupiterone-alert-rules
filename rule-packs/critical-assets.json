@@ -34,5 +34,17 @@
       }
     ],
     "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "critical-assets-problematic",
+    "description": "Find critical assets that are most problematic",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND #CriticalAsset AS e THAT HAS AS r Problem          \n RETURN \n e._type, e.displayName, COUNT(r) AS numProblems            \n ORDER BY numProblems DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"  
   }
 ]
