@@ -404,12 +404,12 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "iam-user-mfa-enabled",
-    "description": "Checks if the AWS Identity and Access Management users have multi-factor authentication (MFA) enabled.",
+    "name": "iam-user-mfa-disabled",
+    "description": "Checks if the AWS Identity and Access Management users have multi-factor authentication (MFA) enabled provided thet have an enabled password. Results will include system-mapper entities.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_iam_user WITH mfaEnabled != true",
+        "query": "FIND aws_iam_user WITH mfaEnabled != true AND passwordEnabled != false",
         "version": "v1"
       }
     ],
