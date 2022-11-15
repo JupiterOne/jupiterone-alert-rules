@@ -62,7 +62,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "find Internet\n  that CONNECTS aws_cloudfront_distribution with active=true as cloudfront\n  that CONNECTS aws_s3_bucket with classification!='public' as s3\nreturn\n  s3.bucketName, s3.tag.AccountName, s3.ownerId, s3.owner, s3.webLink,\n  cloudfront.domainName, cloudfront.tag.AccountName, cloudfront.webLink",
+        "query": "find Internet\n  that CONNECTS aws_cloudfront_distribution with active=true as cloudfront\n  that CONNECTS aws_s3_bucket with public = true as s3\nreturn\n  s3.bucketName, s3.tag.AccountName, s3.ownerId, s3.owner, s3.webLink,\n  cloudfront.domainName, cloudfront.tag.AccountName, cloudfront.webLink",
         "version": "v1"
       }
     ],
