@@ -709,7 +709,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_vpc AS vpc THAT !LOGS AS flowLog * AS destination RETURN vpc.tag.AccountName, vpc.displayName, vpc.vpcId",
+        "query": "FIND aws_vpc AS vpc THAT !LOGS * with _type^='aws_' RETURN vpc.tag.AccountName, vpc.displayName, vpc.vpcId",
         "version": "v1"
       }
     ],
