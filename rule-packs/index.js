@@ -7,3 +7,5 @@ module.exports.CommonAlerts= require('./common-alerts.json');
 module.exports.DevOps= require('./devops.json');
 module.exports.Compliance = require('./compliance.json');
 module.exports.CriticalAssets = require('./critical-assets.json');
+module.exports.ToxicCombinations = require('./toxic-combinations.json');
+module.exports.DeviceManagement = require('./device-management.json');
