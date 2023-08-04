@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Unscanned workloads with access to non-public cloud data",
+    "description": "Returns workloads including cloud compute functions that are not related to an active HostAgent or cloud scanning Service but have access to non-public DataStores (buckets/databases).",
+    "alertLevel": "HIGH",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND DataStore WITH public != true as data\n  THAT ALLOWS << AccessPolicy\n    THAT ASSIGNED << AccessRole\n      THAT (ASSIGNED|USES) (Host|Device|Function) as workload\n        THAT !(PROTECTS|MANAGES|MONITORS|SCANS) (HostAgent|Service)\n          WITH active=true\nRETURN\n  workload.displayName, workload.webLink, workload.id,\n  data.displayName, data.webLink"
+      }
+    ]
+  },
+  {
+    "name": "Unscanned workloads with access to critical cloud data",
+    "description": "Returns workloads including cloud compute functions that are not related to an active HostAgent or cloud scanning Service but have access to DataStores (buckets/databases) classified as CriticalAssets via user CriticalAsset definition.",
+    "alertLevel": "CRITICAL",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND #CriticalAsset with _class = 'DataStore' as data\n  THAT ALLOWS << AccessPolicy\n    THAT ASSIGNED << AccessRole\n      THAT (ASSIGNED|USES) (Host|Device|Function) as workload\n        THAT !(PROTECTS|MANAGES|MONITORS|SCANS) (HostAgent|Service)\n          WITH active=true\nRETURN\n  workload.displayName, workload.webLink, workload.id,\n  data.displayName, data.webLink"
+      }
+    ]
+  },
+  {
+    "name": "Unscanned workloads with ingress allowed from the internet",
+    "description": "Returns workloads including cloud compute functions that are not related to an active HostAgent or cloud scanning Service but are protected by a firewall that allows ingress from the internet (0.0.0.0/0)",
+    "alertLevel": "MEDIUM",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND Internet\n  THAT ALLOWS >> Firewall as fw\n    THAT PROTECTS (Host|Device|Function) as workload\n      THAT !(PROTECTS|MANAGES|MONITORS|SCANS) (HostAgent|Service)\n          WITH active=true\nRETURN\n  workload.displayName, workload.webLink, workload.id,\n  fw.displayName, fw.webLink"
+      }
+    ]
+  },
+  {
+    "name": "Unscanned endpoints with an owner that has access to non-public cloud data",
+    "description": "Returns user endpoints that are not related to an active HostAgent but are owned by a user that has access to non-public DataStores (buckets/databases).",
+    "alertLevel": "MEDIUM",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND DataStore WITH public != true as data\n  THAT ALLOWS << AccessPolicy\n    (THAT ASSIGNED << AccessRole)?\n      THAT ASSIGNED User as user\n        THAT IS Person as p\n          THAT OWNS Device as d\n            THAT !(PROTECTS|MANAGES|MONITORS|SCANS) (HostAgent|Service)\n              WITH active=true\nRETURN\n  d.displayName, d.macAddress, d.owner,\n  user.displayName, p.email"
+      }
+    ]
+  },
+  {
+    "name": "Unscanned endpoints with an owner that has access to critical cloud data",
+    "description": "Returns user endpoints that are not related to an active HostAgent but are owned by a user that has access to DataStores (buckets/databases) classified as CriticalAssets via user CriticalAsset definition.",
+    "alertLevel": "HIGH",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND #CriticalAsset with _class = 'DataStore'\n  THAT ALLOWS << AccessPolicy\n     (THAT ASSIGNED << AccessRole)?\n      THAT ASSIGNED User as user\n        THAT IS Person as p\n          THAT OWNS Device as d\n            THAT !(PROTECTS|MANAGES|MONITORS|SCANS) (HostAgent|Service)\n              WITH active=true\nRETURN\n  d.displayName, d.macAddress, d.owner,\n  user.displayName, p.email"
+      }
+    ]
+  }
+]

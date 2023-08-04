@@ -1,0 +1,146 @@
+[
+  {
+    "name": "Which of my devices have not been online in more than 72 hours?",
+    "description": "Returns all devices that have not been seen in the last 72 hours",
+    "alertLevel": "MEDIUM",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Host|Device) WITH lastSeenOn < date.now - 72 hours"
+      }
+    ]
+  },
+  {
+    "name": "Which devices are/are not encrypted?",
+    "description": "Returns all devices that do not have disk encryption",
+    "alertLevel": "CRITICAL",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND Device WITH encrypted = false"
+      }
+    ]
+  },
+  {
+    "name": "Are there problems with any of our Critical Devices?",
+    "description": "Returns all devices that are Critical Assets and are connected to a Problem entity",
+    "alertLevel": "MEDIUM",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND #CriticalAsset WITH _class=(\"Host\" or \"Device\")\n  THAT HAS Problem"
+      }
+    ]
+  },
+  {
+    "name": "Public Hosts and Devices that have not been seen in over a week",
+    "description": "Returns all hosts and devices that are publicly accessible, but haven't been scanned by a network / vulnerability scanner in over a week.",
+    "alertLevel": "HIGH",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Host|Device) WITH public = true\n  THAT (IS|PROTECTS|MANAGES|MONITORS|SCANS) (HostAgent|Record)\n    WITH lastSeenOn < date.now - 7 day"
+      }
+    ]
+  },
+  {
+    "name": "Endpoints missing agents or agent disabled",
+    "description": "Returns all endpoints that do not have active Host Agents",
+    "alertLevel": "HIGH",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Host|Device)\n  THAT !(PROTECTS|MANAGES|MONITORS|SCANS) HostAgent\n    WITH active = true"
+      }
+    ]
+  },
+  {
+    "name": "Endpoints with agents not reporting",
+    "description": "Returns all endpoints that have Host Agents which are not active or have not been seen within the last 30 days",
+    "alertLevel": "MEDIUM",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Host|Device)\n  THAT (PROTECTS|MANAGES|MONITORS|SCANS) HostAgent\n    WITH active = false OR lastSeenOn < date.now - 30 day"
+      }
+    ]
+  },
+  {
+    "name": "Endpoints not scanned for vulnerabilities",
+    "description": "Returns all devices not related to a vulnerability scanning Service",
+    "alertLevel": "MEDIUM",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND Device AS x  \n  THAT !(IS|SCANS|PROTECTS|MANAGES|MONITORS) (Record|Service|HostAgent)\n    WITH function = 'vulnerability-management'"
+      }
+    ]
+  },
+  {
+    "name": "Active endpoints with inactive owner (IdP relationship)",
+    "description": "Returns all endpoints that are used, owned, or managed by a person whose IdP user is inactive or hasn't logged in within the last 30 days",
+    "alertLevel": "HIGH",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Host|Device)\n  THAT (OWNS|MANAGES|HAS|USES) Person\n    THAT IS User\n      WITH (active = false OR lastLoginOn < date.now - 30 day)\n        AND _integrationClass=(\"SSO\" or \"IdP\") "
+      }
+    ]
+  },
+  {
+    "name": "Devices with Critical Vulns",
+    "description": "Returns all endpoints that have vulnerability findings with a normalized severity of 'critical'",
+    "alertLevel": "CRITICAL",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Host|Device)\n  (THAT (PROTECTS | MANAGES) HostAgent)?\n  THAT HAS Finding\n    WITH [j1_severity]='critical'"
+      }
+    ]
+  },
+  {
+    "name": "Devices with High Vulns",
+    "description": "Returns all endpoints that have vulnerability findings with a normalized severity of 'high'",
+    "alertLevel": "HIGH",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Host|Device)\n(THAT (PROTECTS | MANAGES) HostAgent)?\n  THAT HAS Finding WITH [j1_severity] = 'high'"
+      }
+    ]
+  },
+  {
+    "name": "Cloud workloads not scanned for vulnerabilities",
+    "description": "Returns all cloud hosts that are not related to a vulnerability scanning Service",
+    "alertLevel": "HIGH",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND Host WITH _integrationClass=\"CSP\"\n  THAT !(IS|SCANS) (Record|Service)\n    WITH function = 'vulnerability-management'"
+      }
+    ]
+  },
+  {
+    "name": "Which devices allow ingress via ports 22 or 443",
+    "description": "Returns all endpoints that allow inbound traffic on ports 22 or 443",
+    "alertLevel": "MEDIUM",
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND (Device|Host) as d\n  (THAT PROTECTS Firewall)?\n  THAT ALLOWS AS r (Network|Host|Function|Account) as a\nWHERE ((r.fromPort <= 22 and r.toPort >= 22)\n  OR (r.fromPort <= 443 and r.toPort >= 443)\n  OR r.portRange = undefined)\n  AND r.ingress = true\nRETURN\n  d.displayName, a.displayName, r.portRange"
+      }
+    ]
+  }
+]
