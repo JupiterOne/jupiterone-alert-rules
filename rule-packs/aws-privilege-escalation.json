@@ -24,18 +24,6 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "aws-ability-to-create-an-ec2-instance-with-a-pre-existing-instance-profile",
-    "description": "Users with the iam:PassRole and ec2:RunInstances permissions can create a new EC2 instance that they will have operating system access to and pass an existing EC2 instance profile/service role to it.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm (aws_iam|aws_ec2)\nWHERE perm.normalizedActions ~= ('iam:passrole' OR 'iam:*')\n  AND perm.normalizedActions ~= ('ec2:runinstances' OR 'ec2:*')",
-        "version": "v1"
-      }
-    ],
-    "alertLevel": "MEDIUM"
-  },
-  {
     "name": "aws-ability-to-create-a-user-access-key-for-another-user",
     "description": "Users with the iam:CreateAccessKey permission for other users can create an access key ID and secret access key belonging to another user in the AWS environment.",
     "queries": [
