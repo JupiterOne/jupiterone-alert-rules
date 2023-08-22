@@ -185,7 +185,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm * aws_glue\nWHERE perm.normalizedActions ~= ('glue:updatedevendpoint' OR 'glue:*')",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_glue\nWHERE perm.normalizedActions ~= ('glue:updatedevendpoint' OR 'glue:*')",
         "version": "v1"
       }
     ],
