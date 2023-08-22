@@ -20,6 +20,10 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 
 - `rule-packs/aws-threat.json`
 
+  Alert rules for AWS privilege escalation
+
+- `rule-packs/aws-privilege-escalation.json`
+
   Alert rules for AWS threat monitoring
 
 - `rule-packs/gcp.json`
@@ -29,27 +33,27 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 - `rule-packs/azure-config.json`
 
   Alert rules for Azure configuration audit
-  
+
 - `rule-packs/azure.json`
 
   Commonly used Azure alert rules
-  
+
 - `rule-packs/gcp.json`
 
   Commonly used GCP alert rules
-  
+
 - `rule-packs/common-alerts.json`
 
   Commonly used alert rules
-  
+
 - `rule-packs/critical-assets.json`
 
   Alert rules to monitor changes to and risks of critical assets
-  
+
 - `rule-packs/devops.json`
 
   Commonly used DevOps alert rules
-  
+
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules

@@ -1,0 +1,194 @@
+[
+  {
+    "name": "aws-ability-to-create-a-new-policy-version",
+    "description": "Users with the iam:CreatePolicyVersion permission can create a new version of an IAM policy that they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:createpolicyversion' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-change-the-default-policy-version-to-an-prior-version",
+    "description": "Users with the iam:SetDefaultPolicyVersion permission may be able to escalate privileges through existing policy versions that are not currently in use.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:setdefaultpolicyversion' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "aws-ability-to-create-an-ec2-instance-with-a-pre-existing-instance-profile",
+    "description": "Users with the iam:PassRole and ec2:RunInstances permissions can create a new EC2 instance that they will have operating system access to and pass an existing EC2 instance profile/service role to it.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm (aws_iam|aws_ec2)\nWHERE perm.normalizedActions ~= ('iam:passrole' OR 'iam:*')\n  AND perm.normalizedActions ~= ('ec2:runinstances' OR 'ec2:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "aws-ability-to-create-a-user-access-key-for-another-user",
+    "description": "Users with the iam:CreateAccessKey permission for other users can create an access key ID and secret access key belonging to another user in the AWS environment.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:createaccesskey' OR 'iam:*')\n  AND perm.resources !~=  User.username",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-ability-to-create-a-new-login-profile",
+    "description": "Users with the iam:CreateLoginProfile permission for other users can create a password to login to the AWS console as any user that does not already have a login profile setup.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:createloginprofile' OR 'iam:*')\n  AND perm.resources !~=  User.username",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "aws-ability-to-update-an-existing-login-profile",
+    "description": "Users with the iam:UpdateLoginProfile permission on other users can change the password used to login to the AWS console on any user that already has a login profile setup.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:updateloginprofile' OR 'iam:*')\n  AND perm.resources !~=  User.username",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-ability-to-attach-a-policy-to-a-user",
+    "description": "Users with the iam:AttachUserPolicy permission can escalate privileges by attaching another policy to their user.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:attachuserpolicy' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-attach-a-policy-to-a-group",
+    "description": "Users with the iam:AttachGroupPolicy permission can escalate privileges by attaching another policy to a group they are a part of.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:attachgrouppolicy' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-attach-a-policy-to-a-role",
+    "description": "Users with the iam:AttachRolePolicy permission can escalate privileges by attaching another policy to a role that they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:attachrolepolicy' OR 'iam:*')\n  AND perm.normalizedActions ~= ('sts:assumerole' OR 'sts:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-create-or-update-an-inline-policy-for-a-user",
+    "description": "Users with the iam:PutUserPolicy permission can escalate privileges by creating or updating an inline policy for a user that they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:putuserpolicy' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-create-or-update-an-inline-policy-for-a-group",
+    "description": "Users with the iam:PutUserPolicy permission can escalate privileges by creating or updating an inline policy for a group that they are a part of.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:putgrouppolicy' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-create-or-update-an-inline-policy-for-a-role",
+    "description": "Users with the iam:PutRolePolicy permission can escalate privileges by creating or updating an inline policy for a role that they have access to",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:putrolepolicy' OR 'iam:*')\n  AND perm.normalizedActions ~= ('sts:assumerole' OR 'sts:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-add-a-user-to-a-group",
+    "description": "Users with the iam:AddUserToGroup permission can use it to add themselves to an existing IAM Group in the AWS account.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:addusertogroup' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-ability-to-update-the-assumerolepolicydocument-of-a-role",
+    "description": "Users with the iam:UpdateAssumeRolePolicy and sts:AssumeRole permissions would be able to change the assume role policy document of any existing role to allow them to assume that role.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:updateassumerolepolicy' OR 'iam:*')\n  AND perm.normalizedActions ~= ('sts:assumerole' OR 'sts:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-update-the-code-of-an-existing-lambda-function",
+    "description": "A user with the lambda:UpdateFunctionCode permission could update the code in an existing Lambda function with an IAM role attached so that it would import the relevant AWS library in that programming language and use it to perform actions on behalf of that role.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_lambda\nWHERE perm.normalizedActions ~= ('lambda:updatefunctioncode' OR 'lambda:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-update-an-existing-glue-dev-endpoint",
+    "description": "A user with the glue:UpdateDevEndpoint permission would be able to update the associated SSH public key of an existing Glue development endpoint, to then SSH into it and have access to the permissions the attached role has access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm * aws_glue\nWHERE perm.normalizedActions ~= ('glue:updatedevendpoint' OR 'glue:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  }
+]
