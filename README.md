@@ -75,14 +75,3 @@ j1 -a <j1AccountId> -u <j1Username> -o provision-alert-rule-pack --alert -f aws-
 
 [1]: https://www.npmjs.com/package/@jupiterone/jupiterone-client-nodejs
 [2]: https://github.com/JupiterOne/jupiterone-client-nodejs
-
-## Contribution
-
-This repo is coupled to the `@jupiterone/jupiterone-alert-rules` npm package via Github Workflows.
-
-In order to publish your changes into a new npm package version, your **last commit** must be the
-commit that is automatically made via running `npm version patch` or `yarn version --patch`. You
-must then push your changes along with the version tag by using `git push --follow-tags`.
-
-Doing both of these things will inform the CI to publish a new package version when the edits are
-merged into `main`.
