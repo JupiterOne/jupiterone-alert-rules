@@ -1,6 +1,6 @@
 [
   {
-    "name": "gcp-possible-deployment-manager-deployments-create-privelege-escalation",
+    "name": "gcp-possible-deployment-manager-deployments-create-privilege-escalation",
     "description": "This permission lets you launch new deployments of resources into GCP as the <project number>@cloudservices.gserviceaccount.com Service Account, which, by default, is granted the Editor role on the project.",
     "queries": [
       {
@@ -12,7 +12,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-iam-roles-update-privelege-escalation",
+    "name": "gcp-possible-iam-roles-update-privilege-escalation",
     "description": "If a user is assigned a custom IAM role, then iam.roles.update will allow the user to update the “includedPermissons” on that role. Because it is assigned to the user, you will gain the additional privileges",
     "queries": [
       {
@@ -24,7 +24,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-get-access-token-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-get-access-token-privilege-escalation",
     "description": "This permission allows a user to request an access token that belongs to a specified Service Account. The user can escalate privileges by requesting an access token for a Service Account that has more privileges than what is intended.",
     "queries": [
       {
@@ -36,7 +36,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-iam-service-account-keys-create-privelege-escalation",
+    "name": "gcp-possible-iam-service-account-keys-create-privilege-escalation",
     "description": "This permission allows a user to create a user managed key for a service account, allowing for access as that service account. ",
     "queries": [
       {
@@ -48,7 +48,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-implicit-delegation-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-implicit-delegation-privilege-escalation",
     "description": "If a user has the iam.serviceAccounts.implicitDelegation permission on another Service Account that has the iam.serviceAccounts.getAccessToken permission on a third Service Account, then one can use implicitDelegation to create a token for that third Service Account.",
     "queries": [
       {
@@ -60,7 +60,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-sign-blob-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-sign-blob-privilege-escalation",
     "description": "The iam.serviceAccounts.signBlob permission “allows signing of arbitrary payloads” in GCP",
     "queries": [
       {
@@ -72,7 +72,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-sign-jwt-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-sign-jwt-privilege-escalation",
     "description": "The iam.serviceAccounts.signJwt permission allows for signing a well formed JSON web tokens (JWT's) and requesting a new access token belonging to the service account. ",
     "queries": [
       {
@@ -84,7 +84,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-act-as-cloud-functions-functions-create-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-act-as-cloud-functions-functions-create-privilege-escalation",
     "description": "This permission can update or overwrite an existing function instead of creating a new one. The API used to update the function also allows you to swap the Service Account if you have another one you want to get the token for.",
     "queries": [
       {
@@ -96,7 +96,7 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-act-as-cloud-functions-functions-update-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-act-as-cloud-functions-functions-update-privilege-escalation",
     "description": "This combination of permissions allows a user to update (overwrite) an existing function instead of creating a new one. The API used to update the function also allows you to swap the Service Account if you have another one you want to get the token for.",
     "queries": [
       {
@@ -108,7 +108,7 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-act-as-compute-instances-create-privelege-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-act-as-compute-instances-create-privilege-privilege-escalation",
     "description": "This method creates a new Compute Engine instance with a specified Service Account, then sends the token belonging to that Service Account to an external server.",
     "queries": [
       {
@@ -120,7 +120,7 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-act-as-run-services-create-privelege-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-act-as-run-services-create-privilege-privilege-escalation",
     "description": "This method creates a new Cloud Run Service that, when invoked, returns the Service Account’s access token by accessing the metadata API of the server it is running on",
     "queries": [
       {
@@ -132,7 +132,7 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "gcp-possible-iam-service-accounts-act-as-cloudscheduler-jobs-create-privelege-escalation",
+    "name": "gcp-possible-iam-service-accounts-act-as-cloudscheduler-jobs-create-privilege-escalation",
     "description": "This escalation path involves leveraging the combination of the iam.serviceAccounts.actAs permission and the cloudscheduler.jobs.create capability in Google Cloud Platform (GCP) to potentially gain elevated privileges",
     "queries": [
       {
@@ -144,7 +144,7 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "gcp-possible-org-policy-policy-set-privelege-escalation",
+    "name": "gcp-possible-org-policy-policy-set-privilege-escalation",
     "description": "This method may disable barriers preventing certain actions (i.e appengine.disableCodeDownload) and thus proceeding around safegaurds.",
     "queries": [
       {
@@ -156,7 +156,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-potential-storage-hmac-keys-create-privelege-escalation",
+    "name": "gcp-potential-storage-hmac-keys-create-privilege-escalation",
     "description": "HMAC keys that can be created for both Service Accounts and regular users. A user can escalate Cloud Storage permissions by creating an HMAC key for a higher-privileged Service Account.",
     "queries": [
       {
@@ -168,7 +168,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-service-usage-api-keys-create-privelege-escalation",
+    "name": "gcp-possible-service-usage-api-keys-create-privilege-escalation",
     "description": "API keys are created with no restrictions, which means they have access to the entire GCP project they were created in. A user can capitalize on that fact by creating a new API key that may have more privileges than intended.",
     "queries": [
       {
@@ -180,7 +180,7 @@
     "alertLevel": "MEDIUM"
   },
   {
-    "name": "gcp-possible-service-usage-api-keys-list-privelege-escalation",
+    "name": "gcp-possible-service-usage-api-keys-list-privilege-escalation",
     "description": "Because you can still see the API key’s value after its creation, This permission will allow a user to pull all the API keys in the project.",
     "queries": [
       {
