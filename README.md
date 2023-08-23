@@ -44,6 +44,10 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 
 - `rule-packs/common-alerts.json`
 
+  Alert rules for GCP privelege escalation
+
+- `rule-packs/gcp-privelege-escalation.json`
+
   Commonly used alert rules
 
 - `rule-packs/critical-assets.json`

@@ -1,0 +1,194 @@
+[
+  {
+    "name": "gcp-possible-deployment-manager-deployments-create-privelege-escalation",
+    "description": "This permission lets you launch new deployments of resources into GCP as the <project number>@cloudservices.gserviceaccount.com Service Account, which, by default, is granted the Editor role on the project.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = \"deploymentmanager.deployments.create\" AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-iam-roles-update-privelege-escalation",
+    "description": "If a user is assigned a custom IAM role, then iam.roles.update will allow the user to update the “includedPermissons” on that role. Because it is assigned to the user, you will gain the additional privileges",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = \"iam.roles.update\" AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-get-access-token-privelege-escalation",
+    "description": "This permission allows a user to request an access token that belongs to a specified Service Account. The user can escalate privileges by requesting an access token for a Service Account that has more privileges than what is intended.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = \"iam.serviceAccounts.getAccessToken\" AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n  RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-iam-service-account-keys-create-privelege-escalation",
+    "description": "This permission allows a user to create a user managed key for a service account, allowing for access as that service account. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = \"iam.serviceAccountKeys.create\" AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-implicit-delegation-privelege-escalation",
+    "description": "If a user has the iam.serviceAccounts.implicitDelegation permission on another Service Account that has the iam.serviceAccounts.getAccessToken permission on a third Service Account, then one can use implicitDelegation to create a token for that third Service Account.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = \"iam.serviceAccounts.implicitDelegation\" AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-sign-blob-privelege-escalation",
+    "description": "The iam.serviceAccounts.signBlob permission “allows signing of arbitrary payloads” in GCP",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = \"iam.serviceAccounts.signBlob\" AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-sign-jwt-privelege-escalation",
+    "description": "The iam.serviceAccounts.signJwt permission allows for signing a well formed JSON web tokens (JWT's) and requesting a new access token belonging to the service account. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = \"iam.serviceAccounts.signJwt\" AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-act-as-cloud-functions-functions-create-privelege-escalation",
+    "description": "This permission can update or overwrite an existing function instead of creating a new one. The API used to update the function also allows you to swap the Service Account if you have another one you want to get the token for.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"cloudfunctions.functions.call \" OR \"cloudfunctions.functions.setIamPolicy\")\n AND permissions = (\"cloudfunctions.functions.create\" AND \"cloudfunctions.functions.sourceCodeSet\" AND \"iam.serviceAccounts.actAs\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-act-as-cloud-functions-functions-update-privelege-escalation",
+    "description": "This combination of permissions allows a user to update (overwrite) an existing function instead of creating a new one. The API used to update the function also allows you to swap the Service Account if you have another one you want to get the token for.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"cloudfunctions.functions.sourceCodeSet\" AND \"cloudfunctions.functions.update\" AND \"iam.serviceAccounts.actAs\") as m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-act-as-compute-instances-create-privelege-privelege-escalation",
+    "description": "This method creates a new Compute Engine instance with a specified Service Account, then sends the token belonging to that Service Account to an external server.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"compute.disks.create\" AND \"compute.instances.create\" AND \"compute.instances.setMetadata\" AND \"compute.instances.setServiceAccount\" AND \"compute.subnetworks.use\" AND \"compute.subnetworks.useExternalIp\" AND \"iam.serviceAccounts.actAs\") as m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-act-as-run-services-create-privelege-privelege-escalation",
+    "description": "This method creates a new Cloud Run Service that, when invoked, returns the Service Account’s access token by accessing the metadata API of the server it is running on",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"run.services.setIamPolicy\" OR \"run.routes.invoke\")\n AND permissions = (\"run.services.create\" AND \"iam.serviceAccounts.actAs\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "gcp-possible-iam-service-accounts-act-as-cloudscheduler-jobs-create-privelege-escalation",
+    "description": "This escalation path involves leveraging the combination of the iam.serviceAccounts.actAs permission and the cloudscheduler.jobs.create capability in Google Cloud Platform (GCP) to potentially gain elevated privileges",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"cloudscheduler.jobs.create\" AND \"cloudscheduler.locations.list\" AND \"iam.serviceAccounts.actAs\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "gcp-possible-org-policy-policy-set-privelege-escalation",
+    "description": "This method may disable barriers preventing certain actions (i.e appengine.disableCodeDownload) and thus proceeding around safegaurds.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"orgpolicy.policy.set\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-potential-storage-hmac-keys-create-privelege-escalation",
+    "description": "HMAC keys that can be created for both Service Accounts and regular users. A user can escalate Cloud Storage permissions by creating an HMAC key for a higher-privileged Service Account.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"storage.hmacKeys.create\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-service-usage-api-keys-create-privelege-escalation",
+    "description": "API keys are created with no restrictions, which means they have access to the entire GCP project they were created in. A user can capitalize on that fact by creating a new API key that may have more privileges than intended.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"serviceusage.apiKeys.create\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-service-usage-api-keys-list-privelege-escalation",
+    "description": "Because you can still see the API key’s value after its creation, This permission will allow a user to pull all the API keys in the project.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding\n WITH permissions = (\"serviceusage.apiKeys.list\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  }
+]
