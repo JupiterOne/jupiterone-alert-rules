@@ -20,6 +20,10 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 
 - `rule-packs/aws-threat.json`
 
+  Alert rules for AWS privilege escalation
+
+- `rule-packs/aws-privilege-escalation.json`
+
   Alert rules for AWS threat monitoring
 
 - `rule-packs/gcp.json`
@@ -29,27 +33,27 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 - `rule-packs/azure-config.json`
 
   Alert rules for Azure configuration audit
-  
+
 - `rule-packs/azure.json`
 
   Commonly used Azure alert rules
-  
+
 - `rule-packs/gcp.json`
 
   Commonly used GCP alert rules
-  
+
 - `rule-packs/common-alerts.json`
 
   Commonly used alert rules
-  
+
 - `rule-packs/critical-assets.json`
 
   Alert rules to monitor changes to and risks of critical assets
-  
+
 - `rule-packs/devops.json`
 
   Commonly used DevOps alert rules
-  
+
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
@@ -71,14 +75,3 @@ j1 -a <j1AccountId> -u <j1Username> -o provision-alert-rule-pack --alert -f aws-
 
 [1]: https://www.npmjs.com/package/@jupiterone/jupiterone-client-nodejs
 [2]: https://github.com/JupiterOne/jupiterone-client-nodejs
-
-## Contribution
-
-This repo is coupled to the `@jupiterone/jupiterone-alert-rules` npm package via Github Workflows.
-
-In order to publish your changes into a new npm package version, your **last commit** must be the
-commit that is automatically made via running `npm version patch` or `yarn version --patch`. You
-must then push your changes along with the version tag by using `git push --follow-tags`.
-
-Doing both of these things will inform the CI to publish a new package version when the edits are
-merged into `main`.
