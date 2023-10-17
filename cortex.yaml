@@ -1,0 +1,12 @@
+openapi: 3.0.1
+info:
+  title: '@jupiterone/jupiterone-alert-rules'
+  description: Alert rule packages for the JupiterOne platform
+  x-cortex-git:
+    github:
+      repository: JupiterOne/jupiterone-alert-rules
+  x-cortex-owners:
+    - type: group
+      name: JupiterOne/solutions
+  x-cortex-service-groups: tier-4
+  x-cortex-tag: '@jupiterone/jupiterone-alert-rules'
