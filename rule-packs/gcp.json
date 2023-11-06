@@ -5,7 +5,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "find google_user with email !$='@{{domain}'",
+          "query": "FIND google_user WITH email !$='@{{domain}}'",
           "version": "v1"
         }
       ]
