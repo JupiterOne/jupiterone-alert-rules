@@ -74,7 +74,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_instance as i1 that uses Key \n  that uses aws_instance as i2 \nwhere i1.instanceId != i2.instanceId \nreturn \n  Key._type, Key.name, Key.tag.AccountName, \n  i1.instanceId, i1.region, i1.webLink, \n  i2.instanceId, i2.region, i2.webLink",
+        "query": "Find aws_instance as i1 that uses >> Key \n  that uses << aws_instance as i2 \nwhere i1.instanceId != i2.instanceId \nreturn \n  Key._type, Key.name, Key.tag.AccountName, \n  i1.instanceId, i1.region, i1.webLink, \n  i2.instanceId, i2.region, i2.webLink",
         "version": "v1"
       }
     ]
