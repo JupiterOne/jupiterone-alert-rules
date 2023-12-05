@@ -8,5 +8,6 @@ info:
   x-cortex-owners:
     - type: group
       name: JupiterOne/solutions
-  x-cortex-service-groups: tier-4
   x-cortex-tag: '@jupiterone/jupiterone-alert-rules'
+  x-cortex-service-groups:
+    - tier-4
