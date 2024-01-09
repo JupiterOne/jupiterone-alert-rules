@@ -1098,5 +1098,17 @@
       }
     ],
     "alertLevel": "HIGH"
+  },
+  {
+    "name": "cloudfront-default-root-object-configured",
+    "description": "Checks if an Amazon CloudFront distribution is configured to return a specific object that is the default root object.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_cloudfront_distribution WITH defaultRootObject = ''",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
   }
 ]
