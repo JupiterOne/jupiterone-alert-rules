@@ -1,10 +1,10 @@
 {
     "name": "jupiterone-integration-failures",
-    "description": "Integrations have failed to run or are in a hung state.",
+    "description": "JupiterOne Integrations currently in a 'FAILED' status with a defined Polling Interval",
     "queries": [
       {
         "name": "query0",
-        "query": "find jupiterone_integration with ((status='IN_PROGRESS' and _beginOn < date.now - 2 day) OR status = 'FAILED') AND pollingInterval!='DISABLED'",
+        "query": "FIND jupiterone_integration WITH status = 'FAILED' AND pollingInterval != 'DISABLED'",
         "version": "v1"
       }
     ],
