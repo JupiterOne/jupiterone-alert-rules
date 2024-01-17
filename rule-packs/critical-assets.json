@@ -38,11 +38,11 @@
   },
   {
     "name": "critical-assets-critical-alert",
-    "description": "Find critical assets with a critical alert associated. These Detections, Problems, or Misconfigurations should be triaged and resolved on priority.",
+    "description": "Find critical assets with a critical alert associated. These Detections, Problems, or Misconfigurations should be triaged and resolved as a priority.",
     "queries": [
       {
         "name": "query0",
-        "query": "FIND #CriticalAsset THAT HAS Alert WITH level = 'CRITICAL'",
+        "query": "FIND #CriticalAsset THAT HAS Alert WITH level = 'CRITICAL' AND displayName != 'critical-assets-critical-alert'",
         "version": "v1"
       }
     ],
