@@ -8,7 +8,8 @@
         "query": "Find #CriticalAsset with _createdOn >= date.now-24hours",
         "version": "v1"
       }
-    ]
+    ],
+    "alertLevel": "INFO"
   },
   {
     "name": "critical-assets-deleted",
@@ -30,6 +31,18 @@
       {
         "name": "query0",
         "query": "Find #CriticalAsset that (ALLOWS|CONNECTS) (Internet|Everyone)",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "critical-assets-critical-alert",
+    "description": "Find critical assets with a critical alert associated. These Detections, Problems, or Misconfigurations should be triaged and resolved as a priority.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND #CriticalAsset THAT HAS Alert WITH level = 'CRITICAL' AND displayName != 'critical-assets-critical-alert'",
         "version": "v1"
       }
     ],
