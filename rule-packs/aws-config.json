@@ -1113,7 +1113,7 @@
   },
   {
     "name": "ec2-imdsv2-optional",
-    "description": "Checks if an Amazon EC2 Instances have been configured to no require Instance Metadata Service Version 2 (IMDSv2)",
+    "description": "Checks if an Amazon EC2 Instance have been configured to not require Instance Metadata Service Version 2 (IMDSv2)",
     "queries": [
       {
         "name": "query0",
