@@ -1110,5 +1110,17 @@
       }
     ],
     "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "ec2-imdsv2-optional",
+    "description": "Checks if an Amazon EC2 Instances have been configured to no require Instance Metadata Service Version 2 (IMDSv2)",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "find aws_instance with httpTokens = 'optional' and httpEndpointEnabled=true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
   }
 ]
