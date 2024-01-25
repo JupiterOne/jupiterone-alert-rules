@@ -1,4 +1,5 @@
-{
+[
+  {
     "name": "jupiterone-integration-failures",
     "description": "JupiterOne Integrations currently in a 'FAILED' status with a defined Polling Interval",
     "queries": [
@@ -13,4 +14,5 @@
       "emailBody": "({{itemIndex+1}} of {{itemCount}}) <br><b>{{item.displayName}}</b><br>---<br><b>Integration:</b>{{item.integrationType}}<br><b>InstanceId:</b> {{item.id}}<br><b>Status:</b> {{item.status}}<br><b>PollingInterval:</b> {{item.pollingInterval}}<br><b>URL:</b> https://apps.us.jupiterone.io/integrations/{{item.integrationType}}/{{item.id}}/jobs<br><br>",
       "slackBody": "({{itemIndex+1}} of {{itemCount}}) \n*{{item.displayName}}*\n---\n*Integration:* {{item.integrationType}}\n*InstanceId:* {{item.id}}\n*Status:* {{item.status}}\n *PollingInterval:* {{item.pollingInterval}}\n *URL:* https://apps.us.jupiterone.io/integrations/{{item.integrationType}}/{{item.id}}/jobs \n\n"
     }
-}
+  }
+]
