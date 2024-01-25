@@ -58,6 +58,10 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 
   Commonly used DevOps alert rules
 
+- `rule-packs/integration-monitoring.json`
+
+  Alert rules for monitoring integration status
+
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
