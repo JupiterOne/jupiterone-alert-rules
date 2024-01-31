@@ -21,7 +21,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: yarn
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
+          yarn
 
       - name: Validate
         run: yarn validate
