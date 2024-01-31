@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
         os: [ubuntu-latest]
 
     steps:
@@ -23,6 +23,9 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Validate
+        run: yarn validate
+
   # Publishing is done in a separate job to allow
   # for all matrix builds to complete.
   release:
@@ -32,13 +35,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [14]
+        node-version: [18.x]
 
     steps:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: ${{ matrix.node-version }}
 
       - name: Check out repo
         uses: actions/checkout@v2

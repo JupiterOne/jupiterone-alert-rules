@@ -2,11 +2,21 @@
   "name": "@jupiterone/jupiterone-alert-rules",
   "version": "0.23.0",
   "description": "Alert rule packages for the JupiterOne platform",
+  "scripts": {
+    "validate": "node --loader tsx ./scripts/validate.ts"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/JupiterOne/jupiterone-alert-rules"
   },
   "license": "MIT",
   "main": "index.js",
-  "author": "JupiterOne <dev@jupiterone.io>"
+  "author": "JupiterOne <dev@jupiterone.io>",
+  "devDependencies": {
+    "@jupiterone/query-language-parser": "^3.16.1",
+    "@types/node": "^20.11.13",
+    "euberlog": "^2.5.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
 }
