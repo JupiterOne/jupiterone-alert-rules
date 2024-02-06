@@ -921,7 +921,7 @@
   },
   {
     "name": "ec2-security-group-attached-to-eni",
-    "description": "Checks if non-default security groups are not currently attached to EC2 instances or an ENI.",
+    "description": "Checks that any non-default security groups are in use and attached to EC2 instances or an ENI.",
     "queries": [
       {
         "name": "query0",
