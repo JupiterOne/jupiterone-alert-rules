@@ -1,4 +1,3 @@
-#start-sophos-endpoint-misconfigurations
 [
   {
     "name": "sophos-misconfigured-endpoints-1",
@@ -108,10 +107,6 @@
     ]
     "alertLevel": "MEDIUM"
   },
-]
-#end-sophos-endpoint-misconfigurations
-#start-sophos-user-app-misconfigurations
-[
   {
     "name": "sophos-misconfigured-endpoints-1",
     "description": "This will query Sophos platform users that are potentially inactive but haven't been deactivated.",
@@ -149,6 +144,3 @@
     "alertLevel": "MEDIUM"
   },
 ]
-#end-sophos-user-app-misconfigurations
-#start-sophos-incident-response
-#end-sophos-incident-response
