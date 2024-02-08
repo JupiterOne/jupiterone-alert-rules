@@ -8,7 +8,7 @@
         "query": "FIND Device !PROTECTS << sophos_endpoint",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -20,7 +20,7 @@
         "query": "Find sophos_endpoint that !HAS User THAT IS Person THAT IS okta_user|azure_user|google_user",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -32,7 +32,7 @@
         "query": "FIND sophos_endpoint with tamperProtectionEnabled != true ",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -41,10 +41,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint with lockdownStatus != ("installing" or "registering" or "starting" or "stopping" or "unlocked")",
+        "query": "FIND sophos_endpoint with lockdownStatus != ('installing' or 'registering' or 'starting' or 'stopping' or 'unlocked')",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -53,10 +53,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint with updateStatus != ("upToDate" or "updating" or "rebootRequired")",
+        "query": "FIND sophos_endpoint with updateStatus != ('upToDate' or 'updating' or 'rebootRequired')",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -65,10 +65,10 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_device with portsEnabled != "443"",
+        "query": "FIND sophos_device with portsEnabled != '443'",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -80,7 +80,7 @@
         "query": "FIND sophos_endpoint WITH policyType = undefined",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -92,7 +92,7 @@
         "query": "FIND sophos_endpoint WHERE policyType != undefined AND policyTypeUpToDate != true",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -104,7 +104,7 @@
         "query": "FIND sophos_endpoint with encryption != true",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -116,7 +116,7 @@
         "query": "FIND sophos_user that has a updatedAt > 30 days",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -128,7 +128,7 @@
         "query": "FIND sophos_user WITH sophos_role that has permissionSet = defined",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
   },
   {
@@ -140,7 +140,7 @@
         "query": "FIND sophos_endpoint_protection WHERE protected != true",
         "version": "v1"
       }
-    ]
+    ],
     "alertLevel": "MEDIUM"
-  },
+  }
 ]
