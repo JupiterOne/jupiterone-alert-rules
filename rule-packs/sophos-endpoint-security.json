@@ -1,0 +1,146 @@
+[
+  {
+    "name": "sophos-misconfigured-endpoints-1",
+    "description": "This will query for endpoints that do not have a Sophos EDR agent installed.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND Device !PROTECTS << sophos_endpoint",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-2",
+    "description": "This will query for endpoints that are missing a relationship with a user. This will help determine potential rogue devices",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find sophos_endpoint that !HAS User THAT IS Person THAT IS okta_user|azure_user|google_user",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-3",
+    "description": "This query is looking for devices that do not have tamper-protection enabled. Tamper Protection is a feature that prevents unauthorized users and certain types of known malware from uninstalling Sophos security software or turning it off through the Sophos interface.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_endpoint with tamperProtectionEnabled != true ",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-4",
+    "description": "This query is looking for endpoints with an unexpected lockdown status. Any status locked, notInstalled, unavailable,uninstalled is considered unexpected.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_endpoint with lockdownStatus != ('installing' or 'registering' or 'starting' or 'stopping' or 'unlocked')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-5",
+    "description": "This query is looking for endpoints with an unexpected update status. This includes any endpoint with a status of notInstalled.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_endpoint with updateStatus != ('upToDate' or 'updating' or 'rebootRequired')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-6",
+    "description": "This query will look for endpoints with with unusual listening ports enabled. This will help in determining potential rogue devices or devices of risk.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_device with portsEnabled != '443'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-7",
+    "description": "This query will look for endpoints that do not have a policyType assigned. The following are appropriate policyTypes: threat-protection, peripheral-control, application-control, data-loss-prevention, web-control, agent-updating, windows-firewall, device-encryption, server-threat-protection, server-peripheral-control, server-application-control, server-web-control, server-lockdown, server-data-loss-prevention, server-agent-updating, server-windows-firewall, server-file-integrity",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_endpoint WITH policyType = undefined",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-8",
+    "description": "This query will return any endpoints with an out of date policyType",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_endpoint WHERE policyType != undefined AND policyTypeUpToDate != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-9",
+    "description": "This query will return endpoints that have an unencrypted status.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_endpoint with encryption != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-1",
+    "description": "This will query Sophos platform users that are potentially inactive but haven't been deactivated.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_user that has a updatedAt > 30 days",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-endpoints-2",
+    "description": "This will use the permissionSet fields to determine service/user permissions to ensure that separation of duties is established.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_user WITH sophos_role that has permissionSet = defined",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sophos-misconfigured-app-1",
+    "description": "This query will alert on applications that do not have a protected status of true. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND sophos_endpoint_protection WHERE protected != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  }
+]
