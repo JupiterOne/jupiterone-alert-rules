@@ -2,7 +2,7 @@
 [
   {
     "name": "sophos-misconfigured-endpoints-1",
-    "description": "This will query for endpoints that do not have sophos edr installed.",
+    "description": "This will query for endpoints that do not have a Sophos EDR agent installed.",
     "queries": [
       {
         "name": "query0",
@@ -18,7 +18,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find sophos_sensor that !HAS User THAT IS Person THAT IS okta_user|azure_user|google_user",
+        "query": "Find sophos_endpoint that !HAS User THAT IS Person THAT IS okta_user|azure_user|google_user",
         "version": "v1"
       }
     ]
@@ -38,7 +38,7 @@
   },
   {
     "name": "sophos-misconfigured-endpoints-4",
-    "description": "This query is looking for endpoints with an unacceptable lockdown status. Any status locked, notInstalled, unavailable,uninstalled is considered unacceptable",
+    "description": "This query is looking for endpoints with an unexpected lockdown status. Any status locked, notInstalled, unavailable,uninstalled is considered unexpected.",
     "queries": [
       {
         "name": "query0",
@@ -50,7 +50,7 @@
   },
   {
     "name": "sophos-misconfigured-endpoints-5",
-    "description": "This query is looking for endpoints with an unacceptable update status. This includes any endpoint with a status of notInstalled.",
+    "description": "This query is looking for endpoints with an unexpected update status. This includes any endpoint with a status of notInstalled.",
     "queries": [
       {
         "name": "query0",
@@ -62,23 +62,11 @@
   },
   {
     "name": "sophos-misconfigured-endpoints-6",
-    "description": "This query will look for endpoints with misconfigured ports. This will help in determining potential rogue devices or devices of risk.",
+    "description": "This query will look for endpoints with with unusual listening ports enabled. This will help in determining potential rogue devices or devices of risk.",
     "queries": [
       {
         "name": "query0",
         "query": "FIND sophos_device with portsEnabled != "443"",
-        "version": "v1"
-      }
-    ]
-    "alertLevel": "MEDIUM"
-  },
-  {
-    "name": "domain-expires-in-30-days",
-    "description": "Find registered domain names with an expiration date within 30 days from now and not set to auto-renew.",
-    "queries": [
-      {
-        "name": "query0",
-        "query": "Find Domain with expiresOn < date.now+30days and autoRenew!=true",
         "version": "v1"
       }
     ]
@@ -114,7 +102,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_enpoint with encryption != true",
+        "query": "FIND sophos_endpoint with encryption != true",
         "version": "v1"
       }
     ]
@@ -126,7 +114,7 @@
 [
   {
     "name": "sophos-misconfigured-endpoints-1",
-    "description": "This will query users that are potentially inactive but haven't been deactivated.",
+    "description": "This will query Sophos platform users that are potentially inactive but haven't been deactivated.",
     "queries": [
       {
         "name": "query0",
@@ -142,7 +130,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_user that has a updatedAt > 30 days",
+        "query": "FIND sophos_user WITH sophos_role that has permissionSet = defined",
         "version": "v1"
       }
     ]
