@@ -78,7 +78,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint WHERE policyType = undefined",
+        "query": "FIND sophos_endpoint WITH policyType = undefined",
         "version": "v1"
       }
     ]
