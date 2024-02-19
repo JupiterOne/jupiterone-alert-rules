@@ -17,7 +17,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "Find sophos_endpoint that !HAS User THAT IS Person THAT IS okta_user|azure_user|google_user",
+        "query": "FIND sophos_endpoint that !HAS User THAT IS Person THAT IS (okta_user|azure_user|google_user)",
         "version": "v1"
       }
     ],
@@ -29,7 +29,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint WITH tamperProtectionEnabled != true ",
+        "query": "FIND sophos_endpoint WITH tamperProtectionEnabled != true",
         "version": "v1"
       }
     ],
@@ -89,7 +89,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint WHERE policyType != undefined AND policyTypeUpToDate != true",
+        "query": "FIND sophos_endpoint WITH policyType != undefined AND policyTypeUpToDate != true",
         "version": "v1"
       }
     ],
@@ -113,7 +113,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_user WHERE lastActive > 30 days",
+        "query": "FIND sophos_user WITH lastActive > date.now - 30 days",
         "version": "v1"
       }
     ],
@@ -125,7 +125,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_user WITH sophos_role that has permissionSet = defined",
+        "query": "FIND sophos_user THAT RELATES TO sophos_role WITH permissionSet != undefined",
         "version": "v1"
       }
     ],
@@ -137,7 +137,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint_protection WHERE protected != true",
+        "query": "FIND sophos_endpoint_protection WITH protected != true",
         "version": "v1"
       }
     ],
