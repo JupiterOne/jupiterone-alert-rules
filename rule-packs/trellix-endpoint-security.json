@@ -77,7 +77,7 @@
         "queries": [
             {
                 "name": "query0",
-                "query": "FIND trellix_device with createdOn < 24 hours return device.name, device.user ",
+                "query": "FIND trellix_device WITH createdOn < 24 hours return device.name, device.user ",
                 "version": "v1"
             }
         ],
@@ -89,7 +89,7 @@
         "queries": [
             {
                 "name": "query0",
-                "query": "FIND trellix_device !ASSIGNED trellix_group",
+                "query": "FIND trellix_device THAT !ASSIGNED trellix_group",
                 "version": "v1"
             }
         ],
@@ -101,7 +101,7 @@
         "queries": [
             {
                 "name": "query0",
-                "query": "FIND trellix_apiKey or trellix_mobileApiKey with expiredOn = true OR startDate > 365 days",
+                "query": "FIND (trellix_apiKey|trellix_mobileApiKey) WITH expiredOn = true OR startDate > 365 days",
                 "version": "v1"
             }
         ],
