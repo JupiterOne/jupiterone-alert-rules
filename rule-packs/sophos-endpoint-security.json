@@ -5,7 +5,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND Device !PROTECTS << sophos_endpoint",
+        "query": "FIND Device THAT !PROTECTS << sophos_endpoint",
         "version": "v1"
       }
     ],
@@ -29,7 +29,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint with tamperProtectionEnabled != true ",
+        "query": "FIND sophos_endpoint WITH tamperProtectionEnabled != true ",
         "version": "v1"
       }
     ],
@@ -41,7 +41,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint with lockdownStatus != ('installing' or 'registering' or 'starting' or 'stopping' or 'unlocked')",
+        "query": "FIND sophos_endpoint WITH lockdownStatus != ('installing' OR 'registering' OR 'starting' OR 'stopping' OR 'unlocked')",
         "version": "v1"
       }
     ],
@@ -53,7 +53,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint with updateStatus != ('upToDate' or 'updating' or 'rebootRequired')",
+        "query": "FIND sophos_endpoint WITH updateStatus != ('upToDate' OR 'updating' OR 'rebootRequired')",
         "version": "v1"
       }
     ],
@@ -65,7 +65,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_device with portsEnabled != '443'",
+        "query": "FIND sophos_device WITH portsEnabled != '443'",
         "version": "v1"
       }
     ],
@@ -101,7 +101,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_endpoint with encryption != true",
+        "query": "FIND sophos_endpoint WITH encryption != true",
         "version": "v1"
       }
     ],
@@ -113,7 +113,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND sophos_user that has a updatedAt > 30 days",
+        "query": "FIND sophos_user WHERE lastActive > 30 days",
         "version": "v1"
       }
     ],
