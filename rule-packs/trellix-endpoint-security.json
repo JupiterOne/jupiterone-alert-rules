@@ -48,7 +48,7 @@
         "alertLevel": "MEDIUM"
     },
     {
-        "name": "trellix-threats-4",
+        "name": "trellix-threats-5",
         "description": "This will return trellix endpoints that do not have a trellix agent installed",
         "queries": [
             {
@@ -60,7 +60,7 @@
         "alertLevel": "MEDIUM"
     },
     {
-        "name": "trellix-threats-4",
+        "name": "trellix-threats-6",
         "description": "This will return trellix endpoints that have not reported a threat in the last 2 weeks. This may be due to a device that is no longer active, or is reporting incorrectly.",
         "queries": [
             {
@@ -72,7 +72,7 @@
         "alertLevel": "INFO"
     },
     {
-        "name": "trellix-threats-4",
+        "name": "trellix-threats-7",
         "description": "This will alert when a device is First Seen.",
         "queries": [
             {
@@ -84,7 +84,7 @@
         "alertLevel": "INFO"
     },
     {
-        "name": "trellix-threats-4",
+        "name": "trellix-threats-8",
         "description": "All devices should be under a group. This will notifiy if a trellix device is not associated with a trellix group",
         "queries": [
             {
@@ -96,12 +96,12 @@
         "alertLevel": "MEDIUM"
     },
     {
-        "name": "trellix-threats-4",
+        "name": "trellix-threats-9",
         "description": "Look for potential Expired API keys.",
         "queries": [
             {
                 "name": "query0",
-                "query": "FIND (trellix_apiKey|trellix_mobileApiKey) WITH expiredOn = true OR startDate > 365 days",
+                "query": "FIND (trellix_apiKey|trellix_mobileApiKey) WITH expiredOn = true OR startDate > DATE.now - 365 days",
                 "version": "v1"
             }
         ],
