@@ -8,7 +8,7 @@ import { parse } from "@jupiterone/query-language-parser";
 const logger = new Logger();
 
 const validateExports = () => {
-  const files = readdirSync(resolve(cwd(), "rule-packs"));
+  const indexFiles = readdirSync(resolve(cwd(), "rule-packs"));
 
   const indexPath = resolve(cwd(), "rule-packs", "index.js");
 
@@ -18,11 +18,18 @@ const validateExports = () => {
     f.fileName.replace("./", "")
   );
 
-  for (const file of files) {
-    if (file === "index.js" || importedFiles.includes(file)) {
+  for (const indexFile of indexFiles) {
+    if (indexFile === "index.js" || importedFiles.includes(indexFile)) {
       continue;
     }
-    throw new Error(`File ${file} is not imported in index.js.`);
+    throw new Error(`File ${indexFile} is not imported in index.js.`);
+  }
+
+  for (const importedFile of importedFiles) {
+    if (indexFiles.includes(importedFile)) {
+      continue;
+    }
+    throw new Error(`File ${importedFile} does not exist`);
   }
 };
 
