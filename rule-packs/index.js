@@ -13,3 +13,5 @@ module.exports.ToxicCombinations = require("./toxic-combinations.json");
 module.exports.DeviceManagement = require("./device-management.json");
 module.exports.IntegrationMonitoring = require("./integration-monitoring.json");
 module.exports.SophosEndpointSecurity = require("./sophos-endpoint-security.json");
+module.exports.ArmisEndpointSecurity = require("./armis-endpoint-security.json");
+module.exports.TrellixEndpointSecurity = require("./trellix-endpoint-security.json");

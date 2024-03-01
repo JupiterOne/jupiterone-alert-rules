@@ -1,0 +1,86 @@
+[
+    {
+        "name": "armis-device-1",
+        "description": "This will find endpoints that are considered a high risk. These devices will require immediate action.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND armis_device as device THAT RELATES TO armis_finding_vulnerability WITH status != 'Closed' AND numericSeverity >= 7 as vuln",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "HIGH"
+    },
+    {
+        "name": "armis-device-2",
+        "description": "This will find and alert on endpoints that have active findings of a severity of high or critical. ",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND armis_device as device THAT RELATES TO armis_finding_alert WITH status = 'Unhandled' AND numericSeverity >= 7 as alert",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "HIGH"
+    },    
+    {
+        "name": "armis-device-3",
+        "description": "This will find and alert on endpoints that have a policy violation.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND armis_device as device THAT RELATES TO armis_finding_alert WITH description ~= 'policy' AND numericSeverity >= 7 as alert",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "MEDIUM"
+    },
+    {
+        "name": "armis-vuln-1",
+        "description": "This will find and alert on new vulnerabilities that are high or critical. ",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND armis_finding_vulnerability WITH status != 'Closed' AND numericSeverity >= 7 as vuln",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "HIGH"
+    },    
+    {
+        "name": "armis-vuln-2",
+        "description": "This will alert on vulnerabilities that have not been addressed withing 7 days of first report. ",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND armis_finding_vulnerability WITH status != 'Resolved' and _createdOn > date.now - 7 days",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "MEDIUM"
+    },
+    {
+        "name": "armis-alert-1",
+        "description": "This will find and report on high or critical alerts.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND armis_finding_alert WITH status != 'Closed' AND numericSeverity >= 7 as vuln",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "HIGH"
+    },    
+    {
+        "name": "armis-alert-2",
+        "description": "This will find and report on high or critical alerts that have not been addressed within 7 days of first report.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND armis_finding_alert WITH status = 'Unhandled' and _createdOn > date.now - 7 days",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "MEDIUM"
+    }
+]
