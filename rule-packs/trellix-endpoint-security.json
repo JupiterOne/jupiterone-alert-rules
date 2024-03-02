@@ -1,110 +1,110 @@
 [
-    {
-        "name": "trellix-threats-1",
-        "description": "This query will return threats with an unresolved status",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_threat WITH status = 'unresolved'",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "MEDIUM"
-    },
-    {
-        "name": "trellix-threats-2",
-        "description": "This query will return unresolved threats with a criticality status of major or higher",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_threat WITH status = ('Critical' or 'Major')",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "HIGH"
-    },
-    {
-        "name": "trellix-threats-3",
-        "description": "This query will return threats that require immediate attention due to a failure to quarantine or remove",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_threat WITH remediationStatus = ('removedFailed' or 'quarantineFailed')",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "MEDIUM"
-    },
-    {
-        "name": "trellix-threats-4",
-        "description": "This will return Devices that have a non-compliant software status",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_device THAT INSTALLED trellix_detected_application with complianceStatus = false",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "MEDIUM"
-    },
-    {
-        "name": "trellix-threats-5",
-        "description": "This will return trellix endpoints that do not have a trellix agent installed",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_device THAT !INSTALLED trellix_detected_application",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "MEDIUM"
-    },
-    {
-        "name": "trellix-threats-6",
-        "description": "This will return trellix endpoints that have not reported a threat in the last 2 weeks. This may be due to a device that is no longer active, or is reporting incorrectly.",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_device THAT EXPLOITS << trellix_threat WITH createdOn > DATE.now - 14 days",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "INFO"
-    },
-    {
-        "name": "trellix-threats-7",
-        "description": "This will alert when a device is First Seen.",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_device WITH createdOn < DATE.now - 24 hours as device return device.name, device.user",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "INFO"
-    },
-    {
-        "name": "trellix-threats-8",
-        "description": "All devices should be under a group. This will notifiy if a trellix device is not associated with a trellix group",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND trellix_device THAT !ASSIGNED trellix_group",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "MEDIUM"
-    },
-    {
-        "name": "trellix-threats-9",
-        "description": "Look for potential Expired API keys.",
-        "queries": [
-            {
-                "name": "query0",
-                "query": "FIND (trellix_apiKey|trellix_mobileApiKey) WITH expiredOn = true OR startDate > DATE.now - 365 days",
-                "version": "v1"
-            }
-        ],
-        "alertLevel": "MEDIUM"
-    }
+  {
+    "name": "trellix-threats-1",
+    "description": "This query will return threats with an unresolved status",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_threat WITH status = 'unresolved'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "trellix-threats-2",
+    "description": "This query will return unresolved threats with a criticality status of major or higher",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_threat WITH status = ('Critical' or 'Major')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "trellix-threats-3",
+    "description": "This query will return threats that require immediate attention due to a failure to quarantine or remove",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_threat WITH remediationStatus = ('removedFailed' or 'quarantineFailed')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "trellix-threats-4",
+    "description": "This will return Devices that have a non-compliant software status",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_device THAT INSTALLED trellix_detected_application with complianceStatus = false",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "trellix-threats-5",
+    "description": "This will return trellix endpoints that do not have a trellix agent installed",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_device THAT !INSTALLED trellix_detected_application",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "trellix-threats-6",
+    "description": "This will return trellix endpoints that have not reported a threat in the last 2 weeks. This may be due to a device that is no longer active, or is reporting incorrectly.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_device THAT EXPLOITS << trellix_threat WITH createdOn > date.now - 14 days",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "trellix-threats-7",
+    "description": "This will alert when a device is First Seen.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_device WITH createdOn < date.now - 24 hours as device return device.name, device.user",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "trellix-threats-8",
+    "description": "All devices should be under a group. This will notifiy if a trellix device is not associated with a trellix group",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND trellix_device THAT !ASSIGNED trellix_group",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "trellix-threats-9",
+    "description": "Look for potential Expired API keys.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (trellix_apiKey|trellix_mobileApiKey) WITH expiredOn = true OR startDate > date.now - 365 days",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  }
 ]
