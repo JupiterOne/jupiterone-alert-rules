@@ -1,0 +1,62 @@
+[
+  {
+    "name": "cyberark-idaptive-MFA-disabled",
+    "description": "This query will look for devices that do not have SSO enabled.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_idaptive_device THAT HAS << cyberark_idaptive_user with ssoEnabled != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "cyberark-idaptive-no-user-assigned-to-account",
+    "description": "This query will look for cyberark accounts that have no user associated.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_idaptive_account THAT !HAS cyberark_idaptive_user",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cyberark-idaptive-no-user-assigned-role",
+    "description": "This query will look for cyberark users that have no role assigned.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_idaptive_user THAT !ASSIGNED cyberark_idaptive_role",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cyberark-idaptive-no-longer-active-devices",
+    "description": "This query will look for cyberark devices that may no longer be valid.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_idaptive_device WITH lastSeenOn > DATE.now - 30 days",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cyberark-idaptive-non-compliant-device",
+    "description": "This query will look for cyberark devices that aren't compliant.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_idaptive_device WITH complianceState != 'compliant' OR 'Compliant'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  }
+]
