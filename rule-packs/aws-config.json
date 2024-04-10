@@ -841,7 +841,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_security_group AS fw THAT ALLOWS AS rule (Host|Network) WITH internal != true AS src WHERE (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 20 AND rule.toPort >= 20) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 21 AND rule.toPort >= 21) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3306 AND rule.toPort >= 3306) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 4333 AND rule.toPort >= 4333) RETURN fw.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR, fw.accountId AS \"AWS Account ID\"",
+        "query": "FIND aws_security_group WITH ingressRules ~= '/0\"' AS fw THAT ALLOWS AS rule (Host|Network) WITH internal != true AS src WHERE (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 20 AND rule.toPort >= 20) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 21 AND rule.toPort >= 21) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3306 AND rule.toPort >= 3306) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389) OR (rule.ingress = true AND rule.ipProtocol = 'tcp' AND rule.fromPort <= 4333 AND rule.toPort >= 4333) RETURN fw.displayName, rule.ipProtocol, rule.fromPort, rule.toPort, src.displayName, src.ipAddress, src.CIDR, fw.accountId AS \"AWS Account ID\"",
         "version": "v1"
       }
     ],
