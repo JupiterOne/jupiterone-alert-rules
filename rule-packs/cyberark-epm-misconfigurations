@@ -1,0 +1,50 @@
+[
+  {
+    "name": "cyberark-epm-application-control",
+    "description": "This query will look for applications that were installed before the EPM agent.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_applicationgroup as ag with ag.startOn > cyberark_epm_hostagent startOn",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "cyberark-epm-blocked-applications",
+    "description": "This query will look for applications that have an unsatisfactory status.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_applicationgroup with status != 'OK'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "cyberark-epm-application-groups-with-no-policy",
+    "description": "This query will look for application groups that have no policy associated.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_service THAT !ENFORCES << cyberark_epm_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "cyberark-epm-ensure-regular-backups",
+    "description": "This query will look for accounts that do not have backups enabled.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_account with backupIsEnabled != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  }
+]
