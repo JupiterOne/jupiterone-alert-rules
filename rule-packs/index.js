@@ -15,3 +15,4 @@ module.exports.IntegrationMonitoring = require("./integration-monitoring.json");
 module.exports.SophosEndpointSecurity = require("./sophos-endpoint-security.json");
 module.exports.ArmisEndpointSecurity = require("./armis-endpoint-security.json");
 module.exports.TrellixEndpointSecurity = require("./trellix-endpoint-security.json");
+module.exports.CyberarkIdaptiveMisconfigurations = require("./cyberark-idaptive-misconfigurations.json");
