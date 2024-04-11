@@ -1,0 +1,50 @@
+[
+  {
+    "name": "cyberark-epm-blocked-applications",
+    "description": "This query will look for applications that have an unsatisfactory status.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_applicationgroup with status != 'OK'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "cyberark-epm-application-groups-with-no-policy",
+    "description": "This query will look for application groups that have no policy associated.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_applicationgroup THAT !ENFORCES << cyberark_epm_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+    {
+    "name": "cyberark-epm-service-with-no-policy",
+    "description": "This query will look for services that have no policy associated.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_service THAT !ENFORCES << cyberark_epm_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "cyberark-epm-ensure-regular-backups",
+    "description": "This query will look for accounts that do not have backups enabled.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND cyberark_epm_account with backupIsEnabled != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  }
+]
