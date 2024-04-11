@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/jupiterone-alert-rules",
-  "version": "0.24.2",
+  "version": "0.26.2",
   "description": "Alert rule packages for the JupiterOne platform",
   "scripts": {
     "validate": "tsx ./scripts/validate.ts"
