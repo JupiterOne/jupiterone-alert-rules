@@ -41,7 +41,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND cyberark_idaptive_device WITH lastSeenOn > DATE.now - 30 days",
+        "query": "FIND cyberark_idaptive_device WITH lastSeenOn < DATE.now - 30 days",
         "version": "v1"
       }
     ],
