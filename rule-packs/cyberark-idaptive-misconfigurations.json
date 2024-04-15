@@ -53,7 +53,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND cyberark_idaptive_device WITH complianceState != 'compliant' OR 'Compliant'",
+        "query": "FIND cyberark_idaptive_device WITH complianceState ~= 'compliant'",
         "version": "v1"
       }
     ],
