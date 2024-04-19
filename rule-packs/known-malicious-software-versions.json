@@ -1,7 +1,7 @@
   [
     {
-      "name": "aws-instance-inventory-xz-5.6.0",
-      "description": "This query will look for xz utils version 5.6.0 via aws instance inventory",
+      "name": "aws-ssm-xz-5.6.0",
+      "description": "This query will return iterations of XZ version 5.6.1 via aws ssm.",
       "queries": [
         {
           "name": "query0",
@@ -13,7 +13,7 @@
     },
     {
       "name": "critical-assets-xz-5.6.0",
-      "description": "This query will notify on critical assets that are impacted by aws xz utils version 5.6.0",
+      "description": "This query will notify on potentially affected critical assets that have vulnerable XZ version 5.6.0 installed",
       "queries": [
         {
           "name": "query0",
@@ -25,7 +25,7 @@
     },  
     {
       "name": "network-devices-xz-5.6.0",
-      "description": "This query will notify on potential network devices that are impacted by aws xz utils version 5.6.0'",
+      "description": "This query will return potentially affected network devices with vulnerable XZ version 5.6.0 installed",
       "queries": [
         {
           "name": "query0",
@@ -36,8 +36,8 @@
       "alertLevel": "CRITICAL"
     },
     {
-      "name": "aws-instance-inventory-xz-5.6.1",
-      "description": "This query will look for xz utils version 5.6.1 via aws instance inventory",
+      "name": "aws-ssm-xz-5.6.1",
+      "description": "This query will return iterations of XZ version 5.6.1 via aws ssm.",
       "queries": [
         {
           "name": "query0",
@@ -49,7 +49,7 @@
     },
     {
       "name": "critical-assets-xz-5.6.1",
-      "description": "This query will notify on critical assets that are impacted by aws xz utils version 5.6.1",
+      "description": "This query will notify on potentially affected critical assets that have vulnerable XZ version 5.6.1 installed",
       "queries": [
         {
           "name": "query0",
@@ -58,17 +58,41 @@
         }
       ],
       "alertLevel": "CRITICAL"
-    },    
+    },
     {
       "name": "network-devices-xz-5.6.1",
-      "description": "This query will notify on potential network devices that are impacted by aws xz utils version 5.6.1'",
+      "description": "This query will return potentially affected network devices with vulnerable XZ version 5.6.1 installed",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND Internet THAT RELATES TO aws_security_group THAT RELATES TO aws_instance THAT HAS >> aws_instance_inventory WITH applicationInventory ~= 'xz-utils/xz-utils_5.6.1'",
+          "query": "FIND Internet THAT RELATES TO aws_security_group THAT RELATES TO aws_instance THAT HAS >> aws_instance_inventory WITH applicationInventory ~= 'xz-utils_5.6.1'",
           "version": "v1"
         }
       ],
       "alertLevel": "CRITICAL"
+    },
+    {
+      "name": "devices-xz-5.6.1",
+      "description": "This query will return potentially affected devices with vulnerable XZ version installed",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND (Host|Device) THAT RELATES TO aws_instance_inventory WITH applicationInventory ~= ('xz-utils_5.6.0' OR 'xz-utils_5.6.1')",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    }
+    {
+      "name": "general-xz-queries",
+      "description": "This query will query all installed versions of XZ in your environment",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_instance_inventory WITH applicationInventory ~= 'xz-utils'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "INFORMATIONAL"
     }
   ]
