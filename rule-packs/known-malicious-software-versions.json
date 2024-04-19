@@ -29,7 +29,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND Internet THAT RELATES TO aws_security_group THAT RELATES TO aws_instance THAT HAS >> aws_instance_inventory WITH applicationInventory ~= 'xz-utils/xz-utils_5.6.0'",
+          "query": "FIND Internet THAT RELATES TO aws_security_group THAT RELATES TO aws_instance THAT HAS >> aws_instance_inventory WITH applicationInventory ~= 'xz-utils_5.6.0'",
           "version": "v1"
         }
       ],
