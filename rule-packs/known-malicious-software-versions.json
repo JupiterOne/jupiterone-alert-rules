@@ -82,7 +82,7 @@
         }
       ],
       "alertLevel": "HIGH"
-    }
+    },
     {
       "name": "general-xz-queries",
       "description": "This query will query all installed versions of XZ in your environment",
