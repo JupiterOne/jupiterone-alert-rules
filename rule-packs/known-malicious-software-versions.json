@@ -93,6 +93,6 @@
           "version": "v1"
         }
       ],
-      "alertLevel": "INFORMATIONAL"
+      "alertLevel": "INFO"
     }
   ]
