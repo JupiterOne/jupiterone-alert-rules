@@ -17,4 +17,3 @@ module.exports.ArmisEndpointSecurity = require("./armis-endpoint-security.json")
 module.exports.TrellixEndpointSecurity = require("./trellix-endpoint-security.json");
 module.exports.CyberarkEPMMisconfigurations = require("./cyberark-epm-misconfigurations.json");
 module.exports.CyberarkIdaptiveMisconfigurations = require("./cyberark-idaptive-misconfigurations.json");
-module.exports.KnownMaliciousSoftwareVersions = require("./known-malicious-software-versions.json");
