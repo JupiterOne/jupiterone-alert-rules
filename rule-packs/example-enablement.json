@@ -1,0 +1,14 @@
+  [
+    {
+      "name": "example-rule-1",
+      "description": "This query can be used for finding all recently updated Production assets. Useful for trending analysis and asset onboarding insights",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND * WITH _createdOn > date.now - 30 mins AND instanceLifecyle != 'spot'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "INFO"
+    }
+  ]
