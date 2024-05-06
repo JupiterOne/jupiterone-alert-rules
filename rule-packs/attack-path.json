@@ -1,0 +1,605 @@
+[
+  {
+    "name": "watchTowr-attack-path-1",
+    "description": "Direct host to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore with tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_ipaddress THAT IS IpAddress THAT USES (Host|Device) THAT (USES|HAS|ALLOWS|CONTAINS) DataStore with tag.CriticalAsset = true RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-2",
+    "description": "Host to role to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) \nTHAT USES AccessRole \nTHAT Allows DataStore WITH tag.CriticalAsset=true AS criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_ipaddress THAT IS IpAddress THAT USES (Host|Device)  THAT USES AccessRole  THAT Allows DataStore WITH tag.CriticalAsset=true RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-3",
+    "description": "Host to role to host to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES AccessRole \nTHAT USES (Host|Device) AS b \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true as criticalAsset\nWHERE a._key!=b._key\nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_ipaddress THAT IS IpAddress THAT USES (Host|Device) AS a THAT USES AccessRole THAT USES (Host|Device) AS b THAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true WHERE a._key!=b._key RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-4",
+    "description": "Host to role to host to role to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES AccessRole AS c \nTHAT USES (Host|Device) AS b \nTHAT USES AccessRole AS d \nTHAT ALLOWS DataStore WITH tag.CriticalAsset=true as criticalAsset \nWHERE a._key!=b._key AND c._key!=d._key \nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_ipaddress THAT IS IpAddress THAT USES (Host|Device) AS a THAT USES AccessRole AS c THAT USES (Host|Device) AS b THAT USES AccessRole AS d THAT ALLOWS DataStore WITH tag.CriticalAsset=true WHERE a._key!=b._key AND c._key!=d._key RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-5",
+    "description": "Host to key to host to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES Key \nTHAT USES (Host|Device) AS b \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true as criticalAsset \nWHERE a._key!=b._key \nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_ipaddress THAT IS IpAddress THAT USES (Host|Device) AS a THAT USES Key THAT USES (Host|Device) AS b THAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true WHERE a._key!=b._key RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-6",
+    "description": "Host to key to host to role to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES Key \nTHAT USES (Host|Device) AS b \nTHAT USES AccessRole AS d \nTHAT ALLOWS DataStore WITH tag.CriticalAsset=true as criticalAsset \nWHERE a._key!=b._key \nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_ipaddress THAT IS IpAddress THAT USES (Host|Device) AS a THAT USES Key THAT USES (Host|Device) AS b THAT USES AccessRole AS d THAT ALLOWS DataStore WITH tag.CriticalAsset=true WHERE a._key!=b._key RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-7",
+    "description": "Domain to gateway to function to role to access policy to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS Domain as vulnerableAsset \nTHAT Uses Gateway \nTHAT Triggers Function \nTHAT Assigned AccessRole \nTHAT Assigned AccessPolicy \nTHAT Allows DataStore WITH tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_domain THAT IS Domain THAT Uses Gateway THAT Triggers Function THAT Assigned AccessRole THAT Assigned AccessPolicy THAT Allows DataStore WITH tag.CriticalAsset = true RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-8",
+    "description": "Domain to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS DomainRecord as vulnerableAsset \nTHAT Connects DataStore WITH tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_domain THAT IS DomainRecord THAT Connects DataStore WITH tag.CriticalAsset = true RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "watchTowr-attack-path-9",
+    "description": "Domain to cluster to critical data store",
+    "queries": [
+      {
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS DomainRecord as vulnerabeAsset \nTHAT Connects Cluster \nTHAT Connects DataStore WITH tag.CriticalAsset=true as criticalAsset \nRETURN finding, vulnerabeAsset, criticalAsset",
+        "name": "query0",
+        "version": "v1"
+      }
+    ],
+    "operations": [
+      {
+        "when": {
+          "type": "FILTER",
+          "condition": [
+            "AND",
+            [
+              "queries.query0.total",
+              ">",
+              0
+            ]
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "TAG_ENTITIES",
+            "entities": "{{[queries.query0.data.finding]}}",
+            "tags": [
+              {
+                "name": "attackPath",
+                "value": "FIND watchtowr_finding THAT HAS watchtowr_domain THAT IS DomainRecord THAT Connects Cluster THAT Connects DataStore WITH tag.CriticalAsset=true RETURN TREE"
+              },
+              {
+                "name": "vulnerableAssetDisplayName",
+                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
+              },
+              {
+                "name": "vulnerableAssetId",
+                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+              },
+              {
+                "name": "criticalAssetDisplayName",
+                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
+              },
+              {
+                "name": "criticalAssetId",
+                "value": "{{queries.query0.data.criticalAsset.id}}"
+              },
+              {
+                "name": "criticalAssetBusinessImpact",
+                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+              },
+              {
+                "name": "criticalAssetOwner",
+                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
