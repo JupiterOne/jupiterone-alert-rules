@@ -4,7 +4,7 @@
     "description": "Direct host to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore with tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore with tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -63,7 +63,7 @@
     "description": "Host to role to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) \nTHAT USES AccessRole \nTHAT Allows DataStore WITH tag.CriticalAsset=true AS criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) \nTHAT USES AccessRole \nTHAT Allows DataStore WITH tag.CriticalAsset=true AS criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -122,7 +122,7 @@
     "description": "Host to role to host to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES AccessRole \nTHAT USES (Host|Device) AS b \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true as criticalAsset\nWHERE a._key!=b._key\nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES AccessRole \nTHAT USES (Host|Device) AS b \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true as criticalAsset\nWHERE a._key!=b._key\nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -181,7 +181,7 @@
     "description": "Host to role to host to role to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES AccessRole AS c \nTHAT USES (Host|Device) AS b \nTHAT USES AccessRole AS d \nTHAT ALLOWS DataStore WITH tag.CriticalAsset=true as criticalAsset \nWHERE a._key!=b._key AND c._key!=d._key \nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES AccessRole AS c \nTHAT USES (Host|Device) AS b \nTHAT USES AccessRole AS d \nTHAT ALLOWS DataStore WITH tag.CriticalAsset=true as criticalAsset \nWHERE a._key!=b._key AND c._key!=d._key \nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -240,7 +240,7 @@
     "description": "Host to key to host to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES Key \nTHAT USES (Host|Device) AS b \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true as criticalAsset \nWHERE a._key!=b._key \nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES Key \nTHAT USES (Host|Device) AS b \nTHAT (USES|HAS|ALLOWS|CONTAINS) DataStore WITH tag.CriticalAsset = true as criticalAsset \nWHERE a._key!=b._key \nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -299,7 +299,7 @@
     "description": "Host to key to host to role to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES Key \nTHAT USES (Host|Device) AS b \nTHAT USES AccessRole AS d \nTHAT ALLOWS DataStore WITH tag.CriticalAsset=true as criticalAsset \nWHERE a._key!=b._key \nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_ipaddress \nTHAT IS IpAddress as vulnerableAsset \nTHAT USES (Host|Device) AS a \nTHAT USES Key \nTHAT USES (Host|Device) AS b \nTHAT USES AccessRole AS d \nTHAT ALLOWS DataStore WITH tag.CriticalAsset=true as criticalAsset \nWHERE a._key!=b._key \nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -358,7 +358,7 @@
     "description": "Domain to gateway to function to role to access policy to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS Domain as vulnerableAsset \nTHAT Uses Gateway \nTHAT Triggers Function \nTHAT Assigned AccessRole \nTHAT Assigned AccessPolicy \nTHAT Allows DataStore WITH tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS Domain as vulnerableAsset \nTHAT Uses Gateway \nTHAT Triggers Function \nTHAT Assigned AccessRole \nTHAT Assigned AccessPolicy \nTHAT Allows DataStore WITH tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -417,7 +417,7 @@
     "description": "Domain to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS DomainRecord as vulnerableAsset \nTHAT Connects DataStore WITH tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS DomainRecord as vulnerableAsset \nTHAT Connects DataStore WITH tag.CriticalAsset = true as criticalAsset \nRETURN finding, vulnerableAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
@@ -476,7 +476,7 @@
     "description": "Domain to cluster to critical data store",
     "queries": [
       {
-        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS DomainRecord as vulnerabeAsset \nTHAT Connects Cluster \nTHAT Connects DataStore WITH tag.CriticalAsset=true as criticalAsset \nRETURN finding, vulnerabeAsset, criticalAsset",
+        "query": "FIND watchtowr_finding as finding \nTHAT HAS watchtowr_domain \nTHAT IS DomainRecord as vulnerabeAsset \nTHAT Connects Cluster \nTHAT Connects DataStore WITH tag.CriticalAsset=true as criticalAsset \nRETURN finding, vulnerabeAsset, criticalAsset, criticalAsset.tag.BusinessImpact",
         "name": "query0",
         "version": "v1"
       }
