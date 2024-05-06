@@ -18,4 +18,4 @@ module.exports.TrellixEndpointSecurity = require("./trellix-endpoint-security.js
 module.exports.CyberarkEPMMisconfigurations = require("./cyberark-epm-misconfigurations.json");
 module.exports.CyberarkIdaptiveMisconfigurations = require("./cyberark-idaptive-misconfigurations.json");
 module.exports.KnownMaliciousSoftwareVersions = require("./known-malicious-software-versions.json");
-module.exports.Watchtowr = require("./attack-path.json");
+module.exports.AttackPath = require("./attack-path.json");
