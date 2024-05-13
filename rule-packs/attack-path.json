@@ -9,6 +9,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -38,27 +44,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -76,6 +74,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -105,27 +109,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -143,6 +139,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -172,27 +174,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -210,6 +204,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -239,27 +239,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -277,6 +269,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -306,27 +304,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -344,6 +334,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -373,27 +369,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -411,6 +399,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -440,27 +434,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -478,6 +464,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -507,27 +499,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
@@ -545,6 +529,12 @@
         "version": "v1"
       }
     ],
+    "templates": {
+      "criticalAssetDisplayNameTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"displayName\":\"{{item.criticalAsset.entity.displayName}}\"}",
+      "criticalAssetBusinessImpactTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"businessImpact\":\"{{item.criticalAsset.properties['tag.BusinessImpact']}}\"}",
+      "criticalAssetOwnerTemplate": "{\"id\": \"{{item.criticalAsset.entity._id}}\", \"owner\":\"{{item.criticalAsset.entity.properties['tag.Owner']}}\"}",
+      "vulnerableAssetDisplayNameTemplate": "{\"id\": \"{{item.vulnerableAsset.entity._id}}\", \"displayName\":\"{{item.vulnerableAsset.entity.displayName}}\"}"
+    },
     "operations": [
       {
         "when": {
@@ -574,27 +564,19 @@
               },
               {
                 "name": "vulnerableAssetDisplayName",
-                "value": "{{queries.query0.data.vulnerableAsset.entity.displayName}}"
-              },
-              {
-                "name": "vulnerableAssetId",
-                "value": "{{queries.query0.data.vulnerableAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('vulnerableAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetDisplayName",
-                "value": "{{queries.query0.data.criticalAsset.entity.displayName}}"
-              },
-              {
-                "name": "criticalAssetId",
-                "value": "{{queries.query0.data.criticalAsset.id}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetDisplayNameTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetBusinessImpact",
-                "value": "{{queries.query0.data.criticalAsset.tag.BusinessImpact}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetBusinessImpactTemplate') | join(', ') }}]"
               },
               {
                 "name": "criticalAssetOwner",
-                "value": "{{queries.query0.data.criticalAsset.tag.Owner}}"
+                "value": "[{{ queries.query0.data | mapTemplate('criticalAssetOwnerTemplate') | join(', ') }}]"
               }
             ]
           }
