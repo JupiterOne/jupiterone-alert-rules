@@ -1,0 +1,79 @@
+[
+    {
+      "name": "gitlab-CVE-2023-7028-unverified-email-16-1",
+      "description": "An issue has been discovered in GitLab CE/EE affecting all versions from 16.1.0 to 16.1.6 in which user account password reset emails could be delivered to an unverified email address.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND gitlab_account AS account WHERE account._version = '16.1.0' OR account._version = '16.1.1' OR account._version = '16.1.2' OR account._version = '16.1.3' OR account._version = '16.1.4' OR account._version = '16.1.5' OR account._version = '16.1.6'",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "gitlab-CVE-2023-7028-unverified-email-16-2",
+      "description": "An issue has been discovered in GitLab CE/EE affecting all versions from 16.2.0 to 16.2.9 in which user account password reset emails could be delivered to an unverified email address.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND gitlab_account AS account WHERE account._version = '16.2.0' OR account._version = '16.2.1' OR account._version = '16.2.2' OR account._version = '16.2.3' OR account._version = '16.2.4' OR account._version = '16.2.5' OR account._version = '16.2.6' OR account._version = '16.2.7' OR account._version = '16.2.8' OR account._version = '16.2.9'",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "gitlab-CVE-2023-7028-unverified-email-16-3",
+      "description": "An issue has been discovered in GitLab CE/EE affecting all versions from 16.3.0 to 16.3.7 in which user account password reset emails could be delivered to an unverified email address.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND gitlab_account AS account WHERE account._version = '16.3.0' OR account._version = '16.3.1' OR account._version = '16.3.2' OR account._version = '16.3.3' OR account._version = '16.3.4' OR account._version = '16.3.5' OR account._version = '16.3.6' OR account._version = '16.3.7'",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "gitlab-CVE-2023-7028-unverified-email-16-4",
+      "description": "An issue has been discovered in GitLab CE/EE affecting all versions from 16.4.0 to 16.4.5 in which user account password reset emails could be delivered to an unverified email address.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND gitlab_account AS account WHERE account._version = '16.4.0' OR account._version = '16.4.1' OR account._version = '16.4.2' OR account._version = '16.4.3' OR account._version = '16.4.4' OR account._version = '16.4.5'",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "gitlab-CVE-2023-7028-unverified-email-16-5",
+      "description": "An issue has been discovered in GitLab CE/EE affecting all versions from 16.5.0 to 16.5.6 in which user account password reset emails could be delivered to an unverified email address.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND gitlab_account AS account WHERE account._version = '16.5.0' OR account._version = '16.5.1' OR account._version = '16.5.2' OR account._version = '16.5.3' OR account._version = '16.5.4' OR account._version = '16.5.5' OR account._version = '16.5.6'",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "gitlab-CVE-2023-7028-unverified-email-16-6",
+      "description": "An issue has been discovered in GitLab CE/EE affecting all versions from 16.6.0 to 16.6.4 in which user account password reset emails could be delivered to an unverified email address.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND gitlab_account AS account WHERE account._version = '16.6.0' OR account._version = '16.6.1' OR account._version = '16.6.2' OR account._version = '16.6.3' OR account._version = '16.6.4'",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "name": "gitlab-CVE-2023-7028-unverified-email-16-7",
+      "description": "An issue has been discovered in GitLab CE/EE affecting all versions from 16.7.0 to 16.7.2 in which user account password reset emails could be delivered to an unverified email address.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND gitlab_account AS account WHERE account._version = '16.7.0' OR account._version = '16.7.1' OR account._version = '16.7.2'",
+          "version": "v1"
+        }
+      ]
+    }
+]

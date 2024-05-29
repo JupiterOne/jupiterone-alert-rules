@@ -19,3 +19,4 @@ module.exports.CyberarkEPMMisconfigurations = require("./cyberark-epm-misconfigu
 module.exports.CyberarkIdaptiveMisconfigurations = require("./cyberark-idaptive-misconfigurations.json");
 module.exports.KnownMaliciousSoftwareVersions = require("./known-malicious-software-versions.json");
 module.exports.AttackPath = require("./attack-path.json");
+module.exports.GitlabMaliciousVersions = require("./gitlab-malicious-versions.json");
