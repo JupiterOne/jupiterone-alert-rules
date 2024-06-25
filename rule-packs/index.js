@@ -20,3 +20,4 @@ module.exports.CyberarkIdaptiveMisconfigurations = require("./cyberark-idaptive-
 module.exports.KnownMaliciousSoftwareVersions = require("./known-malicious-software-versions.json");
 module.exports.AttackPath = require("./attack-path.json");
 module.exports.GitlabMaliciousVersions = require("./gitlab-malicious-versions.json");
+module.exports.ServiceNowCMDBDevices = require("./snow-cmdb-devices.json");
