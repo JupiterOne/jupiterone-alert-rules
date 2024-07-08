@@ -178,5 +178,113 @@
       }
     ],
     "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-ability-to-create-a-codestar-project-and-associate-as-project-owner",
+    "description": "Users with the codestar:CreateProject and codestar:AssociateTeamMember permissions can create a new CodeStar project and associate themselves as an Owner of the project.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_codestar\nWHERE perm.normalizedActions ~= 'codestar:*' OR perm.normalizedActions ~= ('codestar:CreateProject' AND 'codestar:AssociateTeamMember')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-remove-permissions-boundary-from-a-role",
+    "description": "Users with the iam:DeleteRolePermissionsBoundary permission can remove a permissions boundary from a role they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:deleterolepermissionsboundary' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-delete-an-inline-policy-from-a-role",
+    "description": "Users with the iam:DeleteRolePolicy permission can delete an inline policy from a role they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:deleterolepolicy' OR 'iam:*')\n  AND perm.normalizedActions ~= ('sts:assumerole' OR 'sts:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-delete-an-inline-policy-from-a-user",
+    "description": "Users with the iam:DeleteUserPolicy permission can delete an inline policy from a user they have access to. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:deleteuserpolicy' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-remove-a-managed-policy-from-a-user",
+    "description": "Users with the iam:DetachUserPolicy permission can remove a managed policy from a user they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:detachuserpolicy' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-update-a-permissions-boundary-attached-to-a-user",
+    "description": "A user with the iam:PutUserPermissionsBoundary can update a permissions boundary attached to a user they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:putuserpermissionsboundary' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-ability-to-modify-an-existing-lambda-functions-configuration",
+    "description": "Users with the lambda:UpdateFunctionConfiguration permission can modify an existing Lambda function's configuration to add a new Lambda layer, allowing the user to override an existing library and allow them to execute malicious code under the privilege of the role associated with the Lambda function.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_lambda\nWHERE perm.normalizedActions ~= ('lambda:updatefunctionconfiguration' OR 'lambda:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-remove-a-managed-policy-from-a-role",
+    "description": "Users with the iam:DetachRolePolicy permission can remove a managed policy from a role they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:detachrolepolicy' OR 'iam:*')\n  AND perm.normalizedActions ~= ('sts:assumerole' OR 'sts:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "aws-ability-to-update-a-permissions-boundary-attached-to-a-role",
+    "description": "A user with the iam:PutRolePermissionsBoundary can update a permissions boundary attached to a role they have access to.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User\n  (THAT HAS aws_iam_group)?\n  (THAT ASSIGNED aws_iam_role)?\n  (THAT TRUSTS << aws_iam_role)?\n  THAT ASSIGNED AccessPolicy\n  THAT ALLOWS as perm aws_iam\nWHERE perm.normalizedActions ~= ('iam:putrolepermissionsboundary' OR 'iam:*')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
   }
 ]
