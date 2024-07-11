@@ -197,7 +197,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND google_iam_binding WITH permissions = 'coudbuilds.builds.create' AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName ",
+        "query": "FIND google_iam_binding WITH permissions = 'cloudbuilds.builds.create' AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName ",
         "version": "v1"
       }
     ],
@@ -205,7 +205,7 @@
   },
   {
     "name": "gcp-possible-composer-get-privilege-escalation-path",
-    "description": "A potential attacker can use the following permissions to edit objects in storage buckets and update the environment, comprimising the composer's service account and associated permissions. It is recommended to limit which users or service accounts can create Composer jobs.",
+    "description": "A potential attacker can use the following permissions to edit objects in storage buckets and update the environment, compromising the composer's service account and associated permissions. It is recommended to limit which users or service accounts can create Composer jobs.",
     "queries": [
       {
         "name": "query0",
@@ -229,7 +229,7 @@
   },
   {
     "name": "gcp-possible-dataproc-clusters-privilege-escalation-path",
-    "description": "With the dataproc.clusers.create permissions a bad actor can comprimise your dataproc account. It is recommended to review the results and limit which users or service accounts can create Dataproc clusters",
+    "description": "With the dataproc.clusers.create permissions a bad actor can compromise your dataproc account. It is recommended to review the results and limit which users or service accounts can create Dataproc clusters",
     "queries": [
       {
         "name": "query0",
@@ -241,7 +241,7 @@
   },
   {
     "name": "gcp-possible-dataproc-jobs-create-privilege-escalation-path",
-    "description": "With the dataproc.jobs.create and iam.serviceAccounts.actAs permissions a bad actor can comprimise existing dataproc clusters. It is recommended to review the results and limit which users or service accounts can create Dataproc jobs",
+    "description": "With the dataproc.jobs.create and iam.serviceAccounts.actAs permissions a bad actor can compromise existing dataproc clusters. It is recommended to review the results and limit which users or service accounts can create Dataproc jobs",
     "queries": [
       {
         "name": "query0",
@@ -253,7 +253,7 @@
   },
   {
     "name": "gcp-possible-dataproc-jobs-update-privilege-escalation-path",
-    "description": "With the dataproc.jobs.update permission a bad actor can comprimise existing dataproc clusters. It is recommended to review the results and limit which users or service accounts can update Dataproc jobs.",
+    "description": "With the dataproc.jobs.update permission a bad actor can compromise existing dataproc clusters. It is recommended to review the results and limit which users or service accounts can update Dataproc jobs.",
     "queries": [
       {
         "name": "query0",
