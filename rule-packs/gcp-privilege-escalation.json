@@ -121,7 +121,7 @@
   },
   {
     "name": "gcp-possible-iam-service-accounts-act-as-run-services-create-privilege-privilege-escalation",
-    "description": "This method creates a new Cloud Run Service that, when invoked, returns the Service Account’s access token by accessing the metadata API of the server it is running on",
+    "description": "This method creates a new Cloud Run Service that, when invoked, returns the Service Account's access token by accessing the metadata API of the server it is running on",
     "queries": [
       {
         "name": "query0",
@@ -181,11 +181,83 @@
   },
   {
     "name": "gcp-possible-service-usage-api-keys-list-privilege-escalation",
-    "description": "Because you can still see the API key’s value after its creation, This permission will allow a user to pull all the API keys in the project.",
+    "description": "Because you can still see the API key's value after its creation, This permission will allow a user to pull all the API keys in the project.",
     "queries": [
       {
         "name": "query0",
         "query": "FIND google_iam_binding\n WITH permissions = (\"serviceusage.apiKeys.list\") AS m\n THAT ASSIGNED >> (User | UserGroup) AS user\n RETURN user.displayName, user.email as \"Email\", user._createdOn as \"Created Date\", m.displayName as \"Display Name\",  m.member as \"Member List\"\n ORDER BY m._createdOn DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-cloudbuilds-create-privilege-escalation-path",
+    "description": "Using the cloudbuilds.builds.create permission an attacker could potentially have access to additional read and write permissions to seven different GCP services (excluding Cloud Build itself). Most notably, they gain nearly-full access to Google Cloud Storage. It is recommended to restrict the permissions granted to the Cloud Build Service Account and to be careful granting the cloudbuild.builds.create permission to any users in your Organization.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = 'coudbuilds.builds.create' AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName ",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-composer-get-privilege-escalation-path",
+    "description": "A potential attacker can use the following permissions to edit objects in storage buckets and update the environment, comprimising the composer's service account and associated permissions. It is recommended to limit which users or service accounts can create Composer jobs.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = ('storage.objects.update' AND 'composer.environments.get') AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-dataflow-jobs-create-privilege-escalation-path",
+    "description": "The combination of these permissions, an attacker can compromise the Dataflow services by creating or updating jobs and run any code as they wish. It is recommended to limit which users or service accounts can create Dataflow jobs.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = ('dataflow.jobs.create' AND 'dataflow.jobs.updateContentsiam' AND 'serviceAccounts.actAs') AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-dataproc-clusters-privilege-escalation-path",
+    "description": "With the dataproc.clusers.create permissions a bad actor can comprimise your dataproc account. It is recommended to review the results and limit which users or service accounts can create Dataproc clusters",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = 'dataproc.clusters.create' AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName ",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-dataproc-jobs-create-privilege-escalation-path",
+    "description": "With the dataproc.jobs.create and iam.serviceAccounts.actAs permissions a bad actor can comprimise existing dataproc clusters. It is recommended to review the results and limit which users or service accounts can create Dataproc jobs",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = ('dataproc.jobs.create' AND 'iam.serviceAccounts.actAs') AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName AS user",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "gcp-possible-dataproc-jobs-update-privilege-escalation-path",
+    "description": "With the dataproc.jobs.update permission a bad actor can comprimise existing dataproc clusters. It is recommended to review the results and limit which users or service accounts can update Dataproc jobs.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND google_iam_binding WITH permissions = 'dataproc.jobs.update' AS permission THAT ASSIGNED >> (User | UserGroup) AS user RETURN user.displayName, user.email, permission.displayName",
         "version": "v1"
       }
     ],
