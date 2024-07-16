@@ -21,3 +21,4 @@ module.exports.KnownMaliciousSoftwareVersions = require("./known-malicious-softw
 module.exports.AttackPath = require("./attack-path.json");
 module.exports.GitlabMaliciousVersions = require("./gitlab-malicious-versions.json");
 module.exports.ServiceNowCMDBDevices = require("./servicenow-cmdb-devices.json");
+module.exports.InitialAccessExploits = require("./initial-access-exploits.json");
