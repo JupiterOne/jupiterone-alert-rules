@@ -1,7 +1,7 @@
   [
     {
-      "name": "execution-command-and-scripting-unix-aws-ssm-xz-5.6.0",
-      "description": "This query will return iterations of XZ version 5.6.1 via aws ssm.",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-1",
+      "description": "This query will use ssm inventories to return iterations of XZ version 5.6.0 via aws ssm.",
       "queries": [
         {
           "name": "query0",
@@ -12,8 +12,8 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-unix-critical-assets-xz-5.6.0",
-      "description": "This query will notify on potentially affected critical assets that have vulnerable XZ version 5.6.0 installed",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-critical-assets-1",
+      "description": "This query will use ssm inventories to notify on potentially affected critical assets that have vulnerable XZ version 5.6.0 installed",
       "queries": [
         {
           "name": "query0",
@@ -24,8 +24,8 @@
       "alertLevel": "HIGH"
     },  
     {
-      "name": "execution-command-and-scripting-unix-network-devices-xz-5.6.0",
-      "description": "This query will return potentially affected network devices with vulnerable XZ version 5.6.0 installed",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-network-devices-1",
+      "description": "This query will use ssm inventories to return potentially affected network devices with vulnerable XZ version 5.6.0 installed",
       "queries": [
         {
           "name": "query0",
@@ -36,8 +36,8 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-unix-aws-ssm-xz-5.6.1",
-      "description": "This query will return iterations of XZ version 5.6.1 via aws ssm.",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-2",
+      "description": "This query will use ssm inventories to return iterations of XZ version 5.6.1 via aws ssm.",
       "queries": [
         {
           "name": "query0",
@@ -48,8 +48,8 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-unix-critical-assets-xz-5.6.1",
-      "description": "This query will notify on potentially affected critical assets that have vulnerable XZ version 5.6.1 installed",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-critical-assets-2",
+      "description": "This query will use ssm inventories to notify on potentially affected critical assets that have vulnerable XZ version 5.6.1 installed",
       "queries": [
         {
           "name": "query0",
@@ -60,8 +60,8 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-unix-network-devices-xz-5.6.1",
-      "description": "This query will return potentially affected network devices with vulnerable XZ version 5.6.1 installed",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-network-devices-2",
+      "description": "This query will use ssm inventories to return potentially affected network devices with vulnerable XZ version 5.6.1 installed",
       "queries": [
         {
           "name": "query0",
@@ -72,8 +72,8 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-unix-devices-xz-5.6.0-5.6.1",
-      "description": "This query will return potentially affected devices with vulnerable XZ version installed",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-devices",
+      "description": "This query will use ssm inventories to return potentially affected devices with vulnerable XZ version installed",
       "queries": [
         {
           "name": "query0",
@@ -84,8 +84,8 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-unix-general-xz-queries",
-      "description": "This query will return all installed versions of XZ in your environment",
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-general",
+      "description": "This query will use ssm inventories to return all installed versions of XZ in your environment",
       "queries": [
         {
           "name": "query0",
@@ -96,7 +96,7 @@
       "alertLevel": "INFO"
     },
     {
-      "name": "execution-interprocess-communication-log4j",
+      "name": "execution-command-and-scripting-malicious-binary",
       "description": "Identify which hosts/endpoints are using CodeRepos with Log4j dependencies.",
       "queries": [
         {
@@ -108,7 +108,7 @@
       "alertLevel": "INFO"
     },
     {
-      "name": "execution-cloud-administration-command-openssh-server-v1-4.3",
+      "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-device-1",
       "description": "Identify which hosts/endpoints are using vulnerable versions of openssh.",
       "queries": [
         {
@@ -120,7 +120,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-cloud-administration-command-openssh-server-v8.5-9.7",
+      "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-device-2",
       "description": "Identify which hosts/endpoints are using vulnerable versions of openssh.",
       "queries": [
         {
@@ -132,7 +132,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-cloud-administration-command-openssh-server-general-queries-v1-4.3",
+      "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-general-1",
       "description": "Identify ssm inventories that contain vulnerable versions of openssh.",
       "queries": [
         {
@@ -144,7 +144,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-cloud-administration-command-openssh-server-general-queries-v8.5-9.7",
+      "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-general-2",
       "description": "Identify ssm inventories that contain vulnerable versions of openssh.",
       "queries": [
         {
