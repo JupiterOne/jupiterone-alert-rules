@@ -85,7 +85,7 @@
     },
     {
       "name": "execution-command-and-scripting-unix-general-xz-queries",
-      "description": "This query will query all installed versions of XZ in your environment",
+      "description": "This query will return all installed versions of XZ in your environment",
       "queries": [
         {
           "name": "query0",
