@@ -109,7 +109,7 @@
     },
     {
       "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-device-1",
-      "description": "Identify which hosts/endpoints are using vulnerable versions of openssh.",
+      "description": "Identify which hosts/endpoints are using vulnerable versions of openssh versions 1-4.3.",
       "queries": [
         {
           "name": "query0",
@@ -121,7 +121,7 @@
     },
     {
       "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-device-2",
-      "description": "Identify which hosts/endpoints are using vulnerable versions of openssh.",
+      "description": "Identify which hosts/endpoints are using vulnerable versions of openssh versions 8.5-9.7.",
       "queries": [
         {
           "name": "query0",
@@ -133,7 +133,7 @@
     },
     {
       "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-general-1",
-      "description": "Identify ssm inventories that contain vulnerable versions of openssh.",
+      "description": "Identify ssm inventories that contain vulnerable versions of openssh versions 1-4.3.",
       "queries": [
         {
           "name": "query0",
@@ -145,7 +145,7 @@
     },
     {
       "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-general-2",
-      "description": "Identify ssm inventories that contain vulnerable versions of openssh.",
+      "description": "Identify ssm inventories that contain vulnerable versions of openssh versions 8.5-9.7.",
       "queries": [
         {
           "name": "query0",
