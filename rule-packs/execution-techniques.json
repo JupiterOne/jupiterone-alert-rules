@@ -13,7 +13,7 @@
     },
     {
       "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-critical-assets",
-      "description": "This query will use ssm inventories to notify on potentially affected critical assets that have vulnerable XZ versions 5.6.0 and 5.6.1 installed",
+      "description": "This query will use ssm inventories to notify on potentially affected critical assets that have vulnerable XZ versions 5.6.0 and 5.6.1 installed.",
       "queries": [
         {
           "name": "query0",
@@ -25,7 +25,7 @@
     },  
     {
       "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-network-devices",
-      "description": "This query will use ssm inventories to return potentially affected network devices with vulnerable XZ versions 5.6.0 and 5.6.1 installed",
+      "description": "This query will use ssm inventories to return potentially affected network devices with vulnerable XZ versions 5.6.0 and 5.6.1 installed.",
       "queries": [
         {
           "name": "query0",
