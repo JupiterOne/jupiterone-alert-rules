@@ -1,0 +1,98 @@
+  [
+    {
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary",
+      "description": "This query will use ssm inventories to return iterations of XZ versions 5.6.0 and 5.6.1 via aws ssm.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_instance_inventory WITH applicationInventory ~= ('xz-utils_5.6.0' OR 'xz-utils_5.6.1')",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-critical-assets",
+      "description": "This query will use ssm inventories to notify on potentially affected critical assets that have vulnerable XZ versions 5.6.0 and 5.6.1 installed.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND #CriticalAsset THAT HAS >> aws_instance_inventory WITH applicationInventory ~= ('xz-utils_5.6.0' OR 'xz-utils_5.6.1')",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },  
+    {
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-network-devices",
+      "description": "This query will use ssm inventories to return potentially affected network devices with vulnerable XZ versions 5.6.0 and 5.6.1 installed.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND Internet THAT RELATES TO aws_security_group AS sg THAT RELATES TO aws_instance AS i THAT HAS >> aws_instance_inventory WITH applicationInventory ~= ('xz-utils_5.6.0' OR 'xz-utils_5.6.1') RETURN i.displayName AS 'EC2', sg.displayName AS 'Security Group'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-devices",
+      "description": "This query will use ssm inventories to return potentially affected devices with vulnerable XZ version installed.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND (Host|Device) THAT RELATES TO aws_instance_inventory WITH applicationInventory ~= ('xz-utils_5.6.0' OR 'xz-utils_5.6.1')",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary-general",
+      "description": "This query will use ssm inventories to return all installed versions of XZ in your environment.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_instance_inventory WITH applicationInventory ~= 'xz-utils'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "INFO"
+    },
+    {
+      "name": "execution-command-and-scripting-malicious-binary",
+      "description": "Identify which hosts/endpoints are using CodeRepos with Log4j dependencies.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND * THAT RELATES TO Host THAT DEPLOYED CodeRepo THAT USES CodeModule WITH displayName = 'log4j'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "INFO"
+    },
+    {
+      "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-device",
+      "description": "Identify which hosts/endpoints are using vulnerable versions of openssh versions 1-4.3 and versions 8.5-9.7.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND (Host | Device) THAT RELATES TO aws_instance_inventory WITH applicationInventory ~= ('openssh-1' OR 'openssh-2' OR 'openssh-3' OR 'openssh-4.1' OR 'openssh-4.2' OR 'openssh-4.3' OR 'openssh-8.5' OR 'openssh-8.6' OR 'openssh-8.6' OR 'openssh-8.8' OR 'openssh-8.9' OR 'openssh-9.1' OR 'openssh-9.2' OR 'openssh-9.3' OR 'openssh-9.4' OR 'openssh-9.5' OR 'openssh-9.6' OR 'openssh-9.7')",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-cloud-administration-command-aws-ssm-malicious-binary-openssh-general",
+      "description": "Identify ssm inventories that contain vulnerable versions of openssh versions 1-4.3 and versions 8.5-9.7.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_instance_inventory WITH applicationInventory ~= ('openssh-1' OR 'openssh-2' OR 'openssh-3' OR 'openssh-4.1' OR 'openssh-4.2' OR 'openssh-4.3' OR 'openssh-8.5' OR 'openssh-8.6' OR 'openssh-8.6' OR 'openssh-8.8' OR 'openssh-8.9' OR 'openssh-9.1' OR 'openssh-9.2' OR 'openssh-9.3' OR 'openssh-9.4' OR 'openssh-9.5' OR 'openssh-9.6' OR 'openssh-9.7')",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    }
+  ]
