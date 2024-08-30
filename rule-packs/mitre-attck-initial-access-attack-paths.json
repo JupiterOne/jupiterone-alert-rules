@@ -17,7 +17,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND * WITH _integrationType = 'azure' WITH sslEnforced != true OR sslEnforcement != 'Enabled'",
+          "query": "FIND * WITH _integrationType = 'azure' AND sslEnforced != true OR sslEnforcement != 'Enabled'",
           "version": "v1"
         }
       ],
@@ -29,7 +29,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND * WITH _integrationType = 'google_cloud' WITH sslEnforced != true OR sslEnforcement != 'Enabled'",
+          "query": "FIND * WITH _integrationType = 'google_cloud' AND sslEnforced != true OR sslEnforcement != 'Enabled'",
           "version": "v1"
         }
       ],
