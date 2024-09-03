@@ -36,7 +36,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-exploit-public-facing-application",
+      "name": "initial-access-exploit-public-facing-application-exploit-protection-storage",
       "description": "M1050 - Exploit Protection - Ensure that public facing instances aren't allowed access to non-public S3 buckets",
       "queries": [
         {
@@ -48,7 +48,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-exploit-public-facing-application",
+      "name": "initial-access-exploit-public-facing-application-exploit-protection",
       "description": "M1050 - Exploit Protection - Ensure that public facing instances aren't allowed access to non-public applications.",
       "queries": [
         {
@@ -60,7 +60,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-exploit-public-facing-application",
+      "name": "initial-access-exploit-public-facing-application-network-segmentation",
       "description": "M1030 - Network Segmentation - Segment externally facing servers and services from the rest of the network with a DMZ or on separate hosting infrastructure.",
       "queries": [
         {
@@ -72,7 +72,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-exploit-public-facing-application",
+      "name": "initial-access-exploit-public-facing-application-update-software",
       "description": "M1051 - Update Software - Update software regularly by employing patch management for externally exposed applications.",
       "queries": [
         {
@@ -84,7 +84,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-exploit-public-facing-application",
+      "name": "initial-access-exploit-public-facing-application-vulnerability-scanning-host",
       "description": "M1016 - Vulnerability Scanning - Regularly scan externally facing HOSTS for vulnerabilities and establish procedures to rapidly patch systems when critical vulnerabilities are discovered through scanning and through public disclosure.",
       "queries": [
         {
@@ -96,31 +96,31 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-exploit-public-facing-application",
+      "name": "initial-access-exploit-public-facing-application-vulnerability-scanning-endpoint",
       "description": "M1016 - Vulnerability Scanning - Regularly scan externally facing ENDPOINTS for vulnerabilities and establish procedures to rapidly patch systems when critical vulnerabilities are discovered through scanning and through public disclosure.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND user_endpoint THAT PROTECTS HostAgent WITH function=('av' OR 'anti-malware') AND active=true",
+          "query": "FIND user_endpoint WITH publicIp != undefined THAT PROTECTS HostAgent WITH function=('av' OR 'anti-malware') AND active=true",
           "version": "v1"
         }
       ],
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-external-remote-services",
+      "name": "initial-access-external-remote-services-limit-access-to-resources",
       "description": "M1035 - Limit Access to Resources Over Network - Limit access to remote services through centrally managed concentrators such as VPNs and other managed remote access systems.",
       "queries": [
         {
           "name": "query0",
-          "query": "'vpn' with _class='Host' or _class='Device' or _class='Network'",
+          "query": "FIND * WITH _class = ('Host' OR 'Device' OR 'Network') AND displayName ~= 'vpn'",
           "version": "v1"
         }
       ],
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-external-remote-services",
+      "name": "initial-access-external-remote-services-use-mfa-aws",
       "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in aws.",
       "queries": [
         {
@@ -132,7 +132,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-external-remote-services",
+      "name": "initial-access-external-remote-services-use-mfa-azure",
       "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in azure.",
       "queries": [
         {
@@ -144,7 +144,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-external-remote-services",
+      "name": "initial-access-external-remote-services-use-mfa-google-cloud",
       "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in google cloud.",
       "queries": [
         {
@@ -156,7 +156,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-supply-chain-compromise",
+      "name": "initial-access-supply-chain-compromise-boot-integrity",
       "description": "M1046 - Boot Integrity - Use secure methods to boot a system and verify the integrity of the operating system and loading mechanisms.",
       "queries": [
         {
@@ -168,7 +168,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-supply-chain-compromise",
+      "name": "initial-access-supply-chain-compromise-limit-software-installation",
       "description": "M1033 - Limit Software Installation - Where possible, consider requiring developers to pull from internal repositories containing verified and approved packages rather than from external ones.",
       "queries": [
         {
@@ -180,7 +180,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-supply-chain-compromise",
+      "name": "initial-access-supply-chain-compromise-vulnerability-scanning-sources",
       "description": "M1016 - Vulnerability Scanning - Continuous monitoring of vulnerability sources and the use of automatic and manual code review tools should also be implemented as well.",
       "queries": [
         {
@@ -192,7 +192,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-use-policies",
       "description": "M1036 - Account Use Policies - Use conditional access policies to block logins from non-compliant devices or from outside defined organization IP ranges.",
       "queries": [
         {
@@ -204,19 +204,19 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-mfa-configuration-general",
       "description": "M1015 - Active Directory Configuration - Disable legacy authentication, which does not support MFA, and require the use of modern authentication protocols instead.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND Account WITH mfaEnabled = false AND active = true",
+          "query": "FIND Account WITH mfaEnabled != true AND active = true",
           "version": "v1"
         }
       ],
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-mfa-configuration-google-cloud",
       "description": "M1015 - Active Directory Configuration - Disable legacy authentication, which does not support MFA, and require the use of modern authentication protocols instead.",
       "queries": [
         {
@@ -228,19 +228,19 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-password-policies-password-update",
       "description": "M1027 - Password Policies - When possible, passwords should be updated periodically.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND aws_account WITH _source = 'integration-managed' THAT HAS aws_iam THAT !HAS aws_iam_account_password_policy",
+          "query": "FIND aws_iam_user WITH passwordLastChanged < date.now - 30 days",
           "version": "v1"
         }
       ],
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-password-policies-reuse-general",
       "description": "M1027 - Password Policies - Policies should minimize (if not eliminate) reuse of passwords between different user accounts, especially employees using the same credentials for personal accounts that may not be defended by enterprise security resources.",
       "queries": [
         {
@@ -252,19 +252,19 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-password-policies-google-cloud",
       "description": "M1027 - Password Policies - Applications and appliances that utilize default username and password should be changed immediately after the installation, and before deployment to a production environment.[72] When possible, applications that use SSH keys should be updated periodically and properly secured in google cloud.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND google_user WITH createdOn < date.now - 7 days and passwordLastChanged < date.now - 7days",
+          "query": "FIND google_user WITH createdOn > date.now-7days AND changePasswordAtNextLogin = false",
           "version": "v1"
         }
       ],
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-password-policies-aws",
       "description": "M1027 - Password Policies - Applications and appliances that utilize default username and password should be changed immediately after the installation, and before deployment to a production environment.[72] When possible, applications that use SSH keys should be updated periodically and properly secured in aws.",
       "queries": [
         {
@@ -276,48 +276,48 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-password-policies-azure",
       "description": "M1027 - Password Policies - Applications and appliances that utilize default username and password should be changed immediately after the installation, and before deployment to a production environment.[72] When possible, applications that use SSH keys should be updated periodically and properly secured in azure.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND azure_user WITH createdOn < date.now - 7 days and passwordLastChanged < date.now - 7days",
+          "query": "FIND azure_user WITH createdOn < date.now - 7 days AND passwordLastChanged < date.now - 7days",
           "version": "v1"
         }
       ],
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-user-account-management-google-cloud",
       "description": "M1018 - User Account Management - Regularly audit user accounts for activity and deactivate or remove any that are no longer needed in google cloud.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND google_user with lastLogin < date.now-90days AND active != true",
+          "query": "FIND google_user WITH lastLogOn < date.now-90days AND active != true",
           "version": "v1"
         }
       ],
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-valid-accounts",
+      "name": "initial-access-valid-accounts-user-account-management-aws",
       "description": "M1018 - User Account Management  - Regularly audit user accounts for activity and deactivate or remove any that are no longer needed in aws.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND aws_iam_user with lastLogin < date.now-90days AND active != true",
+          "query": "FIND aws_iam_user WITH passwordEnabled = true AND passwordLastUsed < date.now-90days",
           "version": "v1"
         }
       ],
-      "alertLevel": "HIGH"
+      "alertLevel": "MEDIUM"
     },
     {
-      "name": "initial-access-valid-accounts",
-      "description": "M1018 - User Account Management  - Regularly audit user accounts for activity and deactivate or remove any that are no longer needed in azure.",
+      "name": "initial-access-valid-accounts-user-account-management-general",
+      "description": "M1018 - User Account Management  - Regularly audit user accounts for activity and deactivate or remove any that are no longer needed.",
       "queries": [
         {
           "name": "query0",
-          "query": "FIND azure_user with lastLogin < date.now-90days AND active != true",
+          "query": "FIND * WITH lastLogin < date.now - 90 days",
           "version": "v1"
         }
       ],
