@@ -1,6 +1,6 @@
 [
     {
-      "name": "initial-access-content-injection-aws",
+      "name": "initial-access-content-injection-encrypt-sensitive-information-aws",
       "description": "M1041 - Encrypt Sensitive Information - Where possible, ensure that online traffic is appropriately encrypted using SSL/TLS enforcement in AWS.",
       "queries": [
         {
@@ -12,7 +12,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-content-injection-azure",
+      "name": "initial-access-content-injection-encrypt-sensitive-information-azure",
       "description": "M1041 - Encrypt Sensitive Information - Where possible, ensure that online traffic is appropriately encrypted using SSL/TLS enforcement in Azure.",
       "queries": [
         {
@@ -24,7 +24,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "initial-access-content-injection-gcp",
+      "name": "initial-access-content-injection-encrypt-sensitive-information-google-cloud",
       "description": "M1041 - Encrypt Sensitive Information - Where possible, ensure that online traffic is appropriately encrypted using SSL/TLS enforcement in GCP.",
       "queries": [
         {
@@ -37,7 +37,7 @@
     },
     {
       "name": "initial-access-exploit-public-facing-application-exploit-protection-storage",
-      "description": "M1050 - Exploit Protection - Ensure that public facing instances aren't allowed access to non-public S3 buckets",
+      "description": "M1050 - Exploit Protection - Ensure that public facing instances are not allowed access to non-public S3 buckets.",
       "queries": [
         {
           "name": "query0",
@@ -49,7 +49,7 @@
     },
     {
       "name": "initial-access-exploit-public-facing-application-exploit-protection",
-      "description": "M1050 - Exploit Protection - Ensure that public facing instances aren't allowed access to non-public applications.",
+      "description": "M1050 - Exploit Protection - Ensure that public facing instances aren not allowed access to non-public applications.",
       "queries": [
         {
           "name": "query0",
