@@ -121,7 +121,7 @@
     },
     {
       "name": "initial-access-external-remote-services-use-mfa-aws",
-      "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in aws.",
+      "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in AWS.",
       "queries": [
         {
           "name": "query0",
@@ -133,7 +133,7 @@
     },
     {
       "name": "initial-access-external-remote-services-use-mfa-azure",
-      "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in azure.",
+      "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in Azure.",
       "queries": [
         {
           "name": "query0",
@@ -145,7 +145,7 @@
     },
     {
       "name": "initial-access-external-remote-services-use-mfa-google-cloud",
-      "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in google cloud.",
+      "description": "M1035 - Limit Access to Resources Over Network - Use strong two-factor or multi-factor authentication for remote service accounts to mitigate an adversary's ability to leverage stolen credentials, but be aware of Multi-Factor Authentication Interception techniques for some two-factor authentication implementations in Google cloud.",
       "queries": [
         {
           "name": "query0",
