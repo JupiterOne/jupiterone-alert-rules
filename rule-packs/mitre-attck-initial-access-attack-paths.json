@@ -113,7 +113,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND * WITH _class = ('Host' OR 'Device' OR 'Network') AND displayName ~= 'vpn'",
+          "query": "FIND (Host | Device | Network) AND displayName ~= 'vpn'",
           "version": "v1"
         }
       ],
