@@ -920,8 +920,8 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "ec2-security-group-attached-to-eni",
-    "description": "Checks that any non-default security groups are in use and attached to EC2 instances or an ENI.",
+    "name": "nondefault-security-group-without-attachment",
+    "description": "Checks for any non-default security groups present but not attached to any EC2 instances or ENI.",
     "queries": [
       {
         "name": "query0",
