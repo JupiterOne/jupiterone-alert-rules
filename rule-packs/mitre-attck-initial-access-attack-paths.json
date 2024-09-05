@@ -113,7 +113,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND (Host | Device | Network) AND displayName ~= 'vpn'",
+          "query": "FIND (Host | Device | Network) WITH displayName ~= /vpn/i",
           "version": "v1"
         }
       ],
