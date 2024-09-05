@@ -185,7 +185,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND github_environment THAT HAS << github_repo THAT !HAS FINDING",
+          "query": "FIND CodeRepo THAT !SCANS << *",
           "version": "v1"
         }
       ],
