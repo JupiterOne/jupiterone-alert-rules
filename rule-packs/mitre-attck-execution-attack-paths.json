@@ -1,4 +1,4 @@
-  [
+[
     {
       "name": "execution-command-and-scripting-unix-aws-ssm-malicious-binary",
       "description": "This query will use ssm inventories to return iterations of XZ versions 5.6.0 and 5.6.1 via aws ssm.",
@@ -94,5 +94,257 @@
         }
       ],
       "alertLevel": "HIGH"
-    }
-  ]
+    },
+    {
+      "name": "execution-cloud-administration-command-privileged-account-management-azure",
+      "description": "M1026 - Limit the number of cloud accounts with permissions to remotely execute commands on virtual machines, and ensure that these are not used for day-to-day operations. In Azure, limit the number of accounts with the roles Azure Virtual Machine Contributer and above, and consider using temporary Just-in-Time (JIT) roles to avoid permanently assigning privileged access to virtual machines.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND azure_subscription THAT RELATES TO (azure_role_definition|azure_role_assignment) WITH actions ~= 'owner' OR actions ~= 'contributor'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-command-and-scripting-interpreter-antivirus",
+      "description": "M1049 - Anti-virus can be used to automatically quarantine suspicious files.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND HostAgent WITH function = 'anti-malware' THAT !(PROTECTS | MANAGES | ASSIGNED | MONITORS) (Device | Host)",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-command-and-scripting-interpreter-execution-prevention-application-control-assessment",
+      "description": "M1038 - Use application control where appropriate. For example, PowerShell Constrained Language mode can be used to restrict access to sensitive or otherwise dangerous language elements such as those used to execute arbitrary Windows APIs or files (e.g., Add-Type).",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND azure_subscription THAT RELATES TO (azure_role_definition|azure_role_assignment) WITH actions ~= 'owner' OR actions ~= 'contributor'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-command-and-scripting-interpreter-execution-prevention-application-control-policy",
+      "description": "M1038 - Use application control where appropriate. For example, PowerShell Constrained Language mode can be used to restrict access to sensitive or otherwise dangerous language elements such as those used to execute arbitrary Windows APIs or files (e.g., Add-Type).",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND azure_subscription THAT HAS azure_policy_assignment THAT USES azure_policy_set_definition THAT !CONTAINS azure_policy_definition WITH displayName ~= /application control/i",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-container-administration-command-execution-prevention-read-only-containers",
+      "description": "M1038 - Use read-only containers, read-only file systems, and minimal images when possible to prevent the execution of commands. Where possible, also consider using application control and software restriction tools (such as those provided by SELinux) to restrict access to files, processes, and system calls in containers.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND Container WITH readOnly != true",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-container-administration-command-user-account-management",
+      "description": "M1018 - Enforce authentication and role-based access control on the container service to restrict users to the least privileges required.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND (kube_cluster|kube_namespace) THAT !CONTAINS (kube_role|kube_role_binding)",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-deploy-container-audit",
+      "description": "M1047 - Scan images before deployment, and block those that are not in compliance with security policies. In Kubernetes environments, the admission controller can be used to validate images after a container deployment request is authenticated but before the container is deployed.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND Image WITH isScanned != true AND state = 'Succeeded'",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-scheduled-task-job-user-account-management-gcp-task-restrict",
+      "description": "M1018 - Limit privileges of Google Cloud user accounts and remediate Privilege Escalation vectors so only authorized administrators can create scheduled tasks on remote systems.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND google_user WITH admin != true THAT ASSIGNED << google_iam_binding WITH permissions ~= /scheduler/i",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-scheduled-task-job-user-account-management-aws-task-restrict",
+      "description": "M1018 - Limit privileges of AWS user accounts and remediate Privilege Escalation vectors so only authorized administrators can create scheduled tasks on remote systems.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_iam_user THAT HAS << aws_iam THAT HAS >> aws_iam_policy WITH arn ~= /AmazonECSTaskExecutionRolePolicy/i OR arn ~= /AmazonECS_FullAccess/i",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-serverless-execution-user-account-management-aws-serverless-restrict",
+      "description": "M1018 - Remove permissions to create, modify, or run lambda resources from users that do not explicitly require them.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_iam_user THAT HAS << aws_iam THAT HAS >> aws_iam_role with arn ~= /AWSLambdaBasicExecutionRole/i or arn ~= /AWSLambda_FullAccess/i",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-serverless-execution-user-account-management-gcp-serverless-restrict",
+      "description": "M1018 - Remove permissions to create, modify, or run cloudrun resources from users that do not explicitly require them.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND (google_iam_role|google_iam_binding) WITH permissions ~= /run./i",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-software-deployment-tools-mfa",
+      "description": "M1032 - Ensure proper system and access isolation for critical network systems through use of multi-factor authentication.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND User WITH mfaEnabled != true THAT !(ASSIGNED|USES|HAS) mfa_device",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-software-deployment-tools-network-segmentation-aws",
+      "description": "M1030 - Ensure proper system isolation for critical network systems through use of firewalls in AWS.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_instance THAT !PROTECTS << Firewall THAT ALLOWS << (Internet|Host|Network)",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-software-deployment-tools-network-segmentation-gcp",
+      "description": "M1030 - Ensure proper system isolation for critical network systems through use of firewalls in Google Cloud.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND google_compute_network THAT !PROTECTS << google_compute_firewall THAT ALLOWS << (Internet|Host|Network)",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-software-deployment-tools-password-policies",
+      "description": "M1027 - Verify that account credentials that may be used to access deployment systems are unique and not used throughout the enterprise network.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND PasswordPolicy WITH historyCount < 10 OR historyCount=undefined",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-software-deployment-tools-update-software",
+      "description": "M1051 - Patch deployment systems regularly to prevent potential remote access through Exploitation for Privilege Escalation.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_patch_group THAT HAS aws_instance",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-user-execution-malicious-link-user-training",
+      "description": "M1017 - Use user training as a way to bring awareness to common phishing and spearphishing techniques and how to raise suspicion for potentially malicious events.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND (Person|User) THAT !COMPELTED Training WITH required = true",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-user-execution-malicious-file-execution-prevention",
+      "description": "M1038 - Application control may be able to prevent the running of executables masquerading as other files.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND azure_subscription THAT !PERFORMED Assessment WITH displayName ~= /application control/i",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-user-execution-malicious-file-user-training",
+      "description": "M1017 - Use user training as a way to bring awareness to common phishing and spearphishing techniques and how to raise suspicion for potentially malicious events.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND (Person|User) THAT !COMPELTED Training WITH required = true",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-user-execution-malicious-image-approved-image",
+      "description": "M1047 - Audit images deployed within the environment to ensure they do not contain any malicious components.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "Find (aws_instance|docker_container|server) THAT USES Image WITH approved!=true",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+    {
+      "name": "execution-user-execution-malicious-image-audit-image",
+      "description": "M1047 - Audit images deployed within the environment to ensure they do not contain any malicious components.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND Container THAT !HAS Assessment",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+    },
+]
