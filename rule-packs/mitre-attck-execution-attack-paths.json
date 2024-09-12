@@ -120,7 +120,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-interpreter-execution-prevention-application-control-assessment",
+      "name": "execution-command-and-scripting-interpreter-execution-prevention-application-control-assessment-azure",
       "description": "M1038 - Use application control where appropriate. For example, PowerShell Constrained Language mode can be used to restrict access to sensitive or otherwise dangerous language elements such as those used to execute arbitrary Windows APIs or files (e.g., Add-Type).",
       "queries": [
         {
@@ -132,7 +132,7 @@
       "alertLevel": "HIGH"
     },
     {
-      "name": "execution-command-and-scripting-interpreter-execution-prevention-application-control-policy",
+      "name": "execution-command-and-scripting-interpreter-execution-prevention-application-control-policy-azure",
       "description": "M1038 - Use application control where appropriate. For example, PowerShell Constrained Language mode can be used to restrict access to sensitive or otherwise dangerous language elements such as those used to execute arbitrary Windows APIs or files (e.g., Add-Type).",
       "queries": [
         {
@@ -197,7 +197,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND aws_iam_user THAT HAS << aws_iam THAT HAS >> aws_iam_policy WITH arn ~= /AmazonECSTaskExecutionRolePolicy/i OR arn ~= /AmazonECS_FullAccess/i",
+          "query": "FIND aws_iam_user (THAT RELATES TO aws_iam_role)? THAT ASSIGNED aws_iam_policy THAT RELATES TO as rel (aws_ecs|aws_ecs_task) WHERE rel.actions ~= ('ecs:*' or 'ecs:RunTask' or 'ecs:Run*' or 'ecs:CreateService' or 'ecs:UpdateService')",
           "version": "v1"
         }
       ],
@@ -209,7 +209,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND aws_iam_user THAT HAS << aws_iam THAT HAS >> aws_iam_role with arn ~= /AWSLambdaBasicExecutionRole/i or arn ~= /AWSLambda_FullAccess/i",
+          "query": "FIND aws_iam_user (THAT RELATES TO aws_iam_role)? THAT ASSIGNED aws_iam_policy THAT RELATES TO as rel (aws_lambda_function|aws_lambda) WHERE rel.actions ~= ('lambda:CreateFunction' or 'lambda:DeleteFunction' or 'lambda:UpdateFunctionCode' or 'lambda:UpdateFunctionConfiguration')",
           "version": "v1"
         }
       ],
