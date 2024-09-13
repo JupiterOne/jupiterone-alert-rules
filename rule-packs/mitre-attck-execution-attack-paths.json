@@ -209,7 +209,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND aws_iam_user (THAT RELATES TO aws_iam_role)? THAT ASSIGNED aws_iam_policy THAT RELATES TO as rel (aws_lambda_function|aws_lambda) WHERE rel.actions ~= ('lambda:CreateFunction' or 'lambda:DeleteFunction' or 'lambda:UpdateFunctionCode' or 'lambda:UpdateFunctionConfiguration')",
+          "query": "FIND aws_iam_user (THAT RELATES TO aws_iam_role)? THAT ASSIGNED aws_iam_policy THAT RELATES TO as rel (aws_lambda_function|aws_lambda) WHERE rel.actions ~= ('lambda:CreateFunction' or 'lambda:DeleteFunction' or 'lambda:UpdateFunctionCode' or 'lambda:UpdateFunctionConfiguration' or 'lambda:*')",
           "version": "v1"
         }
       ],
