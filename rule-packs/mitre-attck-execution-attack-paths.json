@@ -285,7 +285,7 @@
           "version": "v1"
         }
       ],
-      "alertLevel": "HIGH"
+      "alertLevel": "INFO"
     },
     {
       "name": "execution-user-execution-malicious-link-user-training",
@@ -293,7 +293,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND (Person|User) THAT !COMPELTED Training WITH required = true",
+          "query": "FIND (Person|User) THAT !COMPLETED Training WITH required = true",
           "version": "v1"
         }
       ],
@@ -317,7 +317,7 @@
       "queries": [
         {
           "name": "query0",
-          "query": "FIND (Person|User) THAT !COMPELTED Training WITH required = true",
+          "query": "FIND (Person|User) THAT !COMPLETED Training WITH required = true",
           "version": "v1"
         }
       ],
@@ -330,18 +330,6 @@
         {
           "name": "query0",
           "query": "Find (aws_instance|docker_container|server) THAT USES Image WITH approved!=true",
-          "version": "v1"
-        }
-      ],
-      "alertLevel": "HIGH"
-    },
-    {
-      "name": "execution-user-execution-malicious-image-audit-image",
-      "description": "M1047 - Audit images deployed within the environment to ensure they do not contain any malicious components.",
-      "queries": [
-        {
-          "name": "query0",
-          "query": "FIND Container THAT !HAS Assessment",
           "version": "v1"
         }
       ],
