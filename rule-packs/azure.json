@@ -1,16 +1,5 @@
 [
     {
-      "name": "azure-asc-monitor-system-updates",
-      "description": "Finds Azure Security Center setting where 'Monitor System Updates' is disabled.",
-      "queries": [
-        {
-          "name": "query0",
-          "query": "find azure_policy_assignment with id $=\"/SecurityCenterBuiltIn\" and parameters.systemUpdatesMonitoringEffect=\"Disabled\"",
-          "version": "v1"
-        }
-      ]
-    },
-    {
       "name": "azure-asc-monitor-os-vulnerabilities",
       "description": "Finds Azure Security Center setting where 'Monitor OS Vulnerabilities' is disabled.",
       "queries": [
