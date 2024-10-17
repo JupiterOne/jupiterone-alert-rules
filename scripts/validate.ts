@@ -58,6 +58,30 @@ const validateRule = (rule) => {
       `Rule ${rule.name} has an invalid alertLevel. ${rule.alertLevel} is not a valid alertLevel.`
     );
   }
+  if (rule.labels) {
+    if (!Array.isArray(rule.labels)) {
+      throw new Error(
+        `Rule ${rule.name} has an invalid labels property. Labels must be an array.`
+      );
+    }
+
+    const labelNameMap = {};
+
+    for (const label of rule.labels) {
+      if (!label.labelName || !label.labelValue) {
+        throw new Error(
+          `Rule ${rule.name} has an invalid label. "${label}" must include a labelName property and labelValue property.`
+        );
+      }
+      const normalizedLabelName = label.labelName.trim().toLowerCase();
+      if (labelNameMap[normalizedLabelName]) {
+        throw new Error(
+          `Rule ${rule.name} has invalid labels. Duplicate label names are not allowed on a rule`
+        );
+      }
+      labelNameMap[normalizedLabelName] = true;
+    }
+  }
   for (const queryObj of rule.queries) {
     if (RegExp(/[^A-Za-z0-9_]/g).test(queryObj.name)) {
       throw new Error(
