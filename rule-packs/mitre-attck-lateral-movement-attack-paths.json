@@ -1,0 +1,626 @@
+[
+    {
+      "name": "lateral-movement-exploitation-of-remote-services-patch-vulnerabilities-aws",
+      "description": "M1048 - Application Isolation and Sandboxing - Make it difficult for adversaries to advance their operation through exploitation of undiscovered or unpatched vulnerabilities by using sandboxing in AWS. Other types of virtualization and application microsegmentation may also mitigate the impact of some types of exploitation. Risks of additional exploits and weaknesses in these systems may still exist.",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND aws_instance THAT !HAS Finding",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "MEDIUM"
+    },
+    {
+        "name": "lateral-movement-exploitation-of-remote-services-patch-vulnerabilities-gcp",
+        "description": "M1048 - Application Isolation and Sandboxing - Make it difficult for adversaries to advance their operation through exploitation of undiscovered or unpatched vulnerabilities by using sandboxing in Google Cloud. Other types of virtualization and application microsegmentation may also mitigate the impact of some types of exploitation. Risks of additional exploits and weaknesses in these systems may still exist.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND google_compute_instance THAT !HAS Finding",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "MEDIUM"
+      },
+      {
+        "name": "lateral-movement-exploitation-of-remote-services-patch-vulnerabilities-azure",
+        "description": "M1048 - Application Isolation and Sandboxing - Make it difficult for adversaries to advance their operation through exploitation of undiscovered or unpatched vulnerabilities by using sandboxing in Azure. Other types of virtualization and application microsegmentation may also mitigate the impact of some types of exploitation. Risks of additional exploits and weaknesses in these systems may still exist.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND azure_vm THAT !HAS Finding",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "MEDIUM"
+      },
+      {
+        "name": "lateral-movement-exploitation-of-remote-services-minimize-service-account-permissions",
+        "description": "M1048 - Application Isolation and Sandboxing - Minimize permissions and access for service accounts to limit impact of exploitation.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND google_iam_service_account AS acct THAT ASSIGNED AS rel google_iam_binding AS binding RETURN acct.displayName, count(rel)",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "INFORMATIONAL"
+      },
+      {
+        "name": "lateral-movement-exploitation-of-remote-services-patch-management",
+        "description": "M1051 - Update Software - Update software regularly by employing patch management for internal enterprise endpoints and servers.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND HostAgent WITH automaticAppUpdates='OFF' OR automaticDownloadUpdates='OFF' OR automaticOsUpdates='OFF' OR automaticSecurityUpdates='OFF' OR automaticUpdates='OFF' OR autoSecurityPatchEnabled=false and autoSystemPatchEnabled=false",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "lateral-movement-exploitation-of-remote-services-scan-for-vulnerable-services",
+        "description": "M1016 - Vulnerability Scanning - Regularly scan the internal network for available services to identify new and potentially vulnerable services.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (Device|Host) THAT PROTECTS HostAgent WITH function=('av' OR 'anti-malware') AND active=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "lateral-tool-transfer-restrict-smb",
+        "description": "M1037 - Filter Network Traffic - Consider using the host firewall to restrict file sharing communications such as SMB.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'smb' AND rule.fromPort <= 445 AND rule.toPort >= 445",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "lateral-tool-transfer-restrict-smb-legacy",
+        "description": "M1037 - Filter Network Traffic - Consider using the host firewall to restrict file sharing communications such as SMB.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'smb' AND rule.fromPort <= 139 AND rule.toPort >= 139",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-disable-ssh-aws",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the remote service (ex: SSH, RDP, etc.) in aws if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule Internet WHERE rule.ingress=true AND rule.fromPort <= 22 AND rule.toPort >= 22",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-disable-ssh-gcp",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the remote service (ex: SSH, RDP, etc.) in google cloud if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Internet THAT ALLOWS AS rule google_compute_firewall AS firewall THAT PROTECTS google_compute_network AS network THAT CONTAINS google_compute_subnetwork AS subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='ssh' AND rule.fromPort <= 22 AND rule.toPort >= 22",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-disable-ssh-azure",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the remote service (ex: SSH, RDP, etc.) in azure if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND azure_security_group THAT ALLOWS AS rule Internet WHERE rule.inbound=true AND rule.fromPort <= 22 AND rule.toPort >= 22",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-disable-rdp-aws",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the remote service (ex: SSH, RDP, etc.) in aws if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule Internet WHERE rule.ingress=true AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-disable-rdp-gcp",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the remote service (ex: SSH, RDP, etc.) in google cloud if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Internet THAT ALLOWS AS rule google_compute_firewall AS firewall THAT PROTECTS google_compute_network AS network THAT CONTAINS google_compute_subnetwork AS subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-disable-rdp-azure",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the remote service (ex: SSH, RDP, etc.) in azure if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND azure_security_group THAT ALLOWS AS rule Internet WHERE rule.inbound=true AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-block-unecessary-traffic",
+        "description": "M1030 - Network Segmentation - Enable firewall rules to block unnecessary traffic between network security zones within a network.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall WITH ingressRules = 'null' OR egressRules = 'null'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-enforce-password-policies-aws",
+        "description": "M1027 - Password Policies - Set and enforce secure password policies for AWS accounts.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_account THAT HAS aws_iam THAT !HAS aws_iam_account_password_policy",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-enforce-password-policies-gcp",
+        "description": "M1027 - Password Policies - Set and enforce secure password policies for Google Cloud accounts.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND google_iam_service_account THAT !RELATES TO Policy WITH displayName ~= 'password'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-enforce-password-policies-azure",
+        "description": "M1027 - Password Policies - Set and enforce secure password policies for Azure accounts.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND azure_vm THAT HAS azure_policy_state WITH complianceState != 'Compliant' THAT DEFINES azure_policy_definition WITH displayName ~= ('Audit Windows machines that do not have a maximum password age of 70 days' OR 'Audit Windows machines that do not have a minimum password age of 1 day' OR 'Audit Windows machines that do not have the password complexity setting enabled' OR 'Audit Windows machines that do not store passwords using reversible encryption' OR 'Audit Windows machines that allow re-use of the previous 24 passwords' OR 'Audit Windows machines that do not restrict the minimum password length to 14 characters' OR 'Audit Linux machines that allow remote connections from accounts without passwords' OR 'Audit Linux machines that do not have the passwd file permissions set to 0644' OR 'Audit Linux machines that have accounts without passwords')",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-rdp-hijacking-remove-unecessary-remote-desktop-users",
+        "description": "M1047 - Audit - Audit the Remote Desktop Users group membership regularly. Remove unnecessary accounts and groups from Remote Desktop Users groups.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (User) WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-rdp-disable-rdp-aws",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the RDP service in aws if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule Internet WHERE rule.ingress=true AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-rdp-disable-rdp-gcp",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the RDP service in google cloud if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find Internet THAT ALLOWS as rule google_compute_firewall as firewall THAT PROTECTS google_compute_network as network THAT CONTAINS google_compute_subnetwork as subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-rdp-disable-rdp-azure",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the RDP service in azure if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_security_group that allows as rule Internet where rule.inbound=true and rule.fromPort <= 3389 and rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-rdp-disable-rdp",
+        "description": "M1030 - Network Segmentation - Enable firewall rules to block RDP traffic between network security zones within a network.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-session-hijacking-rdp-limit-remote-users",
+        "description": "M1018 - User Account Management - Limit remote user permissions if remote access is necessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (User) (THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote')? THAT RELATES TO azure_conditional_access_policy WITH displayName ~= 'admin'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-perform-audits-and-scans",
+        "description": "M1047 - Audit - Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (Resource|Configuration|Policy) THAT !RELATES TO (Scanner|Assessment)",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-use-mfa-aws",
+        "description": "M1032 - Multi-factor Authenticaion - Use multi-factor authentication on remote service logons where possible in aws.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_iam_user WITH mfaEnabled!=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-use-mfa-gcp",
+        "description": "M1032 - Multi-factor Authenticaion - Use multi-factor authentication on remote service logons where possible in google cloud.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND google_user WITH mfaEnabled!=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-use-mfa-azure",
+        "description": "M1032 - Multi-factor Authenticaion - Use multi-factor authentication on remote service logons where possible in azure.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND azure_user WITH mfaEnabled!=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-password-anti-reuse",
+        "description": "M1027 - Password Policies - Do not reuse local administrator account passwords across systems. Ensure password complexity and uniqueness such that the passwords cannot be cracked or guessed.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_iam_account_password_policy WITH historyCount < 10 OR historyCount=undefined",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-remote-desktop-protocol-audit-remote-users",
+        "description": "M1047 - Audit - Audit the Remote Desktop Users group membership regularly. Remove unnecessary accounts and groups from Remote Desktop Users groups.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND User WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-remote-desktop-protocol-disable-rdp-aws",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the RDP service in aws if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_security_group AS sg THAT ALLOWS AS rule Internet WHERE rule.ingress=true AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-remote-desktop-protocol-disable-rdp-gcp",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the RDP service in google cloud if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find Internet THAT ALLOWS as rule google_compute_firewall as firewall THAT PROTECTS google_compute_network as network THAT CONTAINS google_compute_subnetwork as subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-remote-desktop-protocol-disable-rdp-azure",
+        "description": "M1042 - Disable or Remove Feature or Program - Disable the RDP service in azure if it is unnecessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "Find azure_security_group that allows as rule Internet where rule.inbound=true and rule.fromPort <= 3389 and rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-remote-desktop-protocol-use-mfa",
+        "description": "M1032 - Multi-factor Authenticaion - Use multi-factor authentication for remote logins.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND User WITH mfaEnabled = true THAT RELATES TO (Group|UserGroup) WITH displayName ~= 'remote'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-remote-desktop-protocol-block-rdp-traffic",
+        "description": "M1030 - Network Segmentation - Do not leave RDP accessible from the internet. Enable firewall rules to block RDP traffic between network security zones within a network.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-remote-desktop-protocol-limit-remote-user-permissions",
+        "description": "M1018 - User Account Management - Limit remote user permissions if remote access is necessary.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (User) (THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote')? THAT ASSIGNED as rel AccessPolicy",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "INFORMATIONAL"
+      },
+      {
+        "name": "remote-services-smb-windows-admin-shares-restrict-smb",
+        "description": "M1037 - Filter Network Traffic - Consider using the host firewall to restrict file sharing communications such as SMB.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'smb' AND rule.fromPort <= 445 AND rule.toPort >= 445",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-smb-windows-admin-shares-restrict-smb-legacy",
+        "description": "M1037 - Filter Network Traffic - Consider using the host firewall to restrict file sharing communications such as SMB.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'smb' AND rule.fromPort <= 139 AND rule.toPort >= 139",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-smb-windows-admin-shares-password-anti-reuse",
+        "description": "M1027 - Password Policies - Do not reuse local administrator account passwords across systems. Ensure password complexity and uniqueness such that the passwords cannot be cracked or guessed.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find aws_iam_account_password_policy with historyCount < 10 or historyCount=undefined",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-smb-windows-admin-shares-password-anti-reuse",
+        "description": "M1027 - Password Policies - Do not reuse local administrator account passwords across systems. Ensure password complexity and uniqueness such that the passwords cannot be cracked or guessed.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "find aws_iam_account_password_policy with historyCount < 10 or historyCount=undefined",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-vnc-restrict-vnc-traffic-port-5900",
+        "description": "M1037 - Filter Network Traffic - VNC defaults to TCP ports 5900 for the server, 5800 for browser access, and 5500 for a viewer in listening mode. Filtering or blocking these ports will inhibit VNC traffic utilizing default ports.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'vnc' AND rule.fromPort <= 5900 AND rule.toPort >= 5900",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-vnc-restrict-vnc-traffic-port-5800",
+        "description": "M1037 - Filter Network Traffic - VNC defaults to TCP ports 5900 for the server, 5800 for browser access, and 5500 for a viewer in listening mode. Filtering or blocking these ports will inhibit VNC traffic utilizing default ports.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'vnc' AND rule.fromPort <= 5800 AND rule.toPort >= 5800",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-vnc-restrict-vnc-traffic-port-5500",
+        "description": "M1037 - Filter Network Traffic - VNC defaults to TCP ports 5900 for the server, 5800 for browser access, and 5500 for a viewer in listening mode. Filtering or blocking these ports will inhibit VNC traffic utilizing default ports.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall AS fw THAT ALLOWS AS rule * AS src WHERE rule.ingress = true AND rule.ipProtocol = 'vnc' AND rule.fromPort <= 5500 AND rule.toPort >= 5500",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-cloud-services-use-mfa-aws",
+        "description": "M1032 - Multi-factor Authenticaion - Use multi-factor authentication on remote service logons where possible in aws.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_iam_user WITH mfaEnabled!=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-cloud-services-use-mfa-gcp",
+        "description": "M1032 - Multi-factor Authenticaion - Use multi-factor authentication on remote service logons where possible in google cloud.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND google_user WITH mfaEnabled!=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-cloud-services-use-mfa-azure",
+        "description": "M1032 - Multi-factor Authenticaion - Use multi-factor authentication on remote service logons where possible in azure.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND azure_user WITH mfaEnabled!=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-cloud-services-limit-high-privilege-accounts-aws",
+        "description": "M1026 - Privileged Account Management - Limit the number of high-privileged domain and cloud accounts in aws, and ensure that these are not used for day-to-day operations. Ensure that on-premises accounts do not have privileged cloud permissions and that isolated, cloud-only accounts are used for managing cloud environments.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_iam_user WITH accessKeyLastUsed >= date.now-1day (THAT HAS aws_iam_group)? (THAT ASSIGNED aws_iam_role)? (THAT TRUSTS aws_iam_role)? THAT ASSIGNED AccessPolicy THAT ALLOWS as allows * WHERE allows.admin=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "remote-services-cloud-services-limit-high-privilege-accounts-gcp",
+        "description": "M1026 - Privileged Account Management - Limit the number of high-privileged domain and cloud accounts in google cloud, and ensure that these are not used for day-to-day operations. Ensure that on-premises accounts do not have privileged cloud permissions and that isolated, cloud-only accounts are used for managing cloud environments.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND google_user WITH lastLoginOn >= date.now-1day AND admin = true OR isAdmin = true OR isDelegatedAdmin = true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "software-deployment-tools-network-isolation",
+        "description": "M1030 - Network Segmentation - Ensure proper system isolation for critical network systems through use of firewalls.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND Firewall WITH ingressRules = 'null' or egressRules = 'null'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "lateral-movement-taint-shared-content-antivirus",
+        "description": "M1049 - Antivirus/Antimalware - Anti-virus can be used to automatically quarantine suspicious files.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (Device|Host) THAT PROTECTS HostAgent WITH function=('av' or 'anti-malware') and active=true",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "lateral-movement-use-alternate-authentication-material-use-ad",
+        "description": "M1015 - Active Directory Configuration - Configure Active Directory to prevent use of certain techniques; use SID Filtering, etc.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND azure_sql_server THAT !HAS azure_sql_server_active_directory_admin",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      },
+      {
+        "name": "lateral-movement-use-alternate-authentication-material-use-least-privilege",
+        "description": "M1018 - User Account Management - Enforce the principle of least-privilege. Do not allow a domain user to be in the local administrator group on multiple systems.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND aws_iam_user (THAT HAS aws_iam_group)? (THAT ASSIGNED aws_iam_role)? (THAT TRUSTS aws_iam_role)? THAT ASSIGNED AccessPolicy THAT ALLOWS as allows * WHERE allows.permission='FULL_CONTROL'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "HIGH"
+      }
+    ]pm
