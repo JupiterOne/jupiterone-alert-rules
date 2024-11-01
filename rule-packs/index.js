@@ -22,3 +22,5 @@ module.exports.AttackPath = require("./attack-path.json");
 module.exports.GitlabMaliciousVersions = require("./gitlab-malicious-versions.json");
 module.exports.ServiceNowCMDBDevices = require("./servicenow-cmdb-devices.json");
 module.exports.MITREATTCKInitialAccess = require("./mitre-attck-initial-access-attack-paths.json");
+module.exports.CISAWSFoundations2dot0 = require("./aws-cis-foundations-2-0.json");
+module.exports.CISAZUREFoundations1dot3dot0 = require("./azure-cis-foundations-1-3-0.json");
