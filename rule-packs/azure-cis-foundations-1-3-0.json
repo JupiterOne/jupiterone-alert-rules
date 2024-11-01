@@ -1,0 +1,1439 @@
+[
+    {
+        "name": "are-there-any-custom-role-definitions-with-assignablescope-of-subscription-or-higher-and-action-of-*?",
+        "description": "Subscription ownership should not include permission to create custom owner roles. The principle of least privilege should be followed and only necessary privileges should be assigned instead of allowing full administrative access.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_role_definition with roleType='CustomRole' and actions ~= '*' and assignableScopes!~=('/resourceGroup/' and '/providers/')",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-blob-analytics-logging-enabled-in-azure-storage-accounts?",
+        "description": "Returns a list of Azure storage accounts with Blob Analytics Logging enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_storage_account with blobAnalyticsLoggingReadEnabled=true and blobAnalyticsLoggingWriteEnabled=true and blobAnalyticsLoggingDeleteEnabled=true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_storage_account with blobAnalyticsLoggingReadEnabled!=true or blobAnalyticsLoggingWriteEnabled!=true or blobAnalyticsLoggingDeleteEnabled!=true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-rbac-enabled-on-all-azure-kubernetes-services-instances?",
+        "description": "Checks if all Azure Kubernetes Services Instances has RBAC enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_kubernetes_cluster with enableRBAC = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_kubernetes_cluster with enableRBAC != true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-all-azure-key-vault-keys-have-an-expiration-time-set?",
+        "description": "Checks the expiration time state of all Azure Key Vault Keys.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_keyvault_key with enabled = true and expiresOn != undefined\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_keyvault_key with enabled = true and expiresOn = undefined\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-key-vaults-recoverable?",
+        "description": "Checks if all Key Vaults are recoverable.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_keyvault_service with enableSoftDelete = true AND enablePurgeProtection = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_keyvault_service with enableSoftDelete != true AND enablePurgeProtection != true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-any-\"insights-operational-logs\"-storage-containers-publicly-accessible?",
+        "description": "Returns a list of log profiles that write logs to \"insights-operational-logs\" containers that are publicly accessible.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_log_profile THAT USES\n  azure_storage_account THAT HAS\n  azure_storage_container WITH\n    name = 'insights-operational-logs' AND\n    publicAccess = 'None'\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_monitor_log_profile as p THAT USES\n  azure_storage_account as sa THAT HAS\n  azure_storage_container WITH\n    name = 'insights-operational-logs' AND\n    publicAccess != 'None' as sc\nReturn\n  p.name,\n  p.id,\n  sa.name,\n  sa.id,\n  sc.name,\n  sc.id,\n  sc.publicAccess\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-'automatic-provisioning-of-monitoring-agent'-enabled-in-azure-subscriptions?",
+        "description": "Returns Azure subscriptions that have 'Automatic provisioning of monitoring agent' enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_subscription that has azure_security_center_auto_provisioning_setting with name = 'default' and autoProvision = 'On'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_subscription that !has azure_security_center_auto_provisioning_setting with name = 'default' and autoProvision = 'On'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-\"trusted-microsoft-services\"-enabled-for-azure-storage-accounts?",
+        "description": "Returns a list of Azure storage accounts with \"Trusted Microsoft Services\" enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with networkRuleSet.bypass ~= 'AzureServices'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with networkRuleSet.bypass !~= 'AzureServices'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-security-defaults-enabled-for-all-microsoft-directories/tenants?",
+        "description": "Security defaults in Microsoft Entra ID make it easier to be secure and help protect your organization. Security defaults contain preconfigured security settings for common attacks.\\nMicrosoft is making security defaults available to everyone. The goal is to ensure that all organizations have a basic level of security-enabled at no extra cost. You turn on security defaults in the Azure portal.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_account with securityDefaultsEnabled=true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_account with securityDefaultsEnabled=false",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-container-registries?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for container registries.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='ContainerRegistry' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='ContainerRegistry' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-any-azure-storage-accounts-that-have-not-enabled-secure-transfer?",
+        "description": "Returns a list of Azure storage accounts with enableHttpsTrafficOnly enabled / not enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_storage_account with enableHttpsTrafficOnly = true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_storage_account with enableHttpsTrafficOnly != true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-connection-throttling-enforced-on-all-azure-postgresql-database-servers?",
+        "description": "Returns a list of PostgreSQL database servers with connection throttling enabled / not enabled.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND azure_postgresql_server WITH configurations.connectionThrottling='on'",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND azure_postgresql_server WITH configurations.connectionThrottling!='on'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-using-\"register-with-microsoft-entra-id\"?",
+        "description": "Checks that all Azure Web Apps have \"Register with Microsoft Entra ID\" enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with principalId != undefined\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with principalId = undefined\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-managed-unattached-disks-encrypted?",
+        "description": "Checks the encryption status of all Azure managed disks in unattached state.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_managed_disk with attached=false and encrypted=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_managed_disk with attached=false and encrypted!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-redirecting-http-traffic-to-https?",
+        "description": "Checks the HTTPS redirection SSL settings of all Azure Web Apps.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with httpsOnly = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with httpsOnly = false\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-ssl-enforced-on-all-azure-mysql-database-servers?",
+        "description": "Returns a list of MySQL database servers with SSL enforcement enabled / not enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_mysql_server with sslEnforced=true or sslEnforcement='Enabled'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_mysql_server with sslEnforced!=true and sslEnforcement!='Enabled'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-azure-storage-accounts-encrypted-with-customer-managed-keys?",
+        "description": "Returns a list of Azure storage accounts with Customer Managed Keys enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with encryption.keySource = 'Microsoft.Keyvault'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with encryption.keySource != 'Microsoft.Keyvault'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-checkpoint-logging-enforced-on-all-azure-postgresql-database-servers?",
+        "description": "Returns a list of PostgreSQL database servers with checkpoint logging enabled / not enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_postgresql_server WITH configurations.logCheckpoints='on'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_postgresql_server WITH configurations.logCheckpoints!='on'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-any-azure-subscriptions-that-have-not-enabled-administrative,-alert,-policy,-and-security-diagnostic-logs?",
+        "description": "Returns a list of subscriptions that have not enabled Adminstrative, Alert, Policy, or Security diagnostic logs.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_subscription THAT HAS\n  azure_diagnostic_setting WITH\n    log.Administrative.enabled = true AND\n    log.Alert.enabled = true AND\n    log.Policy.enabled = true AND\n    log.Security.enabled = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !HAS\n  azure_diagnostic_setting WITH\n    log.Administrative.enabled = true AND\n    log.Alert.enabled = true AND\n    log.Policy.enabled = true AND\n    log.Security.enabled = true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-app-service?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for app service.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='AppServices' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='AppServices' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-networksecuritygroups/delete?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for networkSecurityGroups/delete.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "does-every-azure-subscription-have-a-\"resource-lock\"-role-definition?",
+        "description": "Returns a list of Azure subscriptions with / without a \"Resource Lock Administrator\" role.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find\n  azure_subscription THAT CONTAINS\n  azure_role_definition WITH\n    roleName = 'Resource Lock Administrator' AND\n    actions = 'Microsoft.Authorization/locks/read' AND\n    actions = 'Microsoft.Authorization/locks/write' AND\n    actions = 'Microsoft.Authorization/locks/delete'\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find\n  azure_subscription THAT !CONTAINS\n  azure_role_definition WITH\n    roleName = 'Resource Lock Administrator' AND\n    actions = 'Microsoft.Authorization/locks/read' AND\n    actions = 'Microsoft.Authorization/locks/write' AND\n    actions = 'Microsoft.Authorization/locks/delete'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-windows-defender-atp-enabled-in-azure-subscriptions?",
+        "description": "Returns Azure subscriptions that have Windows Defender ATP enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_subscription that has azure_security_center_setting with name='WDATP' and enabled = true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_subscription that !has azure_security_center_setting with name='WDATP' and enabled = true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-networksecuritygroups/securityrules/delete?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for networkSecurityGroups/securityRules/delete.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/securityRules/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/securityRules/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-virtual-machines?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for virtual machines.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='VirtualMachines' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='VirtualMachines' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-any-guest-users-with-access-to-azure?",
+        "description": "Azure AD is extended to include Azure AD B2B collaboration, allowing you to invite people from outside your organization to be guest users in your cloud account and sign in with their own work, school, or social identities. Guest users allow you to share your company's applications and services with users from any other organization, while maintaining control over your own corporate data.\\n\\nWork with external partners, large or small, even if they don't have Azure AD or an IT department. A simple invitation and redemption process lets partners use their own credentials to access your company's resources a a guest user.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_user with userType='Guest' and trusted=true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_user with userType='Guest' and trusted!=true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-critical-resources-protected-by-resource-locks?",
+        "description": "Checks if all critical resources have resources locks set.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND * WITH _integrationType = 'azure' AND tag.classification = 'critical' THAT HAS azure_resource_lock\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND * WITH _integrationType = 'azure' AND tag.classification = 'critical' THAT !HAS azure_resource_lock\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-advanced-threat-protection-(atp)-enabled-for-azure-sql-servers?",
+        "description": "Checks if Azure SQL servers have Advanced Threat Protection (ATP) enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with alertingEnabled = true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with alertingEnabled != true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-any-azure-keyvault-entitis-that-have-not-enabled-logging-to-a-storage-account-for-at-least-180-days?",
+        "description": "Returns a list of Azure KeyVault entities that have not enabled logging to a storage account for at least 180 days.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_keyvault_service THAT HAS\n  azure_diagnostic_setting WITH\n    storageAccountId != undefined AND\n    log.AuditEvent.enabled = true AND\n    log.AuditEvent.retentionPolicy.enabled = true AND\n    log.AuditEvent.retentionPolicy.days > 180\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_keyvault_service THAT !HAS\n  azure_diagnostic_setting WITH\n    storageAccountId != undefined AND\n    log.AuditEvent.enabled = true AND\n    log.AuditEvent.retentionPolicy.enabled = true AND\n    log.AuditEvent.retentionPolicy.days > 180\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-using-php's-latest-version?",
+        "description": "Checks that all Azure Web Apps are using the latest version of PHP.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with phpVersion = \"8.0.11\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with phpVersion != \"8.0.11\"\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-storage-accounts?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for storage accounts.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='StorageAccounts' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='StorageAccounts' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "ensure-that-'send-email-also-to-subscription-owners'-is-set-to-'on'",
+        "description": "Enable security alert emails to subscription owners.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_contact with name=\"default1\" and alertsToAdmins=\"On\"",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_contact with name=\"default1\" and alertsToAdmins!=\"On\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-any-storage-accounts-containg-activity-logs-that-do-not-use-byok?",
+        "description": "Returns a list of log profiles that write logs to storage accounts that do not use BYOK.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_log_profile THAT USES\n  azure_storage_account WITH\n    encryption.keySource = 'Microsoft.Keyvault'\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_monitor_log_profile as p THAT USES\n  azure_storage_account WITH\n    encryption.keySource != 'Microsoft.Keyvault' as sa\nReturn\n  p.name,\n  p.id,\n  sa.name,\n  sa.id,\n  sa.encryption.keySource\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-networksecuritygroups/write?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for networkSecurityGroups/write.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-auditing-enabled-on-all-azure-sql-servers-and-databases?",
+        "description": "Returns a list of Azure SQL servers and databases with auditing enabled / not enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_sql_server|azure_sql_database) with auditingEnabled=true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_sql_server with auditingEnabled!=true\n  that has azure_sql_database with auditingEnabled!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-vms-on-the-latest-os-patches?",
+        "description": "Checks that all VMs do not have a reccomendation for a system update.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_vm THAT !HAS azure_advisor_recommendation with recommendation^=(\"Apply system updates\" OR 'apply system updates')\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_vm THAT HAS azure_advisor_recommendation with recommendation^=(\"Apply system updates\" OR 'apply system updates')\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-all-locations-have-a-network-watcher-enabled?",
+        "description": "Returns a list of Azure locations with network watchers that are 'Enabled'.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_location THAT HAS azure_network_watcher WITH provisioningState = 'Succeeded'\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_location as l THAT !HAS azure_network_watcher WITH provisioningState = 'Succeeded' as watcher\n    return\n      watcher.webLink,\n      watcher.displayName,\n      watcher.provisioningState,\n      l.webLink,\n      l.displayName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-sql-servers-protected-with-transparent-data-encryption-using-a-customer-managed-key?",
+        "description": "Returns a list of SQL servers with that are not protected with an encryption protector using a CMK.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND\n  azure_sql_server WITH\n    encryptionProtector.serverKeyType = 'AzureKeyVault'\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND\n  azure_sql_server WITH\n    encryptionProtector.serverKeyType != 'AzureKeyVault'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "has-each-azure-subscription-configured-an-e-mail-address-for-the-default-security-center-contact?",
+        "description": "Returns Azure security center contacts that have / have not configured an e-mail address.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_contact with name = 'default' and email != ''",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_contact with name = 'default' and email = ''",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-using-java's-latest-version?",
+        "description": "Checks that all Azure Web Apps are using the latest version of Java.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with javaVersion = \"16.0.2\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with javaVersion != \"16.0.2\"\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-using-python's-latest-version?",
+        "description": "Checks that all Azure Web Apps are using the latest version of Python.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with pythonVersion = \"3.9.7\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with pythonVersion != \"3.9.7\"\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-vulnerability-assessment-(va)-enabled-for-azure-sql-servers?",
+        "description": "Checks if Azure SQL servers have Vulnerability Assessment (VA) enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaStoragePath != undefined",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaStoragePath!= undefined",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-azure-security-group-rules-allowing-inbound-ssh-access-from-the-internet?",
+        "description": "Returns a list of Security Groups with rules allowing inbound SSH access (port 22) from the Internet.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_security_group that allows as rule Internet\nwhere rule.inbound=true and rule.fromPort <= 22 and rule.toPort >= 22\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-disconnection-logging-enforced-on-all-azure-postgresql-database-servers?",
+        "description": "Returns a list of PostgreSQL database servers with disconnection logging enabled / not enabled.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND azure_postgresql_server WITH configurations.logDisconnections='on'",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND azure_postgresql_server WITH configurations.logDisconnections!='on'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-app-service-authentication-enabled-for-all-azure-app-services?",
+        "description": "Checks the app service authentication state of all Azure app services",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with authEnabled = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with authEnabled = false\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-vulnerability-assessment-(va)-sending-scan-reports-for-azure-sql-servers?",
+        "description": "Checks if Azure SQL servers have Vulnerability Assessment (VA) scan reports sending enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaEmails != undefined",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaEmails = undefined",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-requiring-the-client-certificates?",
+        "description": "Checks that all Azure Web Apps has option \"client certificate mode\" set to \"require\".",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with clientCertEnabled = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with clientCertEnabled = false\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-networksecuritygroups/securityrules/write?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for networkSecurityGroups/securityRules/write.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/securityRules/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Network/networkSecurityGroups/securityRules/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-sql-servers?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for SQL servers.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='SqlServers' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='SqlServers' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-key-vaults?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for key vaults.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='KeyVaults' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='KeyVaults' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-policyassignments/write?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for policyAssignments/write.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Authorization/policyAssignments/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Authorization/policyAssignments/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-microsoft.sql/servers/firewallrules/write?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for Microsoft.Sql/servers/firewallRules/write.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Sql/servers/firewallRules/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Sql/servers/firewallRules/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "how-long-are-azure-sql-server-and-database-audit-events-retained?",
+        "description": "Audit events for SQL servers and databases should be retained for at least 90 days. This question returns a list of SQL servers and databases and their retention period settings accordingly.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_sql_server|azure_sql_database) with auditLogRetentionDays >= 90",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_sql_server|azure_sql_database) with\n  auditLogRetentionDays < 90 or auditLogRetentionDays = undefined\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-vulnerability-assessment-(va)-sending-scan-reports-to-admins-and-subscription-owners-for-azure-sql-servers?",
+        "description": "Checks if Azure SQL servers have Vulnerability Assessment (VA) scan reports sending to admins and subscription owners enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaEmailSubscriptionAdmins = true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaEmailSubscriptionAdmins != true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "have-all-installed-vm-extensions-been-approved?",
+        "description": "Checks that all the installed VM extensions have been manually marked as \"trusted\" in JupiterOne.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_vm_extension with trusted=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_vm_extension with trusted!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-udp-services-exposed-to-the-internet?",
+        "description": "Returns a list of security groups that have a UDP port exposed to the internet.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_security_group as sg that allows as rule * as source\n  where\n      rule.inbound=true AND\n      rule.destinationPortRange!=undefined AND\n      (\n          rule.protocol='*' OR\n          rule.protocol='udp' OR\n          rule.protocol='UDP'\n      ) AND\n      (\n          rule.sourceAddressPrefix='*' OR\n          rule.sourceAddressPrefix='0.0.0.0' OR\n          rule.sourceAddressPrefix~='<nw>/0' OR\n          rule.sourceAddressPrefix='internet' OR\n          rule.sourceAddressPrefix='any'\n      )\n  return\n      sg.displayName,\n      sg.webLink,\n      source._class,\n      source._type,\n      source.displayName,\n      rule.displayName,\n      rule.inbound,\n      rule.destinationPortRange,\n      rule.protocol,\n      rule.sourceAddressPrefix,\n      rule.destinationPortRange,\n      rule.access,\n      rule.id\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-policyassignments/delete?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for policyAssignments/delete.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Authorization/policyAssignments/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Authorization/policyAssignments/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "has-each-azure-subscription-enabled-alerting-for-the-default-security-center-contact?",
+        "description": "Returns Azure security center contacts that have alerting enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_contact with name = 'default' and alertNotifications = 'On'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_contact with name = 'default' and alertNotifications != 'On'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-azure-sql-servers-not-have-an-active-directory-admin-configured?",
+        "description": "Returns a list of SQL servers with no active directory admin configured.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND\n  azure_sql_server THAT HAS\n  azure_sql_server_active_directory_admin\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND\n  azure_sql_server THAT !HAS\n  azure_sql_server_active_directory_admin\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-queue-analytics-logging-enabled-in-azure-storage-accounts?",
+        "description": "Returns a list of Azure storage accounts with Queue Analytics Logging enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_storage_account with queueAnalyticsLoggingReadEnabled=true and queueAnalyticsLoggingWriteEnabled=true and queueAnalyticsLoggingDeleteEnabled=true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_storage_account with queueAnalyticsLoggingReadEnabled!=true or queueAnalyticsLoggingWriteEnabled!=true or queueAnalyticsLoggingDeleteEnabled!=true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-managed-os-/-boot-disks-encrypted?",
+        "description": "Checks the encryption status of all Azure managed disks with an installed OS and in attached state.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_managed_disk with osType!=undefined and attached=true and encrypted=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_managed_disk with osType!=undefined and attached=true and encrypted!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-resources-do-not-have-diagnostic-settings?",
+        "description": "Returns a list of Azure resources with no Diagnostic Settings. NOTE: Diagnostic settings are not supported on all resources in JupiterOne. Read the documentation to learn more about supported services: https://github.com/JupiterOne/graph-azure/blob/master/docs/jupiterone.md#diagnostic-settings\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find (\n  azure_api_management_service|\n  azure_batch_account|\n  azure_cdn_endpoint|\n  azure_cdn_profile|\n  azure_container_registry|\n  azure_event_grid_domain|\n  azure_event_grid_topic|\n  azure_keyvault_service|\n  azure_lb|\n  azure_mariadb_server|\n  azure_mysql_server|\n  azure_network_azure_firewall|\n  azure_postgresql_server|\n  azure_public_ip|\n  azure_security_group|\n  azure_sql_server|\n  azure_subscription|\n  azure_vnet\n) that has azure_diagnostic_setting\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find (\n  azure_api_management_service|\n  azure_batch_account|\n  azure_cdn_endpoint|\n  azure_cdn_profile|\n  azure_container_registry|\n  azure_event_grid_domain|\n  azure_event_grid_topic|\n  azure_keyvault_service|\n  azure_lb|\n  azure_mariadb_server|\n  azure_mysql_server|\n  azure_network_azure_firewall|\n  azure_postgresql_server|\n  azure_public_ip|\n  azure_security_group|\n  azure_sql_server|\n  azure_subscription|\n  azure_vnet\n) that !has azure_diagnostic_setting\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-using-http's-latest-version?",
+        "description": "Checks that all Azure Web Apps are using the latest version of HTTP.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with http20Enabled = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with http20Enabled != true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-managed-data-disks-(no-os-or-non-boot)-encrypted?",
+        "description": "Checks the encryption status of all Azure managed disks without an installed OS and in attached state.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_managed_disk with osType=undefined and attached=true and encrypted=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_managed_disk with osType=undefined and attached=true and encrypted!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-ssl-enforced-on-all-azure-postgresql-database-servers?",
+        "description": "Returns a list of PostgreSQL database servers with SSL enforcement enabled / not enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_postgresql_server with sslEnforced=true or sslEnforcement='Enabled'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_postgresql_server with sslEnforced!=true and sslEnforcement!='Enabled'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-\"soft-delete\"-enabled-for-azure-storage-accounts?",
+        "description": "Returns a list of Azure storage accounts with \"Soft Delete\" enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with blobSoftDeleteEnabled = true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with blobSoftDeleteEnabled != true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-vhd's-attached-to-vms-encrypted?",
+        "description": "Checks all Virtual Hard Disks used by VMs have encryption turned on.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_vm THAT USES azure_storage_account with encryptedBlob=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_vm THAT USES azure_storage_account with encryptedBlob!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-azure-security-group-rules-allowing-inbound-rdp-access-from-the-internet?",
+        "description": "Returns a list of Security Groups with rules allowing inbound RDP access (port 3389) from the Internet.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_security_group that allows as rule Internet\nwhere rule.inbound=true and rule.fromPort <= 3389 and rule.toPort >= 3389\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-azure-sql-servers-allow-ingress-0.0.0.0/0-(any-ip)?",
+        "description": "Returns a list of Azure SQL Server Firewall Rules that start with 0.0.0.0.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_sql_server_firewall_rule with startIpAddress = '0.0.0.0'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-using-latest-version-of-tls-encryption?",
+        "description": "Checks the version of TLS in use of all Azure Web Apps.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with minTlsVersion = \"1.2\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with minTlsVersion != \"1.2\"\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-microsoft.security/securitysolutions/delete?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for Microsoft.Security/securitySolutions/delete.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Security/securitySolutions/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Security/securitySolutions/delete' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-all-azure-key-vault-secrets-have-an-expiration-time-set?",
+        "description": "Checks the expiration time state of all Azure Key Vault Secrets.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_keyvault_secret with enabled = true and expiresOn != undefined\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_keyvault_secret with enabled = true and expiresOn = undefined\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-storage-accounts-configured-with-\"deny\"-as-the-default-network-access-rule?",
+        "description": "Returns a list of Azure storage accounts with/without \"Deny\" as the default network access rule.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with networkRuleSet.defaultAction = 'Deny'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_storage_account with networkRuleSet.defaultAction != 'Deny'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-data-encryption-enabled-on-all-azure-sql-servers?",
+        "description": "Returns a list of Azure SQL servers with encryption enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_sql_database with encrypted=true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_sql_database with encrypted!=true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-the-\"periodic-recurring-scans\"-setting-enabled-for-azure-sql-server-vulnerability-assessments-(va)?",
+        "description": "Checks if Azure SQL servers have Vulnerability Assessment (VA) Periodic Recurring Scans enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaRecurringScansEnabled = true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_sql_server with vaRecurringScansEnabled != true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-sql-servers-on-machines?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for SQL servers on machines.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='SqlServerVirtualMachines' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='SqlServerVirtualMachines' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-all-vms-have-endpoint-protection-installed?",
+        "description": "Checks that there is an endpoint protection VM extension installed on every VM.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_vm THAT USES azure_vm_extension with displayName^=('EndpointSecurity' OR 'TrendMicroDSA' OR 'Antimalware' OR 'EndpointProtection' OR 'SCWPAgent' OR 'PortalProtectExtension' OR 'FileSecurity')\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_vm THAT !USES azure_vm_extension with displayName^=('EndpointSecurity' OR 'TrendMicroDSA' OR 'Antimalware' OR 'EndpointProtection' OR 'SCWPAgent' OR 'PortalProtectExtension' OR 'FileSecurity')\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-microsoft-cloud-app-security-enabled-in-azure-subscriptions?",
+        "description": "Returns Azure subscriptions that have Microsoft Cloud App Security enabled / disabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_subscription that has azure_security_center_setting with name='MCAS' and enabled = true",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_subscription that !has azure_security_center_setting with name='MCAS' and enabled = true",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-subscriptions-not-have-an-activity-log-alert-for-microsoft.security/securitysolutions/write?",
+        "description": "Returns a list of Azure subscriptions that have not configured an activity log alert for Microsoft.Security/securitySolutions/write.\n",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Security/securitySolutions/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY' THAT MONITORS\n  azure_subscription\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find\n  azure_subscription THAT !MONITORS\n  azure_monitor_activity_log_alert WITH\n    condition.operationName = 'Microsoft.Security/securitySolutions/write' AND\n    condition.level = 'ANY' AND\n    condition.status = 'ANY' AND\n    condition.caller = 'ANY'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-nsg-flow-logs-configured-with-retention->=-90-days?",
+        "description": "Returns a list of Network Security Groups with flow logs that have retention period >= 90 days.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_group that HAS azure_security_group_flow_logs with retentionPolicy.days >= 90\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_security_group AS sg THAT HAS azure_security_group_flow_logs WITH retentionPolicy.days < 90 AS fl return fl.webLink AS \"Flowlog URL\", fl.retentionPolicy.days AS \"Retention Policy in Days\", fl.retentionPolicy.enabled AS \"Retention Policy Enabled\", sg.webLink AS \"Security Group URL\", sg.displayName AS \"Security Group Name\", sg.category AS \"Security Group Category\", sg.id AS \"Security Group ID\", sg.isWideOpen AS \"Security Group Wide Open\", sg.region AS \"Security Group Region\", sg.resource AS \"Security Group Resource\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_security_group AS sg THAT !HAS azure_security_group_flow_logs RETURN sg.webLink AS \"Security Group URL\", sg.displayName AS \"Security Group Name\", sg.category AS \"Security Group Category\", sg.id AS \"Security Group ID\", sg.isWideOpen AS \"Security Group Wide Open\", sg.region AS \"Security Group Region\", sg.resource AS \"Security Group Resource\"    \n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-azure-web-apps-ftp-deployments-disabled?",
+        "description": "Checks that all Azure Web Apps have disabled FTP deployments.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with ftpsState != \"AllAllowed\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find (azure_function_app | azure_web_app) with ftpsState = \"AllAllowed\"\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-azure-postgresql-servers-allow-traffic-from-startip-'0.0.0.0'?",
+        "description": "Returns a list of PostgreSQL database servers that have a firewall rule with startIp of '0.0.0.0'.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "FIND azure_postgresql_server_firewall_rule WITH startIpAddress = '0.0.0.0'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "do-any-azure-postgresql-database-servers-not-have-logretention->-3-days?",
+        "description": "Returns a list of PostgreSQL database servers without logRetention > 3 days.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND azure_postgresql_server WITH configurations.logRetentionDays > 3",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND azure_postgresql_server WITH configurations.logRetentionDays <= 3 or configurations.logRetentionDays = undefined",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-public-access-enabled-on-any-azure-blob-container?",
+        "description": "Returns a list of Azure Blob Storage Containers with public access enabled / not enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "Find azure_storage_container with public=false or publicAccess='None'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "Find azure_storage_container with public=true or publicAccess!='None'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-azure-defender-enabled-for-kubernetes-service?",
+        "description": "Returns Azure subscriptions that have Azure Defender enabled / disabled for Kubernetes service.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='KubernetesService' and pricingTier = 'Standard'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "find azure_security_center_subscription_pricing with name='KubernetesService' and pricingTier != 'Standard'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-connections-logging-enforced-on-all-azure-postgresql-database-servers?",
+        "description": "Returns a list of PostgreSQL database servers with connections logging enabled / not enabled.",
+        "queries": [
+            {
+                "name": "query0",
+                "query": "FIND azure_postgresql_server WITH configurations.logConnections='on'",
+                "version": "v1"
+            },
+            {
+                "name": "query0",
+                "query": "FIND azure_postgresql_server WITH configurations.logConnections!='on'",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    }
+]
