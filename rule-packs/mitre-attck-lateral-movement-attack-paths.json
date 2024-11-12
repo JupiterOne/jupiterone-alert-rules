@@ -45,7 +45,7 @@
             "version": "v1"
           }
         ],
-        "alertLevel": "INFORMATIONAL"
+        "alertLevel": "LOW"
       },
       {
         "name": "lateral-movement-exploitation-of-remote-services-patch-management",
@@ -65,7 +65,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (Device|Host) THAT PROTECTS HostAgent WITH function=('av' OR 'anti-malware') AND active=true",
+            "query": "FIND (Device|Host) THAT PROTECTS << HostAgent WITH function=('av' OR 'anti-malware') AND active=true",
             "version": "v1"
           }
         ],
@@ -173,7 +173,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND Firewall WITH ingressRules = 'null' OR egressRules = 'null'",
+            "query": "FIND Firewall WITH ingressRules !~= /CidrIp/i AND egressRules !~= /CidrIp/i'",
             "version": "v1"
           }
         ],
@@ -221,7 +221,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (User) WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote'",
+            "query": "FIND User WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote'",
             "version": "v1"
           }
         ],
@@ -245,7 +245,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find Internet THAT ALLOWS as rule google_compute_firewall as firewall THAT PROTECTS google_compute_network as network THAT CONTAINS google_compute_subnetwork as subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "query": "FIND Internet THAT ALLOWS as rule google_compute_firewall as firewall THAT PROTECTS google_compute_network as network THAT CONTAINS google_compute_subnetwork as subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
             "version": "v1"
           }
         ],
@@ -257,7 +257,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "Find azure_security_group that allows as rule Internet where rule.inbound=true and rule.fromPort <= 3389 and rule.toPort >= 3389",
+            "query": "FIND azure_security_group THAT ALLOWS AS rule Internet WHERE rule.inbound=true AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
             "version": "v1"
           }
         ],
@@ -281,7 +281,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (User) (THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote')? THAT RELATES TO azure_conditional_access_policy WITH displayName ~= 'admin'",
+            "query": "FIND User (THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote')? THAT RELATES TO azure_conditional_access_policy WITH displayName ~= 'admin'",
             "version": "v1"
           }
         ],
@@ -377,7 +377,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find Internet THAT ALLOWS as rule google_compute_firewall as firewall THAT PROTECTS google_compute_network as network THAT CONTAINS google_compute_subnetwork as subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
+            "query": "FIND Internet THAT ALLOWS AS rule google_compute_firewall AS firewall THAT PROTECTS google_compute_network AS network THAT CONTAINS google_compute_subnetwork AS subnetwork WHERE firewall.ingress=true AND rule.ipProtocol='rdp' AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
             "version": "v1"
           }
         ],
@@ -389,7 +389,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "Find azure_security_group that allows as rule Internet where rule.inbound=true and rule.fromPort <= 3389 and rule.toPort >= 3389",
+            "query": "FIND azure_security_group THAT ALLOWS AS rule Internet WHERE rule.inbound=true AND rule.fromPort <= 3389 AND rule.toPort >= 3389",
             "version": "v1"
           }
         ],
@@ -429,7 +429,7 @@
             "version": "v1"
           }
         ],
-        "alertLevel": "INFORMATIONAL"
+        "alertLevel": "LOW"
       },
       {
         "name": "remote-services-smb-windows-admin-shares-restrict-smb",
@@ -581,7 +581,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND Firewall WITH ingressRules = 'null' or egressRules = 'null'",
+            "query": "FIND Firewall WITH ingressRules !~= /CidrIp/i AND egressRules !~= /CidrIp/i",
             "version": "v1"
           }
         ],
@@ -593,7 +593,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (Device|Host) THAT PROTECTS HostAgent WITH function=('av' or 'anti-malware') and active=true",
+            "query": "FIND (Device|Host) THAT PROTECTS << HostAgent WITH function=('av' or 'anti-malware') and active=true",
             "version": "v1"
           }
         ],
