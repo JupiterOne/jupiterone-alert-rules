@@ -22,3 +22,4 @@ module.exports.AttackPath = require("./attack-path.json");
 module.exports.GitlabMaliciousVersions = require("./gitlab-malicious-versions.json");
 module.exports.ServiceNowCMDBDevices = require("./servicenow-cmdb-devices.json");
 module.exports.MITREATTCKInitialAccess = require("./mitre-attck-initial-access-attack-paths.json");
+module.exports.MITREATTCKLateralMovement = require("./mitre-attck-lateral-movement-attack-paths.json");
