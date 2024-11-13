@@ -173,7 +173,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND Firewall WITH ingressRules !~= /CidrIp/i AND egressRules !~= /CidrIp/i'",
+            "query": "FIND Firewall WITH ingressRules !~= /CidrIp/i AND egressRules !~= /CidrIp/i",
             "version": "v1"
           }
         ],
