@@ -9,7 +9,7 @@
             "version": "v1"
           }
         ],
-        "alertLevel": "LOW"
+        "alertLevel": "INFO"
       },
       {
         "name": "lateral-movement-exploitation-of-remote-services-patch-management",
@@ -29,7 +29,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (Device|Host) THAT PROTECTS << HostAgent WITH function=('av' OR 'anti-malware') AND active=true",
+            "query": "FIND (Device|Host) THAT !SCANS << (HostAgent|Service) WITH _integrationClass = 'Scanner'",
             "version": "v1"
           }
         ],
@@ -185,7 +185,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND User WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote'",
+            "query": "FIND User WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) WITH displayName ~= 'remote'",
             "version": "v1"
           }
         ],
@@ -245,7 +245,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND User (THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote')? THAT RELATES TO azure_conditional_access_policy WITH displayName ~= 'admin'",
+            "query": "FIND User (THAT RELATES TO (Group|UserGroup) WITH displayName ~= 'remote')? THAT RELATES TO azure_conditional_access_policy WITH displayName ~= 'admin'",
             "version": "v1"
           }
         ],
@@ -317,7 +317,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND User WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote'",
+            "query": "FIND User WITH accountEnabled != true THAT RELATES TO (Group|UserGroup) WITH displayName ~= 'remote'",
             "version": "v1"
           }
         ],
@@ -389,7 +389,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (User) (THAT RELATES TO (Group|UserGroup) with displayName ~= 'remote')? THAT ASSIGNED as rel AccessPolicy",
+            "query": "FIND (User) (THAT RELATES TO (Group|UserGroup) WITH displayName ~= 'remote')? THAT ASSIGNED as rel AccessPolicy",
             "version": "v1"
           }
         ],
@@ -425,7 +425,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find aws_iam_account_password_policy with historyCount < 10 or historyCount=undefined",
+            "query": "FIND aws_iam_account_password_policy WITH historyCount < 10 OR historyCount=undefined",
             "version": "v1"
           }
         ],
@@ -437,7 +437,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "find aws_iam_account_password_policy with historyCount < 10 or historyCount=undefined",
+            "query": "FIND aws_iam_account_password_policy WITH historyCount < 10 OR historyCount=undefined",
             "version": "v1"
           }
         ],
@@ -557,7 +557,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (Device|Host) THAT PROTECTS << HostAgent WITH function=('av' or 'anti-malware') and active=true",
+            "query": "FIND (Device|Host) THAT !PROTECTS << HostAgent WITH function=('av' OR 'anti-malware') and active=true",
             "version": "v1"
           }
         ],
