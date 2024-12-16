@@ -14,5 +14,21 @@
       "emailBody": "({{itemIndex+1}} of {{itemCount}}) <br><b>{{item.displayName}}</b><br>---<br><b>Integration:</b>{{item.integrationType}}<br><b>InstanceId:</b> {{item.id}}<br><b>Status:</b> {{item.status}}<br><b>PollingInterval:</b> {{item.pollingInterval}}<br><b>URL:</b> https://apps.us.jupiterone.io/integrations/{{item.integrationType}}/{{item.id}}/jobs<br><br>",
       "slackBody": "({{itemIndex+1}} of {{itemCount}}) \n*{{item.displayName}}*\n---\n*Integration:* {{item.integrationType}}\n*InstanceId:* {{item.id}}\n*Status:* {{item.status}}\n *PollingInterval:* {{item.pollingInterval}}\n *URL:* https://apps.us.jupiterone.io/integrations/{{item.integrationType}}/{{item.id}}/jobs \n\n"
     }
+  },
+  {
+    "name": "jupiterone-integration-failures-misconfigurations",
+    "description": "JupiterOne Integrations currently in a 'FAILED' or 'CONFIGURATION_FAILURE' status with a defined Polling Interval",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND jupiterone_integration WITH status = ('FAILED' or 'CONFIGURATION_FAILURE') AND pollingInterval != 'DISABLED'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO",
+    "templates": {
+      "emailBody": "({{itemIndex+1}} of {{itemCount}}) <br><b>{{item.displayName}}</b><br>---<br><b>Integration:</b>{{item.integrationType}}<br><b>InstanceId:</b> {{item.id}}<br><b>Status:</b> {{item.status}}<br><b>PollingInterval:</b> {{item.pollingInterval}}<br><b>URL:</b> https://apps.us.jupiterone.io/integrations/{{item.integrationType}}/{{item.id}}/jobs<br><br>",
+      "slackBody": "({{itemIndex+1}} of {{itemCount}}) \n*{{item.displayName}}*\n---\n*Integration:* {{item.integrationType}}\n*InstanceId:* {{item.id}}\n*Status:* {{item.status}}\n *PollingInterval:* {{item.pollingInterval}}\n *URL:* https://apps.us.jupiterone.io/integrations/{{item.integrationType}}/{{item.id}}/jobs \n\n"
+    }
   }
 ]
