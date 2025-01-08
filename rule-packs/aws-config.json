@@ -1129,7 +1129,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND aws_iam_role AS ROLE WITH lastUsedOn <= date.now - 90 days",
+        "query": "FIND aws_iam_role WITH lastUsedOn <= date.now - 90 days",
         "version": "v1"
       }
     ],
