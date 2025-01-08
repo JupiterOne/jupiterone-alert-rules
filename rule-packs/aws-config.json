@@ -1117,7 +1117,19 @@
     "queries": [
       {
         "name": "query0",
-        "query": "find aws_instance with httpTokens = 'optional' and httpEndpointEnabled=true",
+        "query": "FIND aws_instance WITH httpTokens = 'optional' AND httpEndpointEnabled=true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "privileges-unused-for-90-days",
+    "description": "Checks for aws role privileges that have been unused for 90 days or greater. It is recommended to review results returned and remove unused privileges.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_iam_role AS ROLE WITH lastUsedOn <= date.now - 90 days",
         "version": "v1"
       }
     ],

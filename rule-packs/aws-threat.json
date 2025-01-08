@@ -78,5 +78,16 @@
         "version": "v1"
       }
     ]
+  },
+  {
+    "name": "aws-public-facing-resources-list",
+    "description": "This alert returns ALL AWS resources that are public facing.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND * WITH public = true AND _integrationType = 'aws'",
+        "version": "v1"
+      }
+    ]
   }
 ]
