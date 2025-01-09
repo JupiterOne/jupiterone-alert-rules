@@ -313,7 +313,7 @@
   },
   {
     "name": "aws-high-privilege-lambda-function-get-policy",
-    "description": "This query looks for users that have the 'lambda:get-policy' action assigned. A malicious actor with this permission can view environmental variables of a lambda function and it is recommended to review all results.",
+    "description": "This query looks for users that have the 'lambda:get-policy' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
     "queries": [
       {
         "name": "query0",
@@ -325,7 +325,7 @@
   },
   {
     "name": "aws-high-privilege-lambda-function-get-function",
-    "description": "This query looks for users that have the 'lambda:get-function' action assigned. A malicious actor with this permission can view environmental variables of a lambda function and it is recommended to review all results.",
+    "description": "This query looks for users that have the 'lambda:get-function' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
     "queries": [
       {
         "name": "query0",
@@ -337,7 +337,7 @@
   },
   {
     "name": "aws-high-privilege-lambda-function-get-function",
-    "description": "This query looks for users that have the 'lambda:GetFunctionConfiguration' action assigned. A malicious actor with this permission can view environmental variables of a lambda function and it is recommended to review all results.",
+    "description": "This query looks for users that have the 'lambda:GetFunctionConfiguration' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
     "queries": [
       {
         "name": "query0",
@@ -349,7 +349,7 @@
   },
   {
     "name": "aws-high-privilege-lambda-function-list-function",
-    "description": "This query looks for users that have the 'lambda:ListFunctions' action assigned. A malicious actor with this permission can view environmental variables of a lambda function and it is recommended to review all results.",
+    "description": "This query looks for users that have the 'lambda:ListFunctions' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
     "queries": [
       {
         "name": "query0",
