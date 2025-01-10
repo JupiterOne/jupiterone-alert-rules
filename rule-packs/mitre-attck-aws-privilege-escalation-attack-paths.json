@@ -336,7 +336,7 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "aws-high-privilege-lambda-function-get-function",
+    "name": "aws-high-privilege-lambda-function-get-function-configuration",
     "description": "This query looks for users that have the 'lambda:GetFunctionConfiguration' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
     "queries": [
       {
@@ -348,7 +348,7 @@
     "alertLevel": "HIGH"
   },
   {
-    "name": "aws-high-privilege-lambda-function-list-function",
+    "name": "aws-high-privilege-lambda-function-list-functions",
     "description": "This query looks for users that have the 'lambda:ListFunctions' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
     "queries": [
       {
