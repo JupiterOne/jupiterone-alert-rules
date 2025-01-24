@@ -1,0 +1,62 @@
+[
+    {
+        "name": "sbom-code-repos-with-vulnerable-module",
+        "description": "Finds code repos that use a known vulnerable version of a module.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND CodeRepo THAT CONTAINS AS rel CodeModule WITH displayName='babel__traverse' WHERE rel.version<'7.23.2'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "MEDIUM"
+    },
+    {
+        "name": "sbom-workloads-with-vulnerable-module",
+        "description": "Finds deployed workloads using known vulnerable versions of a module.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (Worlkoad|Function|Host) THAT DEFINES CodeRepo THAT CONTAINS AS rel CodeModule WITH displayName='babel__traverse' WHERE rel.version<'7.23.2'",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "MEDIUM"
+    },
+    {
+        "name": "sbom-all-module-versions-used",
+        "description": "Finds all versions of a module used by your application.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (CodeRepo|CodeModule) AS parent THAT CONTAINS AS rel CodeModule WITH displayName='chalk' RETURN parent.displayName, rel.version",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "sbom-nested-sboms",
+        "description": "See the nested nature of SBOMs and why graph databases are a good way to consume them.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND CodeRepo THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule RETURN TREE",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "sbom-most-used-packages",
+        "description": "Find your most used packages.",
+        "queries": [
+          {
+            "name": "query0",
+            "query": "FIND (CodeRepo|CodeModule) AS src THAT CONTAINS >> AS rel  CodeModule AS target RETURN target.displayName, rel.version, COUNT(src) AS cnt ORDER BY cnt DESC",
+            "version": "v1"
+          }
+        ],
+        "alertLevel": "INFO"
+    },
+]

@@ -23,3 +23,4 @@ module.exports.GitlabMaliciousVersions = require("./gitlab-malicious-versions.js
 module.exports.ServiceNowCMDBDevices = require("./servicenow-cmdb-devices.json");
 module.exports.MITREATTCKInitialAccess = require("./mitre-attck-initial-access-attack-paths.json");
 module.exports.MITREATTCKLateralMovement = require("./mitre-attck-lateral-movement-attack-paths.json");
+module.exports.JUPTERONESBOM = require("./jupiterone-sbom.json");
