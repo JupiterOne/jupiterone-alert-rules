@@ -5,7 +5,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND CodeRepo THAT CONTAINS AS rel CodeModule WITH displayName='babel__traverse' WHERE rel.version<'7.23.2'",
+            "query": "FIND CodeModule THAT RELATES TO << CodeRepo THAT HAS Finding WITH numericSeverity >= 7",
             "version": "v1"
           }
         ],
@@ -17,7 +17,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (Worlkoad|Function|Host) THAT DEFINES CodeRepo THAT CONTAINS AS rel CodeModule WITH displayName='babel__traverse' WHERE rel.version<'7.23.2'",
+            "query": "FIND (Worlkoad|Function|Host) THAT DEFINES << CodeRepo THAT HAS Finding WITH numericSeverity >= 7 (THAT RELATES TO CodeModule)?",
             "version": "v1"
           }
         ],
@@ -29,7 +29,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (CodeRepo|CodeModule) AS parent THAT CONTAINS AS rel CodeModule WITH displayName='chalk' RETURN parent.displayName, rel.version",
+            "query": "FIND (CodeRepo|CodeModule) AS parent THAT CONTAINS AS rel CodeModule RETURN parent.displayName, rel.version",
             "version": "v1"
           }
         ],
@@ -53,7 +53,7 @@
         "queries": [
           {
             "name": "query0",
-            "query": "FIND (CodeRepo|CodeModule) AS src THAT CONTAINS >> AS rel  CodeModule AS target RETURN target.displayName, rel.version, COUNT(src) AS cnt ORDER BY cnt DESC",
+            "query": "FIND (CodeRepo|CodeModule) AS src THAT CONTAINS >> AS rel CodeModule AS target RETURN target.displayName, rel.version, COUNT(src) AS cnt ORDER BY cnt DESC",
             "version": "v1"
           }
         ],
