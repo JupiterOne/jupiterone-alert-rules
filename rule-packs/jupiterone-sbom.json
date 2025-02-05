@@ -58,5 +58,53 @@
           }
         ],
         "alertLevel": "INFO"
-    }
+    },
+    {
+      "name": "sbom-merged-pull-requests-with-critical-findings",
+      "description": "Look for pull requests with critical findings",
+      "queries": [
+        {
+          "name": "query0",
+          "query": "FIND Finding AS finding THAT HAS << CodeRepo AS repo THAT RELATES TO PR WITH merged = true AS pullRequest RETURN repo.displayName, finding.displayName, pullRequest.displayName",
+          "version": "v1"
+        }
+      ],
+      "alertLevel": "HIGH"
+  },
+  {
+    "name": "sbom-repositories-with-active-findings",
+    "description": "Find repositories with active findings.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND Finding WITH open = true AS finding THAT HAS << CodeRepo AS repo RETURN repo.displayName as repository, count(finding) AS findingCount ORDER BY findingCount DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "sbom-package-dependencies-flows",
+    "description": "Find packages and their dependency names.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND UNIQUE CodeModule THAT RELATES TO as dependency CodeRepo RETURN dependency.displayName as dependencyName",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "sbom-package-dependencies",
+    "description": "Find packages and their dependencies.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND UNIQUE CodeModule THAT RELATES TO as dependency CodeRepo",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  }
 ]
