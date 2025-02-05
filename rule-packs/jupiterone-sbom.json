@@ -85,7 +85,7 @@
 },
 {
   "name": "sbom-package-dependencies-flows",
-  "description": "Find packages and their dependencies flows.",
+  "description": "Find packages and their dependency names.",
   "queries": [
     {
       "name": "query0",
