@@ -1,75 +1,75 @@
 [
-    {
-        "name": "sbom-code-repos-with-vulnerable-module",
-        "description": "Finds code repos that use a known vulnerable version of a module.",
-        "queries": [
-          {
-            "name": "query0",
-            "query": "FIND CodeModule THAT RELATES TO << CodeRepo THAT HAS Finding WITH numericSeverity >= 7",
-            "version": "v1"
-          }
-        ],
-        "alertLevel": "MEDIUM"
-    },
-    {
-        "name": "sbom-workloads-with-vulnerable-module",
-        "description": "Finds deployed workloads using known vulnerable versions of a module.",
-        "queries": [
-          {
-            "name": "query0",
-            "query": "FIND (Worlkoad|Function|Host) THAT DEFINES << CodeRepo THAT HAS Finding WITH numericSeverity >= 7 (THAT RELATES TO CodeModule)?",
-            "version": "v1"
-          }
-        ],
-        "alertLevel": "MEDIUM"
-    },
-    {
-        "name": "sbom-all-module-versions-used",
-        "description": "Finds all versions of a module used by your application.",
-        "queries": [
-          {
-            "name": "query0",
-            "query": "FIND (CodeRepo|CodeModule) AS parent THAT CONTAINS AS rel CodeModule RETURN parent.displayName, rel.version",
-            "version": "v1"
-          }
-        ],
-        "alertLevel": "INFO"
-    },
-    {
-        "name": "sbom-nested-sboms",
-        "description": "See the nested nature of SBOMs and why graph databases are a good way to consume them.",
-        "queries": [
-          {
-            "name": "query0",
-            "query": "FIND CodeRepo THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule THAT CONTAINS >> CodeModule RETURN TREE",
-            "version": "v1"
-          }
-        ],
-        "alertLevel": "INFO"
-    },
-    {
-        "name": "sbom-most-used-packages",
-        "description": "Find your most used packages.",
-        "queries": [
-          {
-            "name": "query0",
-            "query": "FIND (CodeRepo|CodeModule) AS src THAT CONTAINS >> AS rel CodeModule AS target RETURN target.displayName, rel.version, COUNT(src) AS cnt ORDER BY cnt DESC",
-            "version": "v1"
-          }
-        ],
-        "alertLevel": "INFO"
-    },
-    {
-      "name": "sbom-merged-pull-requests-with-critical-findings",
-      "description": "Look for pull requests with critical findings",
-      "queries": [
-        {
-          "name": "query0",
-          "query": "FIND Finding AS finding THAT HAS << CodeRepo AS repo THAT RELATES TO PR WITH merged = true AS pullRequest RETURN repo.displayName, finding.displayName, pullRequest.displayName",
-          "version": "v1"
-        }
-      ],
-      "alertLevel": "HIGH"
+  {
+    "name": "sbom-code-modules-in-code-repos-with-finding",
+    "description": "Finds code modules related to a code repository where a high severity finding was discovered",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND CodeModule THAT RELATES TO << CodeRepo THAT HAS Finding WITH numericSeverity >= 7",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sbom-workloads-defined-by-code-repo-with-finding",
+    "description": "Finds deployed workflows, functions, or hosts defined by a code repo with a high severity finding discovered",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (Worlkoad|Function|Host) THAT DEFINES << CodeRepo THAT HAS Finding WITH numericSeverity >= 7 (THAT RELATES TO CodeModule)?",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "sbom-all-module-versions-used",
+    "description": "Finds names and versions of code modules relating to all existing code repos",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (CodeRepo|CodeModule) AS parent THAT CONTAINS AS rel CodeModule AS cm RETURN parent.displayName, cm,displayName, rel.version",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "sbom-nested-sboms",
+    "description": "See the nested nature of SBOMs and why graph databases are a good way to consume them.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND CodeRepo THAT CONTAINS >> CodeModule (THAT CONTAINS >> CodeModule)? RETURN TREE",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "sbom-commonly-used-code-modules",
+    "description": "Find the most commonly used code modules across all code repos.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (CodeRepo|CodeModule) AS src THAT CONTAINS >> AS rel CodeModule AS target RETURN src.displayName AS 'Code Repo Name', target.displayName AS 'Module Name', rel.version AS 'Module Version', COUNT(src) AS 'ModulePrevalence' ORDER BY ModulePrevalence DESC",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "sbom-recently-merged-PRs-for-repos-with-critical-findings",
+    "description": "Look for rercently merged pull requests for code repos with currently open critical findings",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND Finding AS finding THAT HAS << CodeRepo AS repo THAT RELATES TO PR WITH merged = true and updatedOn > date.now -7days AS pullRequest RETURN repo.displayName, finding.displayName, pullRequest.displayName",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
   },
   {
     "name": "sbom-repositories-with-active-findings",
