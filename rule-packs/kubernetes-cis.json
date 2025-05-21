@@ -1,0 +1,158 @@
+[
+  {
+    "name": "cis-5.1.1-cluster-admin-role-usage",
+    "description": "Ensure that the cluster-admin role is only used where required",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_cluster_role_binding THAT ASSIGNED << kube_cluster_role WITH name = 'cluster-admin'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.2-minimize-access-to-secrets",
+    "description": "Minimize access to secrets",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'secrets' AND verbs = ('get' OR 'list' OR 'watch')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.3-minimize-wildcard-use",
+    "description": "Minimize wildcard use in Roles and ClusterRoles",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = '*' OR verbs = '*' OR apiGroups = '*'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.4-minimize-pod-create-access",
+    "description": "Minimize access to create pods",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'pods' AND verbs = 'create'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.5-no-default-service-account-use",
+    "description": "Ensure that default service accounts are not actively used",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_cluster_role_binding|kube_role_binding) THAT ASSIGNED kube_service_account WITH name = 'default'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.6-sa-tokens-only-where-necessary",
+    "description": "Ensure that Service Account Tokens are only mounted where necessary",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH automountServiceAccountToken = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.7-avoid-system-masters-group",
+    "description": "Avoid use of system:masters group",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role_binding|kube_cluster_role_binding) WITH subjects ~= 'Group:default:system:masters'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.8-limit-bind-impersonate-escalate",
+    "description": "Limit use of the Bind, Impersonate and Escalate permissions in the Kubernetes cluster",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH verbs = ('bind' OR 'impersonate' OR 'escalate')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.9-minimize-pv-create-access",
+    "description": "Minimize access to create persistent volumes",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'persistentvolumeclaims' AND verbs = 'create'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.10-minimize-node-proxy-access",
+    "description": "Minimize access to the proxy sub-resource of nodes",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'nodes/proxy'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.11-minimize-csr-approval-access",
+    "description": "Minimize access to the approval sub-resource of certificatesigningrequests objects",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'certificatesigningrequests/approval'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.12-minimize-webhook-config-access",
+    "description": "Minimize access to webhook configuration objects",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'mutatingwebhookconfigurations' OR resources = 'validatingwebhookconfigurations' AND verbs = ('create' OR 'modify' OR 'delete')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "cis-5.1.13-minimize-sa-token-creation-access",
+    "description": "Minimize access to the service account token creation",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'serviceaccounts/token' AND verbs = 'create'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  }
+]
