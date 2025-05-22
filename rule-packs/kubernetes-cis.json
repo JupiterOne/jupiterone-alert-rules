@@ -154,5 +154,161 @@
       }
     ],
     "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.1-policy-control-mechanism",
+    "description": "Ensure that the cluster has at least one active policy control mechanism in place",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND jupiterone_rule WITH name ~= 'kubernetes-cis-5.2' RETURN jupiterone_rule._class, COUNT(jupiterone_rule) as ruleCount HAVING ruleCount < 13",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.2-minimize-privileged-containers",
+    "description": "Minimize the admission of privileged containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.privileged = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.3-minimize-hostpid-containers",
+    "description": "Minimize the admission of containers wishing to share the host process ID namespace",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH hostPID = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.4-minimize-hostipc-containers",
+    "description": "Minimize the admission of containers wishing to share the host IPC namespace",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH hostIPC = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.5-minimize-hostnetwork-containers",
+    "description": "Minimize the admission of containers wishing to share the host network namespace",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH hostNetwork = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.6-minimize-allowprivilegeescalation-containers",
+    "description": "Minimize the admission of containers with allowPrivilegeEscalation",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.allowPrivilegeEscalation = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.7-minimize-root-containers",
+    "description": "Minimize the admission of root containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.runAsNonRoot = false OR securityContext.runAsUser = 0",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.8-minimize-net-raw-capability",
+    "description": "Minimize the admission of containers with the NET_RAW capability",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH label.podSecurityKubernetesIoEnforce != 'restricted'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.9-minimize-added-capabilities",
+    "description": "Minimize the admission of containers with added capabilities",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH label.podSecurityKubernetesIoEnforce != 'restricted'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.10-minimize-capabilities-assigned",
+    "description": "Minimize the admission of containers with capabilities assigned",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH label.podSecurityKubernetesIoEnforce != 'restricted'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.11-minimize-windows-hostprocess",
+    "description": "Minimize the admission of Windows HostProcess Containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.windowsOptions.hostProcess = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.12-minimize-hostpath-volumes",
+    "description": "Minimize the admission of HostPath volumes",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_volume WITH hostPath.path != undefined",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.13-minimize-hostports",
+    "description": "Minimize the admission of containers which use HostPorts",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH hostPorts != undefined",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
   }
 ]
