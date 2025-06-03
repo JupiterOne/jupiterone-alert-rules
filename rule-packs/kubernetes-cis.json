@@ -310,5 +310,89 @@
       }
     ],
     "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.3.2-namespaces-network-policies",
+    "description": "Ensure that all Namespaces have Network Policies defined",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace THAT !CONTAINS kube_network_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.4.1-secrets-as-files",
+    "description": "Prefer using secrets as files over secrets as environment variables",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container WITH isUsingEnvironmentVariableSecrets = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.4.2-external-secret-storage",
+    "description": "Consider external secret storage",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container WITH isUsingEnvironmentVariableSecrets = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.1-administrative-boundaries-namespaces",
+    "description": "Create administrative boundaries between resources using namespaces",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_cluster THAT !CONTAINS kube_namespace",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.2-seccomp-profile-docker-default",
+    "description": "Ensure that the seccomp profile is set to docker/default in your pod definitions",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH securityContext.seccompProfileType != 'RuntimeDefault'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.3-apply-security-context",
+    "description": "Apply Security Context to Your Pods and Containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_pod|kube_container_spec) WITH hasSecurityContext != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.4-default-namespace-not-used",
+    "description": "The default namespace should not be used",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH name = 'default' THAT CONTAINS *",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
   }
 ]
