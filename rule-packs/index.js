@@ -22,4 +22,7 @@ module.exports.AttackPath = require("./attack-path.json");
 module.exports.GitlabMaliciousVersions = require("./gitlab-malicious-versions.json");
 module.exports.ServiceNowCMDBDevices = require("./servicenow-cmdb-devices.json");
 module.exports.MITREATTCKInitialAccess = require("./mitre-attck-initial-access-attack-paths.json");
+module.exports.MITREATTCKLateralMovement = require("./mitre-attck-lateral-movement-attack-paths.json");
+module.exports.JUPTERONESBOM = require("./jupiterone-sbom.json");
+module.exports.KubernetesCIS = require("./kubernetes-cis.json");
 module.exports.CISAWSFoundations2dot0 = require("./aws-cis-foundations-2-0.json");

@@ -1,0 +1,398 @@
+[
+  {
+    "name": "kubernetes-cis-5.1.1-cluster-admin-role-usage",
+    "description": "Ensure that the cluster-admin role is only used where required",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_cluster_role_binding THAT ASSIGNED << kube_cluster_role WITH name = 'cluster-admin'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.2-minimize-access-to-secrets",
+    "description": "Minimize access to secrets",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'secrets' AND verbs = ('get' OR 'list' OR 'watch')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.3-minimize-wildcard-use",
+    "description": "Minimize wildcard use in Roles and ClusterRoles",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = '*' OR verbs = '*' OR apiGroups = '*'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.4-minimize-pod-create-access",
+    "description": "Minimize access to create pods",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'pods' AND verbs = 'create'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.5-no-default-service-account-use",
+    "description": "Ensure that default service accounts are not actively used",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_cluster_role_binding|kube_role_binding) THAT ASSIGNED kube_service_account WITH name = 'default'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.6-sa-tokens-only-where-necessary",
+    "description": "Ensure that Service Account Tokens are only mounted where necessary",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH automountServiceAccountToken = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.7-avoid-system-masters-group",
+    "description": "Avoid use of system:masters group",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role_binding|kube_cluster_role_binding) WITH subjects ~= 'Group:default:system:masters'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.8-limit-bind-impersonate-escalate",
+    "description": "Limit use of the Bind, Impersonate and Escalate permissions in the Kubernetes cluster",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH verbs = ('bind' OR 'impersonate' OR 'escalate')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.9-minimize-pv-create-access",
+    "description": "Minimize access to create persistent volumes",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'persistentvolumeclaims' AND verbs = 'create'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.10-minimize-node-proxy-access",
+    "description": "Minimize access to the proxy sub-resource of nodes",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'nodes/proxy'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.11-minimize-csr-approval-access",
+    "description": "Minimize access to the approval sub-resource of certificatesigningrequests objects",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'certificatesigningrequests/approval'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.12-minimize-webhook-config-access",
+    "description": "Minimize access to webhook configuration objects",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'mutatingwebhookconfigurations' OR resources = 'validatingwebhookconfigurations' AND verbs = ('create' OR 'modify' OR 'delete')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.1.13-minimize-sa-token-creation-access",
+    "description": "Minimize access to the service account token creation",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_role|kube_cluster_role) THAT ENFORCES kube_role_rule WITH resources = 'serviceaccounts/token' AND verbs = 'create'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.1-policy-control-mechanism",
+    "description": "Ensure that the cluster has at least one active policy control mechanism in place",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND jupiterone_rule WITH name ~= 'kubernetes-cis-5.2' RETURN jupiterone_rule._class, COUNT(jupiterone_rule) as ruleCount HAVING ruleCount < 13",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.2-minimize-privileged-containers",
+    "description": "Minimize the admission of privileged containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.privileged = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.3-minimize-hostpid-containers",
+    "description": "Minimize the admission of containers wishing to share the host process ID namespace",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH hostPID = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.4-minimize-hostipc-containers",
+    "description": "Minimize the admission of containers wishing to share the host IPC namespace",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH hostIPC = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.5-minimize-hostnetwork-containers",
+    "description": "Minimize the admission of containers wishing to share the host network namespace",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH hostNetwork = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.6-minimize-allowprivilegeescalation-containers",
+    "description": "Minimize the admission of containers with allowPrivilegeEscalation",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.allowPrivilegeEscalation = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.7-minimize-root-containers",
+    "description": "Minimize the admission of root containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.runAsNonRoot = false OR securityContext.runAsUser = 0",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.8-minimize-net-raw-capability",
+    "description": "Minimize the admission of containers with the NET_RAW capability",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH label.podSecurityKubernetesIoEnforce != 'restricted'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.9-minimize-added-capabilities",
+    "description": "Minimize the admission of containers with added capabilities",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH label.podSecurityKubernetesIoEnforce != 'restricted'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.10-minimize-capabilities-assigned",
+    "description": "Minimize the admission of containers with capabilities assigned",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH label.podSecurityKubernetesIoEnforce != 'restricted'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.11-minimize-windows-hostprocess",
+    "description": "Minimize the admission of Windows HostProcess Containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH securityContext.windowsOptions.hostProcess = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.12-minimize-hostpath-volumes",
+    "description": "Minimize the admission of HostPath volumes",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_volume WITH hostPath.path != undefined",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.2.13-minimize-hostports",
+    "description": "Minimize the admission of containers which use HostPorts",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container_spec WITH hostPorts != undefined",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.3.2-namespaces-network-policies",
+    "description": "Ensure that all Namespaces have Network Policies defined",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace THAT !CONTAINS kube_network_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.4.1-secrets-as-files",
+    "description": "Prefer using secrets as files over secrets as environment variables",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container WITH isUsingEnvironmentVariableSecrets = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.4.2-external-secret-storage",
+    "description": "Consider external secret storage",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_container WITH isUsingEnvironmentVariableSecrets = true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.1-administrative-boundaries-namespaces",
+    "description": "Create administrative boundaries between resources using namespaces",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_cluster THAT !CONTAINS kube_namespace",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.2-seccomp-profile-docker-default",
+    "description": "Ensure that the seccomp profile is set to docker/default in your pod definitions",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_pod WITH securityContext.seccompProfileType != 'RuntimeDefault'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.3-apply-security-context",
+    "description": "Apply Security Context to Your Pods and Containers",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND (kube_pod|kube_container_spec) WITH hasSecurityContext != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  },
+  {
+    "name": "kubernetes-cis-5.6.4-default-namespace-not-used",
+    "description": "The default namespace should not be used",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND kube_namespace WITH name = 'default' THAT CONTAINS *",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  }
+]

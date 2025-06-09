@@ -286,5 +286,77 @@
       }
     ],
     "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-high-privilege-lambda-function-wildcard",
+    "description": "This query looks for lambda functions that have the action of 'anything' on 'any' resources. This is considered overly permissive and it is recommended to review all returned entities to ensure the principle of least privilege is being followed.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_lambda as lambda THAT HAS aws_lambda_function (THAT (ASSIGNED|ALLOWS) as perm aws_iam_role)? WHERE perm.actions ~= '*' AND perm.resources ~= '*'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-high-privilege-lambda-function-lambda:*",
+    "description": "This query looks for lambda functions that have the action of lambda:*. This is considered overly permissive and it is recommended to review all returned entities to ensure the principle of least privilege is being followed.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND aws_lambda as lambda THAT HAS aws_lambda_function (THAT (ASSIGNED|ALLOWS) as perm aws_iam_role)? WHERE perm.normalizedActions ~= 'lambda:*'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-high-privilege-lambda-function-get-policy",
+    "description": "This query looks for users that have the 'lambda:get-policy' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User (THAT HAS aws_iam_group)? (THAT ASSIGNED aws_iam_role)? (THAT TRUSTS << aws_iam_role)? THAT ASSIGNED AccessPolicy THAT ALLOWS as perm aws_lambda WHERE perm.normalizedActions ~= ('lambda:get-policy')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-high-privilege-lambda-function-get-function",
+    "description": "This query looks for users that have the 'lambda:get-function' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User (THAT HAS aws_iam_group)? (THAT ASSIGNED aws_iam_role)? (THAT TRUSTS << aws_iam_role)? THAT ASSIGNED AccessPolicy THAT ALLOWS as perm aws_lambda WHERE perm.normalizedActions ~= ('lambda:get-function')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-high-privilege-lambda-function-get-function-configuration",
+    "description": "This query looks for users that have the 'lambda:GetFunctionConfiguration' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User (THAT HAS aws_iam_group)? (THAT ASSIGNED aws_iam_role)? (THAT TRUSTS << aws_iam_role)? THAT ASSIGNED AccessPolicy THAT ALLOWS as perm aws_lambda WHERE perm.normalizedActions ~= ('lambda:GetFunctionConfiguration')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "aws-high-privilege-lambda-function-list-functions",
+    "description": "This query looks for users that have the 'lambda:ListFunctions' action assigned. A malicious actor with this permission can view environmental variables inluding improperly stored secrets in a lambda function and it is recommended to review all results.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND User (THAT HAS aws_iam_group)? (THAT ASSIGNED aws_iam_role)? (THAT TRUSTS << aws_iam_role)? THAT ASSIGNED AccessPolicy THAT ALLOWS as perm aws_lambda WHERE perm.normalizedActions ~= ('lambda:ListFunctions')",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
   }
 ]

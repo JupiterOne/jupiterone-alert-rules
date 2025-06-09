@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/jupiterone-alert-rules",
-  "version": "0.37.0",
+  "version": "0.44.0",
   "description": "Alert rule packages for the JupiterOne platform",
   "scripts": {
     "validate": "tsx ./scripts/validate.ts"
@@ -13,7 +13,7 @@
   "main": "index.js",
   "author": "JupiterOne <dev@jupiterone.io>",
   "devDependencies": {
-    "@jupiterone/query-language-parser": "^3.16.1",
+    "@jupiterone/query-language-parser": "^4.5.0",
     "@types/node": "^20.11.13",
     "euberlog": "^2.5.1",
     "tsx": "^4.7.0",
