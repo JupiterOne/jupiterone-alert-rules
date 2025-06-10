@@ -21,7 +21,12 @@
         "description": "Returns a list of EC2 instances that are using metadata version 1 (IMDSv1)",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryGOOD",
+                "query": "FIND aws_instance WITH httpTokens=\"required\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
                 "query": "FIND aws_instance WITH httpTokens!=\"required\"\n",
                 "version": "v1"
             }
@@ -32,6 +37,11 @@
         "name": "are-there-unencrypted-efs-file-systems?",
         "description": "Returns a list of EFS file systems not encrypted.",
         "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_efs_file_system with encrypted=true\n",
+                "version": "v1"
+            },
             {
                 "name": "queryBAD",
                 "query": "find aws_efs_file_system with encrypted!=true\n",
@@ -45,7 +55,7 @@
         "description": "Returns AWS IAM Roles that have been assigned an IAM policy that allows it access to the AWS Support service.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "find aws_iam_role that assigned aws_iam_policy that allows aws_support\n",
                 "version": "v1"
             }
@@ -57,7 +67,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"console mfa\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm console mfa\"",
                 "version": "v1"
             }
@@ -69,12 +79,12 @@
         "description": "Returns aws_s3_buckets that allows access to any resource not in the same account. Also returns a list of buckets with a public bucket policy.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO1",
                 "query": "Find aws_s3_bucket as bucket\n  that ALLOWS as grant * as grantee\nwhere\n  bucket.tag.AccountName != grantee.tag.AccountName\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grantee.displayName\n",
                 "version": "v1"
             },
             {
-                "name": "query0",
+                "name": "queryINFO2",
                 "query": "Find aws_s3_bucket as bucket\n  that has aws_s3_bucket_policy with public=true\nreturn\n  bucket.displayName, bucket.tag.AccountName\n",
                 "version": "v1"
             }
@@ -86,7 +96,7 @@
         "description": "Returns the details of default security groups from each VPC.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find aws_security_group with name='default'\n",
                 "version": "v1"
             }
@@ -115,7 +125,7 @@
         "description": "Returns a list of AWS accounts and their contact details.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find aws_account with _source!='system-mapper' as account\nReturn\n  account.name, account.id, account.description,\n  account.email, account.owner, account.phone\n",
                 "version": "v1"
             }
@@ -144,7 +154,7 @@
         "description": "Returns the destination where cloudtrail logs are sent to",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find aws_vpc as vpc that logs as flowLog * as destination\nreturn\n  vpc.tag.AccountName, vpc.displayName, vpc.vpcId,\n  flowLog.flowLogId, flowLog.trafficType, flowLog.createdOn, flowLog.active, flowLog.status,\n  destination._type, destination.displayName, destination.webLink\n",
                 "version": "v1"
             }
@@ -173,7 +183,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"authentication\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm authentication\"",
                 "version": "v1"
             }
@@ -185,7 +195,7 @@
         "description": "Returns aws_s3_buckets that grants 'WRITE' permission to everyone.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryBAD",
                 "query": "Find aws_s3_bucket as bucket\n  that ALLOWS as grant everyone\nwhere\n  grant.permission='WRITE'\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grant.granteeType, grant.granteeURI\n",
                 "version": "v1"
             }
@@ -197,7 +207,7 @@
         "description": "Returns aws_s3_buckets that allows access to any resource that is not the bucket owner.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryBAD",
                 "query": "Find aws_s3_bucket as bucket\n  that ALLOWS as grant * as grantee\nwhere\n  grant.permission='FULL_CONTROL' and bucket.ownerId != grantee.canonicalUserId\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grantee.displayName\n",
                 "version": "v1"
             }
@@ -209,7 +219,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"AWS config\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"AWS Config\" with _type = \"aws_cloudwatch_metric_alarm\"",
                 "version": "v1"
             }
@@ -221,7 +231,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"cloudtrail change\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm cloudtrail change\"",
                 "version": "v1"
             }
@@ -250,7 +260,7 @@
         "description": "Returns a list of IAM users with both console password and access key enabled. The access should be validated and unnecessary access removed, as appropriate.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "find aws_iam_user with accessKeyEnabled=true and passwordEnabled=true\n",
                 "version": "v1"
             }
@@ -262,7 +272,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keyword \"root\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm root\"",
                 "version": "v1"
             }
@@ -286,7 +296,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"iam policy\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm iam policy\"",
                 "version": "v1"
             }
@@ -339,7 +349,7 @@
         "description": "Returns 'AWSCloudShellFullAccess' IAM policies in use",
         "queries": [
             {
-                "name": "queryINFORMATIVE",
+                "name": "queryINFO",
                 "query": "FIND AccessPolicy WITH inUse = true AND policyName = 'AWSCloudShellFullAccess'\n",
                 "version": "v1"
             }
@@ -363,7 +373,7 @@
         "description": "Returns all Users that have access to a master AWS organization account and connected sub accounts through a single sign-on identity provider (e.g. Okta or OneLogin).",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find User as U\n  that ASSIGNED Application as App\n  that CONNECTS aws_account as awsMaster\n  that TRUSTS aws_iam_role as assumeRole\n  that HAS aws_iam that HAS aws_account as awsAccount\nRETURN\n  U.displayName as User,\n  App.tag.AccountName as IdP,\n  App.displayName as ssoApplication,\n  App.signOnMode as signOnMode,\n  awsMaster.displayName as awsOrgMasterAccount,\n  assumeRole.roleName as assumeRole,\n  awsAccount.displayName as awsOrgSubAccount\n",
                 "version": "v1"
             }
@@ -375,7 +385,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"vpc\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm vpc\"",
                 "version": "v1"
             }
@@ -387,7 +397,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"network gateway change\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm network gateway change\"",
                 "version": "v1"
             }
@@ -433,7 +443,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"network acl\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm network acl\"",
                 "version": "v1"
             }
@@ -496,7 +506,7 @@
         "description": "Returns the details of each security group that has ingress ALLOWS from the Internet on port 3389, and the details of matching rules.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryBAD",
                 "query": "Find aws_security_group as sg\n  that ALLOWS as rule Internet\nwhere rule.ingress=true and rule.fromPort <= 3389 and rule.toPort >= 3389\nreturn\n  sg.displayName, sg.groupId, sg.vpcId, sg.tag.AccountName, sg.webLink,\n  rule.ipProtocol, rule.fromPort, rule.toPort\n",
                 "version": "v1"
             }
@@ -576,7 +586,7 @@
         "description": "Returns the details of each security group that has ingress ALLOWS from the Internet on port 22, and the details of matching rules.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryBAD",
                 "query": "Find aws_security_group as sg\n  that ALLOWS as rule Internet\nwhere rule.ingress=true and rule.fromPort <= 22 and rule.toPort >= 22\nreturn\n  sg.displayName, sg.groupId, sg.vpcId, sg.tag.AccountName, sg.webLink,\n  rule.ipProtocol, rule.fromPort, rule.toPort\n",
                 "version": "v1"
             }
@@ -598,7 +608,7 @@
                 "version": "v1"
             },
             {
-                "name": "queryINFORMATIVE",
+                "name": "queryINFO",
                 "query": "Find aws_security_group with name!='default' or exception=true\n  that ALLOWS as rule Internet\nwhere rule.ipProtocol='*' or rule.ipProtocol='all' or rule.ipProtocol='any'\n",
                 "version": "v1"
             }
@@ -610,7 +620,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"s3 policy\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm s3 policy\"",
                 "version": "v1"
             }
@@ -651,17 +661,17 @@
         "description": "Returns a list and a graph showing VPC Peering connections",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO1",
                 "query": "FIND aws_vpc AS vpc1 THAT CONNECTS aws_vpc AS vpc2\nRETURN\n  vpc1.tag.AccountName, vpc1.region, vpc1.displayName, vpc1.CIDR,\n  vpc2.tag.AccountName, vpc2.region, vpc2.displayName, vpc2.CIDR\n",
                 "version": "v1"
             },
             {
-                "name": "query0",
+                "name": "queryINFO2",
                 "query": "FIND aws_vpc THAT CONNECTS aws_vpc RETURN TREE",
                 "version": "v1"
             },
             {
-                "name": "query0",
+                "name": "queryINFO3",
                 "query": "FIND aws_subnet\n  THAT CONTAINS << aws_vpc\n  THAT CONNECTS aws_vpc\n  THAT CONTAINS >> aws_subnet\nRETURN\n  TREE\n",
                 "version": "v1"
             }
@@ -700,7 +710,7 @@
         "description": "Returns a list of IAM users and how many active access keys they have.",
         "queries": [
             {
-                "name": "queryINFORMATIVE",
+                "name": "queryINFO",
                 "query": "find aws_iam_user with accessKeyEnabled=true as user\n  that HAS aws_iam_access_key with active=true as key\n  return user.name, count(key)\n",
                 "version": "v1"
             }
@@ -729,7 +739,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"security group\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm security group\"",
                 "version": "v1"
             }
@@ -792,7 +802,7 @@
         "description": "Returns a list of IAM EC2 instances that use an IAM role.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "FIND UNIQUE aws_instance AS instance\n  THAT USES aws_iam_role AS role\nRETURN instance.tag.AccountName, instance.name, instance.id, instance.region,\ninstance.webLink, role.name, role.arn, role.webLink\n",
                 "version": "v1"
             }
@@ -804,7 +814,7 @@
         "description": "Returns a list of destinations CloudTrail sends logs to.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find aws_cloudtrail as ct that logs as trail aws_cloudwatch_log_group as destination\nReturn\n  ct.accountId, ct.tag.AccountName,\n  trail.name, trail.homeRegion, trail.isMultiRegionTrail,\n  trail.includeGlobalServiceEvents, trail.logFileValidationEnabled,\n  destination._type, destination.displayName\n",
                 "version": "v1"
             }
@@ -816,12 +826,12 @@
         "description": "Returns aws_s3_buckets that grants public permission to everyone via bucket ACL, or has a public bucket policy.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryBAD",
                 "query": "Find aws_s3_bucket\n  with classification != 'public' and\n    ignorePublicAcls != true and\n    restrictPublicBuckets != true\n  as bucket\nthat ALLOWS as grant everyone\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grant.granteeType, grant.granteeURI\n",
                 "version": "v1"
             },
             {
-                "name": "query0",
+                "name": "queryBAD",
                 "query": "Find aws_s3_bucket with classification != 'public' and\n    ignorePublicAcls != true and\n    restrictPublicBuckets != true\n  as bucket\nthat has aws_s3_bucket_policy with public=true\nreturn\n  bucket.displayName, bucket.tag.AccountName\n",
                 "version": "v1"
             }
@@ -833,7 +843,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"route table\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm route table\"",
                 "version": "v1"
             }
@@ -913,7 +923,7 @@
         "description": "Returns a list of roles/users/groups with an IAM policy that allows access to cloudtrail log destinations (S3 buckets or CloudWatch log groups).",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "find (Account|AccessRole|User|UserGroup)\n  that assigned AccessPolicy\n  that allows (aws_s3_bucket|aws_cloudwatch_log_group)\n  that logs aws_cloudtrail\n",
                 "version": "v1"
             }
@@ -937,7 +947,7 @@
         "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"unauthorized cloudtrail\"",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find \"aws_cloudwatch_metric_alarm unauthorized cloudtrail\"",
                 "version": "v1"
             }
@@ -978,7 +988,7 @@
         "description": "Returns a list of users with password enabled set to false.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "find aws_iam_user with passwordEnabled!=true\n",
                 "version": "v1"
             }
@@ -1024,7 +1034,7 @@
         "description": "Returns the details of all AWS Config Rules, including the compliance status (compliant = true or false). This requires AWS Config service to be enabled in your account.",
         "queries": [
             {
-                "name": "query0",
+                "name": "queryINFO",
                 "query": "Find aws_config_rule that EVALUATES *\n",
                 "version": "v1"
             }
@@ -1046,12 +1056,12 @@
                 "version": "v1"
             },
             {
-                "name": "queryINFORMATIVE",
+                "name": "queryINFO",
                 "query": "find AccessPolicy with\n  _key$=':role/Administrator/AdministratorAccess' or\n  _key$=':role/OrganizationAccountAccessRole/AdministratorAccess'\n",
                 "version": "v1"
             },
             {
-                "name": "queryINFORMATIVE",
+                "name": "queryINFO",
                 "query": "find AccessPolicy with exception=true or tag.Exception=true\nthat allows as r aws_account\nwhere r.permission='FULL_CONTROL'\n",
                 "version": "v1"
             }
