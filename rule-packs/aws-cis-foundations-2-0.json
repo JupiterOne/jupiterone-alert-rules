@@ -1,0 +1,1088 @@
+[
+    {
+        "name": "are-all-ebs-volumes-encrypted?",
+        "description": "Returns all EBS volumes and their encryption status.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_ebs_volume with encrypted=true as v\nreturn\n  v.displayName, v.volumeId, v.encrypted,\n  v.size, v.state, v.volumeType, v.snapshotId,\n  v.createdOn, v.region, v.tag.AccountName\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_ebs_volume with encrypted!=true as v\nreturn\n  v.displayName, v.volumeId, v.encrypted,\n  v.size, v.state, v.volumeType, v.snapshotId,\n  v.createdOn, v.region, v.tag.AccountName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-ec2-instances-are-using-metadata-version-1-(imdsv1)",
+        "description": "Returns a list of EC2 instances that are using metadata version 1 (IMDSv1)",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND aws_instance WITH httpTokens=\"required\"\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_instance WITH httpTokens!=\"required\"\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-unencrypted-efs-file-systems?",
+        "description": "Returns a list of EFS file systems not encrypted.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_efs_file_system with encrypted=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_efs_file_system with encrypted!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-an-iam-role-created-to-manage-incidents-and-tickets-with-aws-support?",
+        "description": "Returns AWS IAM Roles that have been assigned an IAM policy that allows it access to the AWS Support service.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "find aws_iam_role that assigned aws_iam_policy that allows aws_support\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-management-console-sign-in-without-mfa?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"console mfa\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm console mfa\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-s3-bucket-access-granted-to-anybody-outside-of-the-account?",
+        "description": "Returns aws_s3_buckets that allows access to any resource not in the same account. Also returns a list of buckets with a public bucket policy.",
+        "queries": [
+            {
+                "name": "queryINFO1",
+                "query": "Find aws_s3_bucket as bucket\n  that ALLOWS as grant * as grantee\nwhere\n  bucket.tag.AccountName != grantee.tag.AccountName\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grantee.displayName\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryINFO2",
+                "query": "Find aws_s3_bucket as bucket\n  that has aws_s3_bucket_policy with public=true\nreturn\n  bucket.displayName, bucket.tag.AccountName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "what-are-the-default-security-groups-and-how-are-their-rules-configured?",
+        "description": "Returns the details of default security groups from each VPC.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find aws_security_group with name='default'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-root-user-access-keys-in-use-for-any-of-my-aws-accounts?",
+        "description": "Returns all AWS accounts where the accountAccessKeysPresent value or accountSigningCertificatesPresent value is > 0. Access keys should NOT be enabled for the account root user. Use IAM users instead.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_account with _source!='system-mapper' and\n  (accountAccessKeysPresent>0 or accountSigningCertificatesPresent > 0) as aws\nreturn\n  aws.displayName,\n  aws.accountId,\n  aws.accountAccessKeysPresent,\n  aws.accountSigningCertificatesPresent\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "Find aws_account with _source!='system-mapper' and\n  (accountAccessKeysPresent=0 and accountSigningCertificatesPresent = 0) as aws\nreturn\n  aws.displayName,\n  aws.accountId,\n  aws.accountAccessKeysPresent,\n  aws.accountSigningCertificatesPresent\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "who-are-the-contact-persons-for-each-aws-account?",
+        "description": "Returns a list of AWS accounts and their contact details.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find aws_account with _source!='system-mapper' as account\nReturn\n  account.name, account.id, account.description,\n  account.email, account.owner, account.phone\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-the-s3-bucket-containing-cloudtrail-logs-publicly-accessible?",
+        "description": "Returns a list of cloudtrail log destination S3 buckets that are public.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_cloudtrail that logs aws_s3_bucket as bucket that allows Everyone\nreturn bucket.tag.AccountName, bucket.displayName, bucket.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "find aws_cloudtrail that logs aws_s3_bucket as bucket that !allows Everyone\nreturn bucket.tag.AccountName, bucket.displayName, bucket.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-vpc-flow-logs-enabled?",
+        "description": "Returns the destination where cloudtrail logs are sent to",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find aws_vpc as vpc that logs as flowLog * as destination\nreturn\n  vpc.tag.AccountName, vpc.displayName, vpc.vpcId,\n  flowLog.flowLogId, flowLog.trafficType, flowLog.createdOn, flowLog.active, flowLog.status,\n  destination._type, destination.displayName, destination.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-key-rotation-enabled-for-customer-managed-aws-kms-keys?",
+        "description": "Returns customer-managed KMS keys that don't have rotation enabled.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_kms_key with keyManager='CUSTOMER' and encryptionAlgorithms ~= 'SYMMETRIC' and keyRotationEnabled=true and keyState='Enabled' as key\nreturn\nkey.displayName, key.accountId, key.description, key.enabled,\nkey.keyManager, key.keyRotationEnabled, key.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_kms_key with keyManager='CUSTOMER' and encryptionAlgorithms ~= 'SYMMETRIC' and keyRotationEnabled!=true and keyState='Enabled' as key\nreturn\nkey.displayName, key.accountId, key.description, key.enabled,\nkey.keyManager, key.keyRotationEnabled, key.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-aws-management-console-authentication-failures?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"authentication\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm authentication\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-public-write-access-enabled-for-any-s3-bucket?",
+        "description": "Returns aws_s3_buckets that grants 'WRITE' permission to everyone.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_s3_bucket as bucket\n  that ALLOWS as grant everyone\nwhere\n  grant.permission='WRITE'\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grant.granteeType, grant.granteeURI\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-any-s3-bucket-that-grants-full-control-access-to-anybody-other-than-the-owner?",
+        "description": "Returns aws_s3_buckets that allows access to any resource that is not the bucket owner.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_s3_bucket as bucket\n  that ALLOWS as grant * as grantee\nwhere\n  grant.permission='FULL_CONTROL' and bucket.ownerId != grantee.canonicalUserId\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grantee.displayName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-aws-config-changes?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"AWS config\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"AWS Config\" with _type = \"aws_cloudwatch_metric_alarm\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-cloudtrail-configuration-changes?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"cloudtrail change\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm cloudtrail change\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-user-access-keys-are-older-than-90-days?",
+        "description": "Returns a list of active IAM access keys that have not been rotated for more than 90 days.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_iam_access_key WITH active = true AND createdOn < date.now - 90 days\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "FIND aws_iam_access_key WITH active = true AND createdOn > date.now - 90 days\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-users-have-both-console-password-and-access-key-enabled?",
+        "description": "Returns a list of IAM users with both console password and access key enabled. The access should be validated and unnecessary access removed, as appropriate.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "find aws_iam_user with accessKeyEnabled=true and passwordEnabled=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-usage-of-'root'-account?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keyword \"root\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm root\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "who-has-access-to-my-aws-accounts-via-aws-organizations?",
+        "description": "Returns accounts in multi-account environments that are managed through AWS Organizations.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_account with master=true\n  that HAS aws_iam\n  that HAS (User|AccessRole)\n  (that ASSIGNED aws_iam_role)?\n  that TRUSTS aws_iam_role\n  that HAS aws_iam\n  that HAS aws_account with master!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-iam-policy-changes?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"iam policy\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm iam policy\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-role-has-not-been-used-in-90-days?",
+        "description": "Returns a list of IAM roles that were last used more than 90 days ago. Consider removing these roles.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_role with createdOn < date.now-90days and lastUsedOn < date.now-90days\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "who-has-access-to-my-aws-accounts-via-sso?",
+        "description": "Returns all Users that have access to AWS accounts through a single sign-on identity provider (e.g. Okta or OneLogin).",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find User as U\n  that ASSIGNED Application as App\n  that CONNECTS aws_account as AWS\nRETURN\n  U.displayName as User,\n  App.tag.AccountName as IdP,\n  App.displayName as ssoApplication,\n  App.signOnMode as signOnMode,\n  AWS.displayName as awsAccount\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "was-the-root-account-user-recently-used-to-log-in-or-access?",
+        "description": "Returns AWS accounts accessed using the root credential or access key within the last 7 days.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_account with _source!='system-mapper' and\n  (rootUserPasswordLastUsed > date.now-7days or\n  rootUserAccessKeyLastUsed > date.now-7days) as aws\nreturn\n  aws.displayName,\n  aws.accountId,\n  aws.rootUserPasswordLastUsed,\n  aws.rootUserAccessKeyLastUsed\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "Find aws_account with _source!='system-mapper' and\n  (rootUserPasswordLastUsed < date.now-7days or rootUserPasswordLastUsed = undefined) and\n  (rootUserAccessKeyLastUsed < date.now-7days or rootUserAccessKeyLastUsed = undefined) as aws\nreturn\n  aws.displayName,\n  aws.accountId,\n  aws.rootUserPasswordLastUsed,\n  aws.rootUserAccessKeyLastUsed\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-the-'awscloudshellfullaccess'-iam-policy-in-use?",
+        "description": "Returns 'AWSCloudShellFullAccess' IAM policies in use",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "FIND AccessPolicy WITH inUse = true AND policyName = 'AWSCloudShellFullAccess'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-active-iam-user-access-keys-unused-for-more-than-45-days?",
+        "description": "Returns a list of users with active access keys unused for more than 45 days. Consider disabling or removing these access keys.\n",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_user with createdOn < date.now-45days as user\n  that has aws_iam_access_key with active=true and\n    (lastUsedOn < date.now-45days or lastUsedOn = undefined) as key\nreturn\n  user.name, user.arn, user.id, user.webLink,\n  key.id, key.createdOn, key.lastUsedOn, key.status, key.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "who-has-access-to-my-aws-accounts-via-sso-in-a-multi-account-environment?",
+        "description": "Returns all Users that have access to a master AWS organization account and connected sub accounts through a single sign-on identity provider (e.g. Okta or OneLogin).",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find User as U\n  that ASSIGNED Application as App\n  that CONNECTS aws_account as awsMaster\n  that TRUSTS aws_iam_role as assumeRole\n  that HAS aws_iam that HAS aws_account as awsAccount\nRETURN\n  U.displayName as User,\n  App.tag.AccountName as IdP,\n  App.displayName as ssoApplication,\n  App.signOnMode as signOnMode,\n  awsMaster.displayName as awsOrgMasterAccount,\n  assumeRole.roleName as assumeRole,\n  awsAccount.displayName as awsOrgSubAccount\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-vpc-changes?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"vpc\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm vpc\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-changes-to-network-gateways?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"network gateway change\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm network gateway change\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-rds-instances-public?",
+        "description": "Returns both RDS instances with + without public access enabled",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND aws_db_instance WITH public = false\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_db_instance WITH public = true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-mfa-delete-enabled-for-all-s3-buckets?",
+        "description": "Returns all aws_s3_buckets and whether MFA Delete is configured.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3_bucket with mfaDelete=true as b\nreturn\n  b.bucketName, b.accountId, b.classification,\n  b.encrypted, b.hasBackup, b.inventoryEnabled, b.lifecycleEnabled,\n  b.loggingEnabled, b.notificationEnabled, b.public, b.region,\n  b.secureTransport, b.versioningEnabled, b.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_s3_bucket with mfaDelete!=true as b\nreturn\n  b.bucketName, b.accountId, b.classification,\n  b.encrypted, b.hasBackup, b.inventoryEnabled, b.lifecycleEnabled,\n  b.loggingEnabled, b.notificationEnabled, b.public, b.region,\n  b.secureTransport, b.versioningEnabled, b.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-changes-to-network-acls?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"network acl\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm network acl\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "iam-password-policy-should-prevent-reuse-of-the-same-password-(for-at-least-past-10-history).",
+        "description": "IAM password policy should prevent reuse of the same password (for at least past 10 history).",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_account_password_policy with historyCount < 10 or historyCount=undefined\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "find aws_iam_account_password_policy with historyCount >= 10\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-secure-transport-(encryption-in-transit)-enabled-for-all-s3-buckets?",
+        "description": "Returns all aws_s3_buckets and their secure transport (encryption in-transit) status.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3_bucket with secureTransport=true as b\nreturn\n  b.bucketName, b.secureTransport,\n  b.createdOn, b.region,\n  b.classification, b.tag.AccountName\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_s3_bucket with secureTransport!=true as b\nreturn\n  b.bucketName, b.secureTransport,\n  b.createdOn, b.region,\n  b.classification, b.tag.AccountName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-iam-users-with-inline-policy-directly-attached?",
+        "description": "IAM policies should be assigned / attached to roles or groups instead of directly to individual users.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_iam_user AS user\nTHAT ASSIGNED (aws_iam_user_policy|aws_iam_policy) AS policy\nRETURN user.tag.AccountName, user.name, user.webLink, policy.name, policy.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "FIND aws_iam_user\nTHAT !ASSIGNED (aws_iam_user_policy|aws_iam_policy)\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-security-group-rules-allow-inbound-rdp-(remote-desktop)-traffic-from-the-internet?",
+        "description": "Returns the details of each security group that has ingress ALLOWS from the Internet on port 3389, and the details of matching rules.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_security_group as sg\n  that ALLOWS as rule Internet\nwhere rule.ingress=true and rule.fromPort <= 3389 and rule.toPort >= 3389\nreturn\n  sg.displayName, sg.groupId, sg.vpcId, sg.tag.AccountName, sg.webLink,\n  rule.ipProtocol, rule.fromPort, rule.toPort\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-user-has-not-logged-in-to-the-console-in-more-than-90-days?",
+        "description": "Returns a list of users that have not used their password for 90 days. Consider removing the password for these users.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_user with\n  createdOn < date.now-90days and\n  passwordEnabled = true and\n  (passwordLastUsed < date.now-90days or passwordLastUsed = undefined)\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-cloudtrail-logging-enabled?",
+        "description": "Returns (a) a list of destinations CloudTrail sends logs to, including global and multi-region events; (b) a list of accounts without cloudtrail destination configured; and (c) a list of CloudTrails not configured with global and multi-region events.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND aws_cloudtrail AS ct\n  THAT LOGS AS trail * AS destination\nWHERE \n  trail.includeGlobalServiceEvents = true AND\n  trail.isMultiRegionTrail = true\nRETURN\n  ct.accountId, ct.tag.AccountName,\n  trail.name,\n  trail.includeGlobalServiceEvents AS globalEvents,\n  trail.isMultiRegionTrail AS multiRegion,\n  trail.homeRegion AS homeRegion,\n  trail.logFileValidationEnabled AS validationEnabled,\n  destination._type, destination.displayName, destination.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find aws_account that has aws_cloudtrail as ct that !logs *",
+                "version": "v1"
+            },
+            {
+                "name": "queryUNKNOWN",
+                "query": "FIND aws_cloudtrail AS ct\n  THAT LOGS AS trail * AS destination\nWHERE\n  trail.includeGlobalServiceEvents != true or\n  trail.isMultiRegionTrail != true\nRETURN\n  ct.accountId, ct.tag.AccountName,\n  trail.name,\n  trail.includeGlobalServiceEvents as globalEvents,\n  trail.isMultiRegionTrail as multiRegion,\n  trail.homeRegion as homeRegion,\n  trail.logFileValidationEnabled as validationEnabled,\n  destination._type, destination.displayName, destination.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-the-data-in-amazon-s3-buckets-classified?",
+        "description": "Returns all aws_s3_buckets and whether the bucket's data has been classified.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3_bucket with classification!=(undefined AND '') AS b\nreturn\n  b.bucketName, b.accountId, b.classification,\n  b.encrypted, b.hasBackup, b.inventoryEnabled, b.lifecycleEnabled,\n  b.loggingEnabled, b.notificationEnabled, b.public, b.region,\n  b.secureTransport, b.versioningEnabled, b.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_s3_bucket with classification=(undefined AND '') AS b\nreturn\n  b.bucketName, b.accountId, b.classification,\n  b.encrypted, b.hasBackup, b.inventoryEnabled, b.lifecycleEnabled,\n  b.loggingEnabled, b.notificationEnabled, b.public, b.region,\n  b.secureTransport, b.versioningEnabled, b.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-encryption-configured-for-rds?",
+        "description": "Returns all RDS clusters and instances and their encryption configuration.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find (aws_rds_cluster|aws_db_instance) with encrypted=true as r\nreturn\n  r._type, r.displayName, r.accountId, r.availabilityZone, r.availabilityZones,\n  r.dbInstanceClass, r.encrypted, r.engine, r.engineVersion,\n  r.hasBackup, r.hostname, r.iamDatabaseAuthenticationEnabled,\n  r.multiAZ, r.status, r.webLink, r.retentionPeriod, r.public,\n  r.loggingEnabled, r.licenseModel, r.deletionProtection, r.backupRetentionPeriod\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find (aws_rds_cluster|aws_db_instance) with encrypted!=true as r\nreturn\n  r._type, r.displayName, r.accountId, r.availabilityZone, r.availabilityZones,\n  r.dbInstanceClass, r.encrypted, r.engine, r.engineVersion,\n  r.hasBackup, r.hostname, r.iamDatabaseAuthenticationEnabled,\n  r.multiAZ, r.status, r.webLink, r.retentionPeriod, r.public,\n  r.loggingEnabled, r.licenseModel, r.deletionProtection, r.backupRetentionPeriod\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-security-group-rules-allow-inbound-ssh-traffic-from-the-internet?",
+        "description": "Returns the details of each security group that has ingress ALLOWS from the Internet on port 22, and the details of matching rules.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_security_group as sg\n  that ALLOWS as rule Internet\nwhere rule.ingress=true and rule.fromPort <= 22 and rule.toPort >= 22\nreturn\n  sg.displayName, sg.groupId, sg.vpcId, sg.tag.AccountName, sg.webLink,\n  rule.ipProtocol, rule.fromPort, rule.toPort\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-any-default-security-groups-allowing-all-egress/outbound-traffic?",
+        "description": "Returns all default security groups allowing all egress/outbound traffic.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_security_group with name='default' and exception!=true\n  that ALLOWS as rule Internet\nwhere\n  (rule.ipProtocol='*' or rule.ipProtocol='all' or rule.ipProtocol='any') and\n  rule.ingress=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find aws_security_group with name='default' and exception!=true\n  that ALLOWS as rule Internet\nwhere\n  (rule.ipProtocol='*' or rule.ipProtocol='all' or rule.ipProtocol='any') and\n  rule.egress=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryINFO",
+                "query": "Find aws_security_group with name!='default' or exception=true\n  that ALLOWS as rule Internet\nwhere rule.ipProtocol='*' or rule.ipProtocol='all' or rule.ipProtocol='any'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-s3-bucket-policy-changes?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"s3 policy\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm s3 policy\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-security-groups-that-allow-ingress-from-::/0-to-remote-server-administration-ports?",
+        "description": "Returns Security Groups that allow ingress from ::/0 to remote server administration ports?",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_security_group WITH ingressRules ~= ('\"ToPort\":22' OR '\"ToPort\":3389') AND ingressRules ~= '::/0'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-iam-access-analyzer-enabled?",
+        "description": "Returns whether or not IAM Analyzer is enabled.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_accessanalyzer_analyzer with active!=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "find aws_accessanalyzer_analyzer with active=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "what-are-the-vpc-peering-connections?",
+        "description": "Returns a list and a graph showing VPC Peering connections",
+        "queries": [
+            {
+                "name": "queryINFO1",
+                "query": "FIND aws_vpc AS vpc1 THAT CONNECTS aws_vpc AS vpc2\nRETURN\n  vpc1.tag.AccountName, vpc1.region, vpc1.displayName, vpc1.CIDR,\n  vpc2.tag.AccountName, vpc2.region, vpc2.displayName, vpc2.CIDR\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryINFO2",
+                "query": "FIND aws_vpc THAT CONNECTS aws_vpc RETURN TREE",
+                "version": "v1"
+            },
+            {
+                "name": "queryINFO3",
+                "query": "FIND aws_subnet\n  THAT CONTAINS << aws_vpc\n  THAT CONNECTS aws_vpc\n  THAT CONTAINS >> aws_subnet\nRETURN\n  TREE\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-there-any-network-access-control-lists-(acls)-that-allow-all-ingress/inbound-traffic-to-remote-server-administration-ports?",
+        "description": "Returns ACLs that allow all ingress/inbound traffic to remote server administration ports.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_network_acl as acl\n  that ALLOWS as rule Internet\n  where rule.ingress=true and rule.fromPort<=22 and rule.toPort>=22\nreturn\nacl.displayName, acl.accountId, acl.region, acl.vpcId, acl.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_network_acl as acl\n  that ALLOWS as rule Internet\n  where rule.ingress=true and rule.fromPort<=3389 and rule.toPort>=3389\nreturn\nacl.displayName, acl.accountId, acl.region, acl.vpcId, acl.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_network_acl as acl\n  that ALLOWS as rule Internet\n  where rule.ingress=true and rule.fromPort<=1433 and rule.toPort>=1433\nreturn\nacl.displayName, acl.accountId, acl.region, acl.vpcId, acl.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_network_acl as acl\n  that ALLOWS as rule Internet\n  where rule.ingress=true and rule.fromPort<=3306 and rule.toPort>=3306\nreturn\nacl.displayName, acl.accountId, acl.region, acl.vpcId, acl.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-users-have-more-than-one-active-access-key?",
+        "description": "Returns a list of IAM users and how many active access keys they have.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "find aws_iam_user with accessKeyEnabled=true as user\n  that HAS aws_iam_access_key with active=true as key\n  return user.name, count(key)\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-mfa-enabled-for-the-account-root-user-for-all-my-aws-accounts?",
+        "description": "Returns the accountMfaEnabled status for all AWS accounts. '0' means MFA is not enabled.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "Find aws_account with _source!='system-mapper' and mfaEnabled=true as aws\nreturn\n  aws.name, aws.accountId, aws.accountMfaEnabled, aws.mfaEnabled\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find aws_account with _source!='system-mapper' and mfaEnabled!=true as aws\nreturn\n  aws.name, aws.accountId, aws.accountMfaEnabled, aws.mfaEnabled\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-security-group-changes?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"security group\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm security group\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-s3-buckets-have-object-level-logging-enabled?",
+        "description": "Returns S3 buckets and their object-level logging configuration.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3_bucket as bucket\n  that sends aws_cloudtrail\n  that logs to *\nreturn\n  bucket.name, bucket.tag.AccountName, bucket.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3\n  that sends aws_cloudtrail\n  that logs to *\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_s3 WITH loggingEnabled != true\n  THAT HAS >> aws_s3_bucket WITH loggingEnabled != true as bucket\nRETURN bucket.name, bucket.tag.AccountName, bucket.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-user-account-has-not-been-accessed-in-90-days?",
+        "description": "Returns a list of users that have not used their password or access key for 90 days. Consider removing or disabling these user accounts.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_user with\n  createdOn < date.now-90days and\n  (passwordLastUsed < date.now-90days or passwordLastUsed = undefined) and\n  (accessKeyLastUsed < date.now-90days or accessKeyLastUsed = undefined)\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-mfa-enabled-for-all-iam-users-that-have-a-console-password?",
+        "description": "Returns a list of users with password enabled and their MFA status.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_iam_user with passwordEnabled=true and mfaEnabled=true\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_user with passwordEnabled=true and mfaEnabled!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-ec2-instances-have-been-assigned-an-iam-role?",
+        "description": "Returns a list of IAM EC2 instances that use an IAM role.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "FIND UNIQUE aws_instance AS instance\n  THAT USES aws_iam_role AS role\nRETURN instance.tag.AccountName, instance.name, instance.id, instance.region,\ninstance.webLink, role.name, role.arn, role.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-cloudtrail-logging-/-trails-integrated-with-cloudwatch-logs?",
+        "description": "Returns a list of destinations CloudTrail sends logs to.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find aws_cloudtrail as ct that logs as trail aws_cloudwatch_log_group as destination\nReturn\n  ct.accountId, ct.tag.AccountName,\n  trail.name, trail.homeRegion, trail.isMultiRegionTrail,\n  trail.includeGlobalServiceEvents, trail.logFileValidationEnabled,\n  destination._type, destination.displayName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-public-access-enabled-for-any-s3-bucket?",
+        "description": "Returns aws_s3_buckets that grants public permission to everyone via bucket ACL, or has a public bucket policy.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_s3_bucket\n  with classification != 'public' and\n    ignorePublicAcls != true and\n    restrictPublicBuckets != true\n  as bucket\nthat ALLOWS as grant everyone\nreturn\n  bucket.displayName, bucket.tag.AccountName,\n  grant.permission, grant.granteeType, grant.granteeURI\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "Find aws_s3_bucket with classification != 'public' and\n    ignorePublicAcls != true and\n    restrictPublicBuckets != true\n  as bucket\nthat has aws_s3_bucket_policy with public=true\nreturn\n  bucket.displayName, bucket.tag.AccountName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-route-table-changes?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"route table\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm route table\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-encryption-enabled-on-the-s3-bucket-containing-cloudtrail-logs?",
+        "description": "Returns a list of cloudtrail log destination S3 buckets and encryption status.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3_bucket with encrypted=true that logs aws_cloudtrail\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_s3_bucket with encrypted!=true that logs aws_cloudtrail\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "iam-password-policy-should-require-minimum-length-of-14-characters.",
+        "description": "IAM password policy should require minimum length of 14 characters.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_account_password_policy with minLength < 14 or minLength=undefined\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "find aws_iam_account_password_policy with minLength >= 14\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-the-auto-minor-version-upgrade-enabled-for-rds-instances?",
+        "description": "Returns both RDS instances with + without Auto Minor Version Upgrade enabled",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND aws_db_instance WITH autoMinorVersionUpgrade = true\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_db_instance WITH autoMinorVersionUpgrade = false\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-default-server-side-encryption-(at-rest)-enabled-for-all-s3-buckets?",
+        "description": "Returns all aws_s3_buckets and their default encryption (at-rest) status. (Note that actual data may be encrypted at the S3 object level even though default server side encryption is not enabled. However, it is highly recommended to enable it.)",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3_bucket with defaultEncryptionEnabled=true as b\nreturn\n  b.bucketName, b.defaultEncryptionEnabled,\n  b.encryptionAlgorithm, b.createdOn, b.region,\n  b.classification, b.tag.AccountName\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_s3_bucket with defaultEncryptionEnabled!=true as b\nreturn\n  b.bucketName, b.defaultEncryptionEnabled,\n  b.encryptionAlgorithm, b.createdOn, b.region,\n  b.classification, b.tag.AccountName\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "who-has-access-to-cloudtrail-logs?",
+        "description": "Returns a list of roles/users/groups with an IAM policy that allows access to cloudtrail log destinations (S3 buckets or CloudWatch log groups).",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "find (Account|AccessRole|User|UserGroup)\n  that assigned AccessPolicy\n  that allows (aws_s3_bucket|aws_cloudwatch_log_group)\n  that logs aws_cloudtrail\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-user-has-a-password-older-than-90-days?",
+        "description": "Returns a list of users with passwords older than 90 days. These passwords should be rotated.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_user with\n  passwordEnabled = true and passwordLastChanged < date.now-90days\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-there-a-log-metric-filter-and-alarm-for-unauthorized-api-calls?",
+        "description": "Performs a search on AWS CloudWatch Metric Alarm with the keywords \"unauthorized cloudtrail\"",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find \"aws_cloudwatch_metric_alarm unauthorized cloudtrail\"",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-users-have-access-key-enabled-but-never-used?",
+        "description": "Returns a list of IAM users with access key enabled but accessKeyLastUsed is undefined. The access may be unnecessary and should be removed.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_user with accessKeyEnabled=true and accessKeyLastUsed=undefined\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-acm-certificates-are-expired?",
+        "description": "Returns a list of ACM certificates and whether they're expired or not.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_acm_certificate with active=true or expiresOn>date.now+1day as cert\nreturn\n  cert.displayName, cert.accountId, cert.active, cert.expiresOn,\n  cert.inUse, cert.active, cert.domainName, cert.issuer, cert.region, cert.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_acm_certificate with active=false or expiresOn<date.now+1day as cert\nreturn\n  cert.displayName, cert.accountId, cert.active, cert.expiresOn,\n  cert.inUse, cert.active, cert.domainName, cert.issuer, cert.region, cert.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-users-do-not-have-a-console-password?",
+        "description": "Returns a list of users with password enabled set to false.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "find aws_iam_user with passwordEnabled!=true\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-aws-accounts-do-not-have-a-contact-email-listed?",
+        "description": "Returns a list of AWS accounts without email.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "Find aws_account with _source!='system-mapper' and email=undefined\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-access-logging-enabled-on-the-s3-bucket-containing-cloudtrail-logs?",
+        "description": "Returns a list of cloudtrail log destination S3 buckets and access logging configuration.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3_bucket with loggingEnabled=true that logs aws_cloudtrail\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryGOOD",
+                "query": "find aws_s3 with loggingEnabled=true\n  that has aws_s3_bucket as bucket\n  that logs aws_cloudtrail\nreturn\n  bucket.tag.AccountName, bucket.displayName,\n  bucket.loggingEnabled, bucket.createdOn,\n  bucket.classification, bucket.public,\n  bucket.encrypted, bucket.mfaDelete,\n  bucket.secureTransport, bucket.versioningEnabled,\n  bucket.tags, bucket.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find aws_s3 with loggingEnabled!=true\n  that has aws_s3_bucket with loggingEnabled!=true as bucket\n  that logs aws_cloudtrail\nreturn\n  bucket.tag.AccountName, bucket.displayName,\n  bucket.loggingEnabled, bucket.createdOn,\n  bucket.classification, bucket.public,\n  bucket.encrypted, bucket.mfaDelete,\n  bucket.secureTransport, bucket.versioningEnabled,\n  bucket.tags, bucket.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "are-all-the-aws-config-rules-compliant?",
+        "description": "Returns the details of all AWS Config Rules, including the compliance status (compliant = true or false). This requires AWS Config service to be enabled in your account.",
+        "queries": [
+            {
+                "name": "queryINFO",
+                "query": "Find aws_config_rule that EVALUATES *\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "which-iam-policies-allow-full-admin-access-to-any-and-all-resources?",
+        "description": "Returns a list of IAM policies that grant full control access to the account.",
+        "queries": [
+            {
+                "name": "queryBAD",
+                "query": "find aws_iam_policy with ( _key $= (\n  'arn:aws:iam::aws:policy/AdministratorAccess' or\n  ':role/Administrator/AdministratorAccess' or\n  ':role/OrganizationAccountAccessRole/AdministratorAccess'\n)) and\n  exception != true and tag.Exception != true\nthat ASSIGNED *\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "find AccessPolicy with\n  arn!='arn:aws:iam::aws:policy/AdministratorAccess' and\n  _key!$=':role/Administrator/AdministratorAccess' and\n  _key!$=':role/OrganizationAccountAccessRole/AdministratorAccess' and\n  exception !=true and\n  tag.Exception != true\nthat allows as r aws_account\nwhere r.permission='FULL_CONTROL'\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryINFO",
+                "query": "find AccessPolicy with\n  _key$=':role/Administrator/AdministratorAccess' or\n  _key$=':role/OrganizationAccountAccessRole/AdministratorAccess'\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryINFO",
+                "query": "find AccessPolicy with exception=true or tag.Exception=true\nthat allows as r aws_account\nwhere r.permission='FULL_CONTROL'\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    },
+    {
+        "name": "is-public-access-block-configured-for-non-public-s3-buckets?",
+        "description": "Returns aws_s3_buckets whose public access block settings are not set to true and that are not specifically tagged as public. It is highly recommended to enable public access block for all non-public buckets. Also returns S3 buckets and their public access block settings for all buckets.",
+        "queries": [
+            {
+                "name": "queryGOOD",
+                "query": "FIND aws_s3_bucket WITH\n  blockPublicAcls=true OR\n  ignorePublicAcls=true OR\n  blockPublicPolicy=true OR\n  restrictPublicBuckets=true OR\n  public!=true AS b\nRETURN\n  b.displayName, b.accountId, b.blockPublicAcls, b.blockPublicPolicy,\n  b.classification, b.defaultEncryptionEnabled, b.hasBackup,\n  b.ignorePublicAcls, b.inventoryEnabled, b.lifecycleEnabled,\n  b.loggingEnabled, b.mfaDelete, b.notificationEnabled, b.owner,\n  b.public, b.region, b.replicationEnabled, b.restrictPublicBuckets,\n  b.secureTransport, b.versioningEnabled, b.webLink\n",
+                "version": "v1"
+            },
+            {
+                "name": "queryBAD",
+                "query": "FIND aws_s3_bucket WITH\n  blockPublicAcls!=true OR\n  ignorePublicAcls!=true OR\n  blockPublicPolicy!=true OR\n  restrictPublicBuckets!=true OR\n  public=true AS b\nRETURN\n  b.displayName, b.accountId, b.blockPublicAcls, b.blockPublicPolicy,\n  b.classification, b.defaultEncryptionEnabled, b.hasBackup,\n  b.ignorePublicAcls, b.inventoryEnabled, b.lifecycleEnabled,\n  b.loggingEnabled, b.mfaDelete, b.notificationEnabled, b.owner,\n  b.public, b.region, b.replicationEnabled, b.restrictPublicBuckets,\n  b.secureTransport, b.versioningEnabled, b.webLink\n",
+                "version": "v1"
+            }
+        ],
+        "alertLevel": "INFO"
+    }
+]
