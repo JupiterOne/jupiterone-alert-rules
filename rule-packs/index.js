@@ -26,3 +26,4 @@ module.exports.MITREATTCKLateralMovement = require("./mitre-attck-lateral-moveme
 module.exports.JUPTERONESBOM = require("./jupiterone-sbom.json");
 module.exports.KubernetesCIS = require("./kubernetes-cis.json");
 module.exports.CISAWSFoundations2dot0 = require("./aws-cis-foundations-2-0.json");
+module.exports.RemediationRecommendations = require("./remediation-recommendations.json");
