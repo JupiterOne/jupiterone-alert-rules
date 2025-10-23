@@ -62,6 +62,10 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 
   Alert rules for monitoring integration status
 
+- `rule-packs/remediation-recommendations.json`
+
+  Rule pack to showcase the `jupiteroneVulnScore`
+
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules

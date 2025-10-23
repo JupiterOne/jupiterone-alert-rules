@@ -1,0 +1,62 @@
+[
+  {
+    "name": "critical-vulnerabilities",
+    "description": "This will find and alert on critical vulnerabilities. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND UnifiedVulnerability WITH jupiteroneVulnScore >= 0.8",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "high-vulnerabilities",
+    "description": "This will find and alert on high vulnerabilities. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND UnifiedVulnerability WITH jupiteroneVulnScore >= 0.6 AND jupiteroneVulnScore < 0.8",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "recently-updated-critical-or-high-vulnerabilities",
+    "description": "This will find and alert on recently updated critical or high vulnerabilities. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND UnifiedVulnerability WITH jupiteroneVulnScore >= 0.6 AND _beginOn > date.now - 7 days",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "critical-or-high-with-recently-changed-epss-score",
+    "description": "This will find and alert on critical or high vulnerabilities with recently changed EPSS score. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND UnifiedVulnerability WITH jupiteroneVulnScore >= 0.6 AND epssLastModified > date.now - 7 days",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "critical-or-high-with-large-number-of-occurances",
+    "description": "This will find and alert on critical or high vulnerabilities with a large number of occurrences. ",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND UnifiedVulnerability WITH jupiteroneVulnScore >= 0.6 AS u THAT IS Vulnerability AS v RETURN COUNT(v) AS instanceCount, u HAVING instanceCount > 50",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  }
+]
