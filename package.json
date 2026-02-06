@@ -13,7 +13,7 @@
   "main": "index.js",
   "author": "JupiterOne <dev@jupiterone.io>",
   "devDependencies": {
-    "@jupiterone/query-language-parser": "^4.5.0",
+    "@jupiterone/query-language-parser": "^6.3.20",
     "@types/node": "^20.11.13",
     "euberlog": "^2.5.1",
     "tsx": "^4.7.0",
