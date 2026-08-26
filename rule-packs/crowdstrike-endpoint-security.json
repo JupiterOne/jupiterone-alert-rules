@@ -1,0 +1,158 @@
+[
+  {
+    "name": "crowdstrike-devices-without-sensor",
+    "description": "Devices in the graph that no CrowdStrike sensor protects. Agent coverage is the gap this pack exists to find: a device absent from the EDR console is invisible to every other rule here.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND Device THAT !PROTECTS << crowdstrike_sensor",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "crowdstrike-sensors-without-prevention-policy",
+    "description": "CrowdStrike sensors with no prevention policy assigned. The sensor is installed and reporting, so coverage reporting counts it as protected, while no prevention setting is actually being enforced on the host.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_sensor THAT !ASSIGNED crowdstrike_prevention_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "crowdstrike-sensors-on-inactive-prevention-policy",
+    "description": "CrowdStrike sensors whose assigned prevention policy is not active. Policy was intended and delivered but is switched off, which reads as configured in every inventory view.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_sensor THAT ASSIGNED crowdstrike_prevention_policy WITH active != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "HIGH"
+  },
+  {
+    "name": "crowdstrike-open-critical-vulnerability-on-unpoliced-sensor",
+    "description": "An open, publicly exploitable CrowdStrike vulnerability on a host whose sensor has no prevention policy. This is the compound condition AX-2 asks for - a critical CVE combined with a missing or incorrect agent policy - and neither half alerts on its own.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_vulnerability WITH status ~= 'open' AND public = true THAT EXPLOITS crowdstrike_sensor THAT !ASSIGNED crowdstrike_prevention_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "crowdstrike-critical-exploitable-vulnerabilities",
+    "description": "Open CrowdStrike vulnerabilities that are public, highly exploitable and scored above 9. The remediation queue, ordered by the vendor's own exploitability signal rather than by CVSS alone.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_vulnerability WITH status ~= 'open' AND public = true AND exploitability > 3 AND score > 9 THAT EXPLOITS crowdstrike_sensor",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "CRITICAL"
+  },
+  {
+    "name": "crowdstrike-sensors-not-reporting",
+    "description": "CrowdStrike sensors not seen in 14 days. A stale sensor presents as a protected host, which is the failure mode that matters: the console still counts it and nothing is being inspected.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_sensor WITH lastSeenOn < date.now - 14 days",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "crowdstrike-hosts-hidden-from-visibility",
+    "description": "Sensors whose host is not in a visible state, so the instance is excluded from nearly all CrowdStrike activity while remaining in the sensor inventory.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_sensor WITH hostHiddenStatus != 'visible'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "crowdstrike-hosts-without-a-person",
+    "description": "CrowdStrike hosts with no relationship to a directory user. Helps separate genuinely unassigned devices from rogue ones.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_host THAT !HAS User THAT IS Person THAT IS (okta_user|azure_user|google_user)",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "crowdstrike-inactive-prevention-policies",
+    "description": "CrowdStrike prevention policies that exist but are not active. Retire them or switch them on; an inactive policy in the console implies coverage that is not being applied.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_prevention_policy WITH active != true",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "crowdstrike-prevention-policies-without-settings",
+    "description": "CrowdStrike prevention policies with no policy settings attached. An empty policy satisfies the assignment check in rule two while asserting nothing.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_prevention_policy THAT !HAS crowdstrike_prevention_policy_setting",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "crowdstrike-endpoint-protection-not-enforced",
+    "description": "CrowdStrike endpoint protection services that no prevention policy enforces.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_endpoint_protection THAT !ENFORCES << crowdstrike_prevention_policy",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "crowdstrike-vulnerable-detected-applications",
+    "description": "Applications CrowdStrike detected that carry open vulnerabilities, for software inventory and patch prioritisation.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_detected_application THAT HAS crowdstrike_vulnerability WITH status ~= 'open'",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "MEDIUM"
+  },
+  {
+    "name": "crowdstrike-sensors-without-zero-trust-assessment",
+    "description": "CrowdStrike sensors with no Zero Trust Assessment. Informational: the assessment is the vendor's own posture score for the host, and its absence means posture cannot be trended.",
+    "queries": [
+      {
+        "name": "query0",
+        "query": "FIND crowdstrike_sensor THAT !HAS crowdstrike_zero_trust_assessment",
+        "version": "v1"
+      }
+    ],
+    "alertLevel": "INFO"
+  }
+]
