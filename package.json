@@ -12,6 +12,10 @@
   },
   "license": "MIT",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "rule-packs"
+  ],
   "author": "JupiterOne <dev@jupiterone.io>",
   "devDependencies": {
     "@jupiterone/query-language-parser": "^4.5.0",

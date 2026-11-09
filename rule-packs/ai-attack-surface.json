@@ -1,49 +1,67 @@
 [
   {
     "name": "Unsanctioned AI apps",
-    "description": "AI identities a vendor has flagged as unapproved: shadow AI reported by Reco (isShadow) or an AI app Microsoft 365 Copilot reports as blocked (isBlocked). An AI app nobody has reviewed is not returned.",
+    "description": "AI apps a vendor has flagged as unapproved: a Reco AI agent marked shadow (isShadow) or a Microsoft 365 Copilot package reported as blocked (isBlocked). Each flag is read only on the vendor's own entity type, so another vendor's field of the same name never counts. An AI app nobody has reviewed is not returned.",
     "alertLevel": "HIGH",
     "labels": [
-      { "labelName": "product", "labelValue": "ai-asm" },
-      { "labelName": "category", "labelValue": "shadow-ai" }
+      {
+        "labelName": "product",
+        "labelValue": "ai-asm"
+      },
+      {
+        "labelName": "category",
+        "labelValue": "shadow-ai"
+      }
     ],
     "queries": [
       {
         "name": "query0",
         "version": "v1",
-        "query": "FIND NHI WITH isAi = true AND (isShadow = true OR isBlocked = true) AS ai\nRETURN\n  ai.displayName, ai._type, ai.aiPlatformName,\n  ai.isShadow, ai.isBlocked, ai.webLink"
+        "query": "FIND (reco_ai_agent | microsoft_365_copilot_package) WITH\n  (_type = 'reco_ai_agent' AND isShadow = true) OR\n  (_type = 'microsoft_365_copilot_package' AND isBlocked = true) AS ai\nRETURN\n  ai.displayName, ai._type, ai.isShadow, ai.isBlocked, ai.webLink"
       }
     ]
   },
   {
     "name": "AI identities with broad access",
-    "description": "AI identities Wiz reports as holding admin or high privileges (hasAdminPrivileges or hasHighPrivileges). These can reach far more than an AI tool should.",
+    "description": "AI resources Wiz reports as holding admin or high privileges (hasAdminPrivileges or hasHighPrivileges). These can reach far more than an AI tool should.",
     "alertLevel": "HIGH",
     "labels": [
-      { "labelName": "product", "labelValue": "ai-asm" },
-      { "labelName": "category", "labelValue": "privilege" }
+      {
+        "labelName": "product",
+        "labelValue": "ai-asm"
+      },
+      {
+        "labelName": "category",
+        "labelValue": "privilege"
+      }
     ],
     "queries": [
       {
         "name": "query0",
         "version": "v1",
-        "query": "FIND NHI WITH isAi = true AND (hasAdminPrivileges = true OR hasHighPrivileges = true) AS ai\nRETURN\n  ai.displayName, ai._type, ai.aiPlatformName,\n  ai.hasAdminPrivileges, ai.hasHighPrivileges, ai.webLink"
+        "query": "FIND wiz_ai_resource WITH hasAdminPrivileges = true OR hasHighPrivileges = true AS ai\nRETURN\n  ai.displayName, ai._type, ai.hasAdminPrivileges, ai.hasHighPrivileges, ai.webLink"
       }
     ]
   },
   {
     "name": "Inactive AI tokens",
-    "description": "AI identities whose last recorded use (lastUsedOn) is more than 90 days ago. An identity with no recorded last use is not returned: unknown is not inactive.",
+    "description": "AI identities and AI API keys whose last recorded use (lastUsedOn) is more than 90 days ago: NHIs marked isAi, plus Anthropic and AWS Bedrock API keys, which no converter marks isAi yet. An identity with no recorded last use is not returned: unknown is not inactive.",
     "alertLevel": "MEDIUM",
     "labels": [
-      { "labelName": "product", "labelValue": "ai-asm" },
-      { "labelName": "category", "labelValue": "hygiene" }
+      {
+        "labelName": "product",
+        "labelValue": "ai-asm"
+      },
+      {
+        "labelName": "category",
+        "labelValue": "hygiene"
+      }
     ],
     "queries": [
       {
         "name": "query0",
         "version": "v1",
-        "query": "FIND NHI WITH isAi = true AND lastUsedOn < date.now - 90 days AS ai\nRETURN\n  ai.displayName, ai._type, ai.aiPlatformName,\n  ai.lastUsedOn, ai.webLink"
+        "query": "FIND (NHI | anthropic_api_key | aws_bedrock_api_key) WITH\n  (isAi = true OR _type = 'anthropic_api_key' OR _type = 'aws_bedrock_api_key') AND\n  lastUsedOn < date.now - 90 days AS ai\nRETURN\n  ai.displayName, ai._type, ai.lastUsedOn, ai.webLink"
       }
     ]
   }
