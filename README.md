@@ -66,6 +66,17 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 
   Rule pack to showcase the `jupiteroneVulnScore`
 
+- `rule-packs/ai-attack-surface.json`
+
+  AI Attack Surface Management (AI ASM) rules: unsanctioned AI apps, AI identities with broad
+  access, and inactive AI tokens. Each rule is labelled `product: ai-asm`.
+
+  The labels are applied when the pack is imported in the JupiterOne app (rule-service's rule pack
+  import copies `labels` onto each rule). The CLI flow below does not copy labels yet
+  (`provisionRulePackAlerts` in `jupiterone-client-nodejs`), so rules provisioned with the CLI
+  are not counted by the `product: ai-asm` label. The in-app import also needs the pack registered
+  in rule-service before it is offered.
+
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
