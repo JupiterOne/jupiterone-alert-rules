@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Unsanctioned AI apps",
+    "description": "AI identities a vendor has flagged as unapproved: shadow AI reported by Reco (isShadow) or an AI app Microsoft 365 Copilot reports as blocked (isBlocked). An AI app nobody has reviewed is not returned.",
+    "alertLevel": "HIGH",
+    "labels": [
+      { "labelName": "product", "labelValue": "ai-asm" },
+      { "labelName": "category", "labelValue": "shadow-ai" }
+    ],
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND NHI WITH isAi = true AND (isShadow = true OR isBlocked = true) AS ai\nRETURN\n  ai.displayName, ai._type, ai.aiPlatformName,\n  ai.isShadow, ai.isBlocked, ai.webLink"
+      }
+    ]
+  },
+  {
+    "name": "AI identities with broad access",
+    "description": "AI identities Wiz reports as holding admin or high privileges (hasAdminPrivileges or hasHighPrivileges). These can reach far more than an AI tool should.",
+    "alertLevel": "HIGH",
+    "labels": [
+      { "labelName": "product", "labelValue": "ai-asm" },
+      { "labelName": "category", "labelValue": "privilege" }
+    ],
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND NHI WITH isAi = true AND (hasAdminPrivileges = true OR hasHighPrivileges = true) AS ai\nRETURN\n  ai.displayName, ai._type, ai.aiPlatformName,\n  ai.hasAdminPrivileges, ai.hasHighPrivileges, ai.webLink"
+      }
+    ]
+  },
+  {
+    "name": "Inactive AI tokens",
+    "description": "AI identities whose last recorded use (lastUsedOn) is more than 90 days ago. An identity with no recorded last use is not returned: unknown is not inactive.",
+    "alertLevel": "MEDIUM",
+    "labels": [
+      { "labelName": "product", "labelValue": "ai-asm" },
+      { "labelName": "category", "labelValue": "hygiene" }
+    ],
+    "queries": [
+      {
+        "name": "query0",
+        "version": "v1",
+        "query": "FIND NHI WITH isAi = true AND lastUsedOn < date.now - 90 days AS ai\nRETURN\n  ai.displayName, ai._type, ai.aiPlatformName,\n  ai.lastUsedOn, ai.webLink"
+      }
+    ]
+  }
+]

@@ -66,6 +66,11 @@ Major version - 1.x.x - A major version is used to introduce breaking changes
 
   Rule pack to showcase the `jupiteroneVulnScore`
 
+- `rule-packs/ai-attack-surface.json`
+
+  AI Attack Surface Management (AI ASM) rules: unsanctioned AI apps, AI identities with broad
+  access, and inactive AI tokens. Each rule is labelled `product: ai-asm`.
+
 All rules inherit the alert settings from `index.js`.
 
 ## Provision Rules
