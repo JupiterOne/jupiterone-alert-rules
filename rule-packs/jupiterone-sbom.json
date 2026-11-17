@@ -29,7 +29,7 @@
     "queries": [
       {
         "name": "query0",
-        "query": "FIND (CodeRepo|CodeModule) AS parent THAT CONTAINS AS rel CodeModule AS cm RETURN parent.displayName, cm,displayName, rel.version",
+        "query": "FIND (CodeRepo|CodeModule) AS parent THAT CONTAINS AS rel CodeModule AS cm RETURN parent.displayName, cm.displayName, rel.version",
         "version": "v1"
       }
     ],
